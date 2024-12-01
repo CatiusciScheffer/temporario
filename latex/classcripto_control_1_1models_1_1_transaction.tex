@@ -1,0 +1,342 @@
+\doxysection{Referência à classe cripto\+Control.\+models.\+Transaction}
+\hypertarget{classcripto_control_1_1models_1_1_transaction}{}\label{classcripto_control_1_1models_1_1_transaction}\index{criptoControl.models.Transaction@{criptoControl.models.Transaction}}
+
+
+Diagrama de heranças da classe cripto\+Control.\+models.\+Transaction
+% FIG 0
+
+
+Diagrama de colaboração para cripto\+Control.\+models.\+Transaction\+:
+% FIG 1
+\doxysubsubsection*{Atributos Públicos Estáticos}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_transaction_a878eb35b91381da8f9cb72337643c3d4}{transactions\+\_\+id}} = db.\+Column(db.\+Integer, primary\+\_\+key=True)
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_transaction_a6b4f12ac41aa611b8036ce5a4c8b23c0}{transaction\+\_\+type}} = db.\+Column(db.\+String, nullable=False)
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_transaction_a4402a17f94c09e9242cc282bcf9a938d}{transaction\+\_\+date}} = db.\+Column(db.\+Date, nullable=False, default=datetime.\+now)
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_transaction_ae9b4948961bfbb879267993840167212}{payment\+\_\+wallet\+\_\+id}} = db.\+Column(db.\+Integer, db.\+Foreign\+Key(\textquotesingle{}wallets.\+wallet\+\_\+id\textquotesingle{}), nullable=True)
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_transaction_a3d1cfa2092f66d9679e9e7881ac0c558}{payment\+\_\+wallet}} = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classcripto_control_1_1models_1_1_wallet}{Wallet}}\textquotesingle{}, foreign\+\_\+keys=\mbox{[}\mbox{\hyperlink{classcripto_control_1_1models_1_1_transaction_ae9b4948961bfbb879267993840167212}{payment\+\_\+wallet\+\_\+id}}\mbox{]}, backref=\textquotesingle{}transactions\textquotesingle{})
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_transaction_a9f1eb36a89f59b27f1cfe4a54b17063e}{receiving\+\_\+wallet\+\_\+id}} = db.\+Column(db.\+Integer, db.\+Foreign\+Key(\textquotesingle{}wallets.\+wallet\+\_\+id\textquotesingle{}), nullable=True)
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_transaction_a9630b8cb0f490110fedec1208910ea76}{receiving\+\_\+wallet}} = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classcripto_control_1_1models_1_1_wallet}{Wallet}}\textquotesingle{}, foreign\+\_\+keys=\mbox{[}\mbox{\hyperlink{classcripto_control_1_1models_1_1_transaction_a9f1eb36a89f59b27f1cfe4a54b17063e}{receiving\+\_\+wallet\+\_\+id}}\mbox{]}, backref=\textquotesingle{}received\+\_\+transactions\textquotesingle{})
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_transaction_adfdd9e06af798276660b9436b181f50d}{crypto\+\_\+payment\+\_\+id}} = db.\+Column(db.\+Integer, db.\+Foreign\+Key(\textquotesingle{}cryptocurrencies.\+crypto\+\_\+id\textquotesingle{}), nullable=True)
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_transaction_a15c3731548c2ab469cc2165e4c17180e}{crypto\+\_\+payment}} = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classcripto_control_1_1models_1_1_cryptocurrency}{Cryptocurrency}}\textquotesingle{}, foreign\+\_\+keys=\mbox{[}\mbox{\hyperlink{classcripto_control_1_1models_1_1_transaction_adfdd9e06af798276660b9436b181f50d}{crypto\+\_\+payment\+\_\+id}}\mbox{]})
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_transaction_a5c4dcef27307d81d8ad48865789e5d6f}{crypto\+\_\+payment\+\_\+price}} = db.\+Column(db.\+Float, nullable=True)
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_transaction_a2ef83f43434ef87a977323773907a367}{crypto\+\_\+payment\+\_\+quantity}} = db.\+Column(db.\+Float, nullable=True)
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_transaction_aef595c54279a7504d556f4b80550c532}{total\+\_\+paid}} = db.\+Column(db.\+Float, nullable=True)
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_transaction_ab5ac9845003f7d4be958cb382c65782e}{crypto\+\_\+receive\+\_\+id}} = db.\+Column(db.\+Integer, db.\+Foreign\+Key(\textquotesingle{}cryptocurrencies.\+crypto\+\_\+id\textquotesingle{}), nullable=True)
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_transaction_a52bcc2cef879d3b942229225365ded4e}{crypto\+\_\+receive}} = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classcripto_control_1_1models_1_1_cryptocurrency}{Cryptocurrency}}\textquotesingle{}, foreign\+\_\+keys=\mbox{[}\mbox{\hyperlink{classcripto_control_1_1models_1_1_transaction_ab5ac9845003f7d4be958cb382c65782e}{crypto\+\_\+receive\+\_\+id}}\mbox{]})
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_transaction_a6adc1dde65e1ba82e4b0ff4f141e8075}{crypto\+\_\+receive\+\_\+price}} = db.\+Column(db.\+Float, nullable=True)
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_transaction_a549058a935a3cbcc6a7f54b7215bb03e}{crypto\+\_\+receive\+\_\+quantity}} = db.\+Column(db.\+Float, nullable=True)
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_transaction_aecba96c7d74577f699843ee101d86ce2}{total\+\_\+received}} = db.\+Column(db.\+Float, nullable=True)
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_transaction_aaa715753dd436f2317842bbbd38d29aa}{crypto\+\_\+fee\+\_\+id}} = db.\+Column(db.\+Integer, db.\+Foreign\+Key(\textquotesingle{}cryptocurrencies.\+crypto\+\_\+id\textquotesingle{}), nullable=True)
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_transaction_a5092ddc025445a3c2c4a295c8654d22a}{crypto\+\_\+fee}} = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classcripto_control_1_1models_1_1_cryptocurrency}{Cryptocurrency}}\textquotesingle{}, foreign\+\_\+keys=\mbox{[}\mbox{\hyperlink{classcripto_control_1_1models_1_1_transaction_aaa715753dd436f2317842bbbd38d29aa}{crypto\+\_\+fee\+\_\+id}}\mbox{]})
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_transaction_af853076819b0d34adcd2d1d5336432dc}{crypto\+\_\+fee\+\_\+price}} = db.\+Column(db.\+Float, nullable=True)
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_transaction_ad211e96fa132704ec352a3da487944e5}{crypto\+\_\+fee\+\_\+quantity}} = db.\+Column(db.\+Float, nullable=True)
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_transaction_ae878e66e5ee030b8a78aab86bf9324ac}{total\+\_\+fee}} = db.\+Column(db.\+Float, nullable=True)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Descrição detalhada}
+\begin{DoxyVerb}Representa uma transação financeira envolvendo criptomoedas entre carteiras.
+
+A classe Transaction mapeia para a tabela 'transactions' no banco de dados e armazena informações
+detalhadas sobre uma transação, como o tipo de transação, as carteiras de pagamento e recebimento, 
+as criptomoedas envolvidas no pagamento e recebimento, bem como as taxas associadas.
+
+Atributos:
+    transactions_id (int): Identificador único da transação (chave primária).
+    transaction_type (str): Tipo da transação (ex: 'Compra', 'Venda', 'Transferência', etc.).
+    transaction_date (date): Data da transação (com valor padrão para a data atual).
+
+    # Carteira de pagamento
+    payment_wallet_id (int): Identificador da carteira de pagamento (chave estrangeira para a tabela 'wallets').
+    payment_wallet (Wallet): Relacionamento com a carteira de pagamento.
+
+    # Carteira de recebimento
+    receiving_wallet_id (int): Identificador da carteira de recebimento (chave estrangeira para a tabela 'wallets').
+    receiving_wallet (Wallet): Relacionamento com a carteira de recebimento.
+
+    # Criptomoeda de pagamento
+    crypto_payment_id (int): Identificador da criptomoeda paga (chave estrangeira para a tabela 'cryptocurrencies').
+    crypto_payment (Cryptocurrency): Relacionamento com a criptomoeda de pagamento.
+    crypto_payment_price (float): Preço da criptomoeda no momento do pagamento.
+    crypto_payment_quantity (float): Quantidade de criptomoeda paga.
+    total_paid (float): Valor total pago na transação.
+
+    # Criptomoeda de recebimento
+    crypto_receive_id (int): Identificador da criptomoeda recebida (chave estrangeira para a tabela 'cryptocurrencies').
+    crypto_receive (Cryptocurrency): Relacionamento com a criptomoeda de recebimento.
+    crypto_receive_price (float): Preço da criptomoeda no momento do recebimento.
+    crypto_receive_quantity (float): Quantidade de criptomoeda recebida.
+    total_received (float): Valor total recebido na transação.
+
+    # Taxa da transação
+    crypto_fee_id (int): Identificador da criptomoeda utilizada para o pagamento de taxas (chave estrangeira para a tabela 'cryptocurrencies').
+    crypto_fee (Cryptocurrency): Relacionamento com a criptomoeda usada para a taxa.
+    crypto_fee_price (float): Preço da criptomoeda utilizada para o pagamento de taxas.
+    crypto_fee_quantity (float): Quantidade de criptomoeda usada para o pagamento de taxas.
+    total_fee (float): Valor total da taxa da transação.
+
+Relacionamentos:
+    payment_wallet (Wallet): Relacionamento de muitos para um com a tabela 'wallets', representando a carteira de pagamento.
+    receiving_wallet (Wallet): Relacionamento de muitos para um com a tabela 'wallets', representando a carteira de recebimento.
+    crypto_payment (Cryptocurrency): Relacionamento de muitos para um com a tabela 'cryptocurrencies', representando a criptomoeda paga.
+    crypto_receive (Cryptocurrency): Relacionamento de muitos para um com a tabela 'cryptocurrencies', representando a criptomoeda recebida.
+    crypto_fee (Cryptocurrency): Relacionamento de muitos para um com a tabela 'cryptocurrencies', representando a criptomoeda utilizada para o pagamento de taxas.
+
+Métodos:
+    __repr__(self): Retorna uma representação legível da transação, exibindo o tipo e o identificador da transação.
+\end{DoxyVerb}
+ 
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00132}{132}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+
+
+\doxysubsection{Documentação dos dados membro}
+\Hypertarget{classcripto_control_1_1models_1_1_transaction_a5092ddc025445a3c2c4a295c8654d22a}\index{criptoControl.models.Transaction@{criptoControl.models.Transaction}!crypto\_fee@{crypto\_fee}}
+\index{crypto\_fee@{crypto\_fee}!criptoControl.models.Transaction@{criptoControl.models.Transaction}}
+\doxysubsubsection{\texorpdfstring{crypto\_fee}{crypto\_fee}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_transaction_a5092ddc025445a3c2c4a295c8654d22a} 
+cripto\+Control.\+models.\+Transaction.\+crypto\+\_\+fee = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classcripto_control_1_1models_1_1_cryptocurrency}{Cryptocurrency}}\textquotesingle{}, foreign\+\_\+keys=\mbox{[}\mbox{\hyperlink{classcripto_control_1_1models_1_1_transaction_aaa715753dd436f2317842bbbd38d29aa}{crypto\+\_\+fee\+\_\+id}}\mbox{]})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00215}{215}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_transaction_aaa715753dd436f2317842bbbd38d29aa}\index{criptoControl.models.Transaction@{criptoControl.models.Transaction}!crypto\_fee\_id@{crypto\_fee\_id}}
+\index{crypto\_fee\_id@{crypto\_fee\_id}!criptoControl.models.Transaction@{criptoControl.models.Transaction}}
+\doxysubsubsection{\texorpdfstring{crypto\_fee\_id}{crypto\_fee\_id}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_transaction_aaa715753dd436f2317842bbbd38d29aa} 
+cripto\+Control.\+models.\+Transaction.\+crypto\+\_\+fee\+\_\+id = db.\+Column(db.\+Integer, db.\+Foreign\+Key(\textquotesingle{}cryptocurrencies.\+crypto\+\_\+id\textquotesingle{}), nullable=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00214}{214}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_transaction_af853076819b0d34adcd2d1d5336432dc}\index{criptoControl.models.Transaction@{criptoControl.models.Transaction}!crypto\_fee\_price@{crypto\_fee\_price}}
+\index{crypto\_fee\_price@{crypto\_fee\_price}!criptoControl.models.Transaction@{criptoControl.models.Transaction}}
+\doxysubsubsection{\texorpdfstring{crypto\_fee\_price}{crypto\_fee\_price}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_transaction_af853076819b0d34adcd2d1d5336432dc} 
+cripto\+Control.\+models.\+Transaction.\+crypto\+\_\+fee\+\_\+price = db.\+Column(db.\+Float, nullable=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00216}{216}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_transaction_ad211e96fa132704ec352a3da487944e5}\index{criptoControl.models.Transaction@{criptoControl.models.Transaction}!crypto\_fee\_quantity@{crypto\_fee\_quantity}}
+\index{crypto\_fee\_quantity@{crypto\_fee\_quantity}!criptoControl.models.Transaction@{criptoControl.models.Transaction}}
+\doxysubsubsection{\texorpdfstring{crypto\_fee\_quantity}{crypto\_fee\_quantity}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_transaction_ad211e96fa132704ec352a3da487944e5} 
+cripto\+Control.\+models.\+Transaction.\+crypto\+\_\+fee\+\_\+quantity = db.\+Column(db.\+Float, nullable=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00217}{217}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_transaction_a15c3731548c2ab469cc2165e4c17180e}\index{criptoControl.models.Transaction@{criptoControl.models.Transaction}!crypto\_payment@{crypto\_payment}}
+\index{crypto\_payment@{crypto\_payment}!criptoControl.models.Transaction@{criptoControl.models.Transaction}}
+\doxysubsubsection{\texorpdfstring{crypto\_payment}{crypto\_payment}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_transaction_a15c3731548c2ab469cc2165e4c17180e} 
+cripto\+Control.\+models.\+Transaction.\+crypto\+\_\+payment = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classcripto_control_1_1models_1_1_cryptocurrency}{Cryptocurrency}}\textquotesingle{}, foreign\+\_\+keys=\mbox{[}\mbox{\hyperlink{classcripto_control_1_1models_1_1_transaction_adfdd9e06af798276660b9436b181f50d}{crypto\+\_\+payment\+\_\+id}}\mbox{]})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00201}{201}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_transaction_adfdd9e06af798276660b9436b181f50d}\index{criptoControl.models.Transaction@{criptoControl.models.Transaction}!crypto\_payment\_id@{crypto\_payment\_id}}
+\index{crypto\_payment\_id@{crypto\_payment\_id}!criptoControl.models.Transaction@{criptoControl.models.Transaction}}
+\doxysubsubsection{\texorpdfstring{crypto\_payment\_id}{crypto\_payment\_id}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_transaction_adfdd9e06af798276660b9436b181f50d} 
+cripto\+Control.\+models.\+Transaction.\+crypto\+\_\+payment\+\_\+id = db.\+Column(db.\+Integer, db.\+Foreign\+Key(\textquotesingle{}cryptocurrencies.\+crypto\+\_\+id\textquotesingle{}), nullable=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00200}{200}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_transaction_a5c4dcef27307d81d8ad48865789e5d6f}\index{criptoControl.models.Transaction@{criptoControl.models.Transaction}!crypto\_payment\_price@{crypto\_payment\_price}}
+\index{crypto\_payment\_price@{crypto\_payment\_price}!criptoControl.models.Transaction@{criptoControl.models.Transaction}}
+\doxysubsubsection{\texorpdfstring{crypto\_payment\_price}{crypto\_payment\_price}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_transaction_a5c4dcef27307d81d8ad48865789e5d6f} 
+cripto\+Control.\+models.\+Transaction.\+crypto\+\_\+payment\+\_\+price = db.\+Column(db.\+Float, nullable=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00202}{202}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_transaction_a2ef83f43434ef87a977323773907a367}\index{criptoControl.models.Transaction@{criptoControl.models.Transaction}!crypto\_payment\_quantity@{crypto\_payment\_quantity}}
+\index{crypto\_payment\_quantity@{crypto\_payment\_quantity}!criptoControl.models.Transaction@{criptoControl.models.Transaction}}
+\doxysubsubsection{\texorpdfstring{crypto\_payment\_quantity}{crypto\_payment\_quantity}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_transaction_a2ef83f43434ef87a977323773907a367} 
+cripto\+Control.\+models.\+Transaction.\+crypto\+\_\+payment\+\_\+quantity = db.\+Column(db.\+Float, nullable=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00203}{203}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_transaction_a52bcc2cef879d3b942229225365ded4e}\index{criptoControl.models.Transaction@{criptoControl.models.Transaction}!crypto\_receive@{crypto\_receive}}
+\index{crypto\_receive@{crypto\_receive}!criptoControl.models.Transaction@{criptoControl.models.Transaction}}
+\doxysubsubsection{\texorpdfstring{crypto\_receive}{crypto\_receive}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_transaction_a52bcc2cef879d3b942229225365ded4e} 
+cripto\+Control.\+models.\+Transaction.\+crypto\+\_\+receive = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classcripto_control_1_1models_1_1_cryptocurrency}{Cryptocurrency}}\textquotesingle{}, foreign\+\_\+keys=\mbox{[}\mbox{\hyperlink{classcripto_control_1_1models_1_1_transaction_ab5ac9845003f7d4be958cb382c65782e}{crypto\+\_\+receive\+\_\+id}}\mbox{]})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00208}{208}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_transaction_ab5ac9845003f7d4be958cb382c65782e}\index{criptoControl.models.Transaction@{criptoControl.models.Transaction}!crypto\_receive\_id@{crypto\_receive\_id}}
+\index{crypto\_receive\_id@{crypto\_receive\_id}!criptoControl.models.Transaction@{criptoControl.models.Transaction}}
+\doxysubsubsection{\texorpdfstring{crypto\_receive\_id}{crypto\_receive\_id}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_transaction_ab5ac9845003f7d4be958cb382c65782e} 
+cripto\+Control.\+models.\+Transaction.\+crypto\+\_\+receive\+\_\+id = db.\+Column(db.\+Integer, db.\+Foreign\+Key(\textquotesingle{}cryptocurrencies.\+crypto\+\_\+id\textquotesingle{}), nullable=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00207}{207}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_transaction_a6adc1dde65e1ba82e4b0ff4f141e8075}\index{criptoControl.models.Transaction@{criptoControl.models.Transaction}!crypto\_receive\_price@{crypto\_receive\_price}}
+\index{crypto\_receive\_price@{crypto\_receive\_price}!criptoControl.models.Transaction@{criptoControl.models.Transaction}}
+\doxysubsubsection{\texorpdfstring{crypto\_receive\_price}{crypto\_receive\_price}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_transaction_a6adc1dde65e1ba82e4b0ff4f141e8075} 
+cripto\+Control.\+models.\+Transaction.\+crypto\+\_\+receive\+\_\+price = db.\+Column(db.\+Float, nullable=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00209}{209}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_transaction_a549058a935a3cbcc6a7f54b7215bb03e}\index{criptoControl.models.Transaction@{criptoControl.models.Transaction}!crypto\_receive\_quantity@{crypto\_receive\_quantity}}
+\index{crypto\_receive\_quantity@{crypto\_receive\_quantity}!criptoControl.models.Transaction@{criptoControl.models.Transaction}}
+\doxysubsubsection{\texorpdfstring{crypto\_receive\_quantity}{crypto\_receive\_quantity}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_transaction_a549058a935a3cbcc6a7f54b7215bb03e} 
+cripto\+Control.\+models.\+Transaction.\+crypto\+\_\+receive\+\_\+quantity = db.\+Column(db.\+Float, nullable=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00210}{210}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_transaction_a3d1cfa2092f66d9679e9e7881ac0c558}\index{criptoControl.models.Transaction@{criptoControl.models.Transaction}!payment\_wallet@{payment\_wallet}}
+\index{payment\_wallet@{payment\_wallet}!criptoControl.models.Transaction@{criptoControl.models.Transaction}}
+\doxysubsubsection{\texorpdfstring{payment\_wallet}{payment\_wallet}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_transaction_a3d1cfa2092f66d9679e9e7881ac0c558} 
+cripto\+Control.\+models.\+Transaction.\+payment\+\_\+wallet = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classcripto_control_1_1models_1_1_wallet}{Wallet}}\textquotesingle{}, foreign\+\_\+keys=\mbox{[}\mbox{\hyperlink{classcripto_control_1_1models_1_1_transaction_ae9b4948961bfbb879267993840167212}{payment\+\_\+wallet\+\_\+id}}\mbox{]}, backref=\textquotesingle{}transactions\textquotesingle{})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00193}{193}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_transaction_ae9b4948961bfbb879267993840167212}\index{criptoControl.models.Transaction@{criptoControl.models.Transaction}!payment\_wallet\_id@{payment\_wallet\_id}}
+\index{payment\_wallet\_id@{payment\_wallet\_id}!criptoControl.models.Transaction@{criptoControl.models.Transaction}}
+\doxysubsubsection{\texorpdfstring{payment\_wallet\_id}{payment\_wallet\_id}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_transaction_ae9b4948961bfbb879267993840167212} 
+cripto\+Control.\+models.\+Transaction.\+payment\+\_\+wallet\+\_\+id = db.\+Column(db.\+Integer, db.\+Foreign\+Key(\textquotesingle{}wallets.\+wallet\+\_\+id\textquotesingle{}), nullable=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00192}{192}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_transaction_a9630b8cb0f490110fedec1208910ea76}\index{criptoControl.models.Transaction@{criptoControl.models.Transaction}!receiving\_wallet@{receiving\_wallet}}
+\index{receiving\_wallet@{receiving\_wallet}!criptoControl.models.Transaction@{criptoControl.models.Transaction}}
+\doxysubsubsection{\texorpdfstring{receiving\_wallet}{receiving\_wallet}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_transaction_a9630b8cb0f490110fedec1208910ea76} 
+cripto\+Control.\+models.\+Transaction.\+receiving\+\_\+wallet = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classcripto_control_1_1models_1_1_wallet}{Wallet}}\textquotesingle{}, foreign\+\_\+keys=\mbox{[}\mbox{\hyperlink{classcripto_control_1_1models_1_1_transaction_a9f1eb36a89f59b27f1cfe4a54b17063e}{receiving\+\_\+wallet\+\_\+id}}\mbox{]}, backref=\textquotesingle{}received\+\_\+transactions\textquotesingle{})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00197}{197}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_transaction_a9f1eb36a89f59b27f1cfe4a54b17063e}\index{criptoControl.models.Transaction@{criptoControl.models.Transaction}!receiving\_wallet\_id@{receiving\_wallet\_id}}
+\index{receiving\_wallet\_id@{receiving\_wallet\_id}!criptoControl.models.Transaction@{criptoControl.models.Transaction}}
+\doxysubsubsection{\texorpdfstring{receiving\_wallet\_id}{receiving\_wallet\_id}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_transaction_a9f1eb36a89f59b27f1cfe4a54b17063e} 
+cripto\+Control.\+models.\+Transaction.\+receiving\+\_\+wallet\+\_\+id = db.\+Column(db.\+Integer, db.\+Foreign\+Key(\textquotesingle{}wallets.\+wallet\+\_\+id\textquotesingle{}), nullable=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00196}{196}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_transaction_ae878e66e5ee030b8a78aab86bf9324ac}\index{criptoControl.models.Transaction@{criptoControl.models.Transaction}!total\_fee@{total\_fee}}
+\index{total\_fee@{total\_fee}!criptoControl.models.Transaction@{criptoControl.models.Transaction}}
+\doxysubsubsection{\texorpdfstring{total\_fee}{total\_fee}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_transaction_ae878e66e5ee030b8a78aab86bf9324ac} 
+cripto\+Control.\+models.\+Transaction.\+total\+\_\+fee = db.\+Column(db.\+Float, nullable=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00218}{218}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_transaction_aef595c54279a7504d556f4b80550c532}\index{criptoControl.models.Transaction@{criptoControl.models.Transaction}!total\_paid@{total\_paid}}
+\index{total\_paid@{total\_paid}!criptoControl.models.Transaction@{criptoControl.models.Transaction}}
+\doxysubsubsection{\texorpdfstring{total\_paid}{total\_paid}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_transaction_aef595c54279a7504d556f4b80550c532} 
+cripto\+Control.\+models.\+Transaction.\+total\+\_\+paid = db.\+Column(db.\+Float, nullable=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00204}{204}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_transaction_aecba96c7d74577f699843ee101d86ce2}\index{criptoControl.models.Transaction@{criptoControl.models.Transaction}!total\_received@{total\_received}}
+\index{total\_received@{total\_received}!criptoControl.models.Transaction@{criptoControl.models.Transaction}}
+\doxysubsubsection{\texorpdfstring{total\_received}{total\_received}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_transaction_aecba96c7d74577f699843ee101d86ce2} 
+cripto\+Control.\+models.\+Transaction.\+total\+\_\+received = db.\+Column(db.\+Float, nullable=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00211}{211}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_transaction_a4402a17f94c09e9242cc282bcf9a938d}\index{criptoControl.models.Transaction@{criptoControl.models.Transaction}!transaction\_date@{transaction\_date}}
+\index{transaction\_date@{transaction\_date}!criptoControl.models.Transaction@{criptoControl.models.Transaction}}
+\doxysubsubsection{\texorpdfstring{transaction\_date}{transaction\_date}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_transaction_a4402a17f94c09e9242cc282bcf9a938d} 
+cripto\+Control.\+models.\+Transaction.\+transaction\+\_\+date = db.\+Column(db.\+Date, nullable=False, default=datetime.\+now)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00189}{189}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_transaction_a6b4f12ac41aa611b8036ce5a4c8b23c0}\index{criptoControl.models.Transaction@{criptoControl.models.Transaction}!transaction\_type@{transaction\_type}}
+\index{transaction\_type@{transaction\_type}!criptoControl.models.Transaction@{criptoControl.models.Transaction}}
+\doxysubsubsection{\texorpdfstring{transaction\_type}{transaction\_type}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_transaction_a6b4f12ac41aa611b8036ce5a4c8b23c0} 
+cripto\+Control.\+models.\+Transaction.\+transaction\+\_\+type = db.\+Column(db.\+String, nullable=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00188}{188}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_transaction_a878eb35b91381da8f9cb72337643c3d4}\index{criptoControl.models.Transaction@{criptoControl.models.Transaction}!transactions\_id@{transactions\_id}}
+\index{transactions\_id@{transactions\_id}!criptoControl.models.Transaction@{criptoControl.models.Transaction}}
+\doxysubsubsection{\texorpdfstring{transactions\_id}{transactions\_id}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_transaction_a878eb35b91381da8f9cb72337643c3d4} 
+cripto\+Control.\+models.\+Transaction.\+transactions\+\_\+id = db.\+Column(db.\+Integer, primary\+\_\+key=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00187}{187}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+
+
+A documentação para esta classe foi gerada a partir do seguinte ficheiro\+:\begin{DoxyCompactItemize}
+\item 
+cripto\+Control/\mbox{\hyperlink{models_8py}{models.\+py}}\end{DoxyCompactItemize}

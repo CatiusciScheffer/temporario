@@ -1,0 +1,253 @@
+\doxysection{Referência à classe cripto\+Control.\+forms.\+Transactions\+Form}
+\hypertarget{classcripto_control_1_1forms_1_1_transactions_form}{}\label{classcripto_control_1_1forms_1_1_transactions_form}\index{criptoControl.forms.TransactionsForm@{criptoControl.forms.TransactionsForm}}
+
+
+Diagrama de heranças da classe cripto\+Control.\+forms.\+Transactions\+Form
+% FIG 0
+
+
+Diagrama de colaboração para cripto\+Control.\+forms.\+Transactions\+Form\+:
+% FIG 1
+\doxysubsubsection*{Atributos Públicos Estáticos}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcripto_control_1_1forms_1_1_transactions_form_abe0edb236be3a6af21cb0c9c8ce5f4eb}{transaction\+\_\+type}} = Select\+Field(\textquotesingle{}Tipo Transação\textquotesingle{}, choices=\mbox{[}(\textquotesingle{}\textquotesingle{},\textquotesingle{}Selecione o Tipo\textquotesingle{}), (\textquotesingle{}Compra\textquotesingle{},\textquotesingle{}Compra\textquotesingle{}), (\textquotesingle{}Venda\textquotesingle{},\textquotesingle{}Venda\textquotesingle{}), (\textquotesingle{}Transferência\textquotesingle{},\textquotesingle{}Transferência\textquotesingle{}), (\textquotesingle{}Saldo\textquotesingle{},\textquotesingle{}Saldo\textquotesingle{})\mbox{]}, validators=\mbox{[}Data\+Required()\mbox{]})
+\item 
+\mbox{\hyperlink{classcripto_control_1_1forms_1_1_transactions_form_a999a6ffd761da80e36c4948cd7e22a15}{crypto\+\_\+payment}} = Select\+Field(\textquotesingle{}Moeda\textquotesingle{}, choices=\mbox{[}$\,$\mbox{]},validators=\mbox{[}Optional()\mbox{]})
+\item 
+\mbox{\hyperlink{classcripto_control_1_1forms_1_1_transactions_form_ae95fd1d023a7dc2f83a8b86fc5db129f}{crypto\+\_\+payment\+\_\+price}} = Float\+Field(\textquotesingle{}Preço Atual\textquotesingle{}, validators=\mbox{[}Optional()\mbox{]})
+\item 
+\mbox{\hyperlink{classcripto_control_1_1forms_1_1_transactions_form_a0017b8cb2a2b5895df657f76bf554317}{crypto\+\_\+payment\+\_\+quantity}} = Float\+Field(\textquotesingle{}Quantidade\textquotesingle{}, validators=\mbox{[}Optional()\mbox{]})
+\item 
+\mbox{\hyperlink{classcripto_control_1_1forms_1_1_transactions_form_a6973e183dd1b1a27955c40fafb52dfcc}{total\+\_\+paid}} = Float\+Field(\textquotesingle{}Total Transação\textquotesingle{}, validators=\mbox{[}Optional()\mbox{]})
+\item 
+\mbox{\hyperlink{classcripto_control_1_1forms_1_1_transactions_form_aca233fd352bb42ad9601e05a06bdfb1f}{crypto\+\_\+fee}} = Select\+Field(\textquotesingle{}Moeda Taxa\textquotesingle{}, choices=\mbox{[}$\,$\mbox{]}, validators=\mbox{[}Optional()\mbox{]})
+\item 
+\mbox{\hyperlink{classcripto_control_1_1forms_1_1_transactions_form_a48dc6140270b32488f640a21e7994bf5}{crypto\+\_\+fee\+\_\+price}} = Float\+Field(\textquotesingle{}Preço Atual\textquotesingle{}, validators=\mbox{[}Optional()\mbox{]})
+\item 
+\mbox{\hyperlink{classcripto_control_1_1forms_1_1_transactions_form_ac512e0f8a4f895ef005412dee20d22fb}{crypto\+\_\+fee\+\_\+quantity}} = Float\+Field(\textquotesingle{}Quantidade\textquotesingle{}, validators=\mbox{[}Optional()\mbox{]})
+\item 
+\mbox{\hyperlink{classcripto_control_1_1forms_1_1_transactions_form_acb680ea1bc833744ee0dbe78c76d4958}{total\+\_\+fee}} = Float\+Field(\textquotesingle{}Total Taxa\textquotesingle{}, validators=\mbox{[}Optional()\mbox{]})
+\item 
+\mbox{\hyperlink{classcripto_control_1_1forms_1_1_transactions_form_adbd43bc0b3d1d996d8ba1d7c54e6a7c4}{crypto\+\_\+receive}} = Select\+Field(\textquotesingle{}Moeda Recebida\textquotesingle{}, choices=\mbox{[}$\,$\mbox{]},validators=\mbox{[}Optional()\mbox{]})
+\item 
+\mbox{\hyperlink{classcripto_control_1_1forms_1_1_transactions_form_a47214541e994817a1dd349c2c973c22f}{crypto\+\_\+receive\+\_\+price}} = Float\+Field(\textquotesingle{}Preço Atual\textquotesingle{}, validators=\mbox{[}Optional()\mbox{]})
+\item 
+\mbox{\hyperlink{classcripto_control_1_1forms_1_1_transactions_form_a8011777803736ed5a4c5276ea82aac80}{crypto\+\_\+receive\+\_\+quantity}} = Float\+Field(\textquotesingle{}Quantidade\textquotesingle{}, validators=\mbox{[}Optional()\mbox{]})
+\item 
+\mbox{\hyperlink{classcripto_control_1_1forms_1_1_transactions_form_a8a141bd7d72d2ddbdf4cbcecd4b92137}{total\+\_\+received}} = Float\+Field(\textquotesingle{}Total Recebido\textquotesingle{}, validators=\mbox{[}Optional()\mbox{]})
+\item 
+\mbox{\hyperlink{classcripto_control_1_1forms_1_1_transactions_form_a1b1f9602e25586d65a18a7603e9fd982}{payment\+\_\+wallet}} = Select\+Field(\textquotesingle{}Carteira Saída\textquotesingle{}, choices=\mbox{[}$\,$\mbox{]}, validators=\mbox{[}Optional()\mbox{]})
+\item 
+\mbox{\hyperlink{classcripto_control_1_1forms_1_1_transactions_form_acd49584fdd36a99f5ad1ebcc537f086e}{receiving\+\_\+wallet}} = Select\+Field(\textquotesingle{}Carteira Recebimento\textquotesingle{}, choices=\mbox{[}$\,$\mbox{]}, validators=\mbox{[}Optional()\mbox{]})
+\item 
+\mbox{\hyperlink{classcripto_control_1_1forms_1_1_transactions_form_adaf3046b8dd3e84b08b957b6c35b4343}{transaction\+\_\+date}} = Date\+Field(\textquotesingle{}Data da Transação\textquotesingle{}, format=\textquotesingle{}\%Y-\/\%m-\/\%d\textquotesingle{}, validators=\mbox{[}Optional()\mbox{]})
+\item 
+\mbox{\hyperlink{classcripto_control_1_1forms_1_1_transactions_form_a3636c75fa74afadf5ecdd453ed361b11}{btn\+\_\+add\+\_\+transactions}} = Submit\+Field(\textquotesingle{}Adicionar\textquotesingle{})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Descrição detalhada}
+\begin{DoxyVerb}Formulário para registrar e gerenciar transações financeiras envolvendo criptomoedas.
+
+Atributos:
+    transaction_type (SelectField): Campo para selecionar o tipo de transação (Compra, Venda, Transferência ou Saldo), obrigatório.
+    crypto_payment (SelectField): Campo para selecionar a criptomoeda utilizada como pagamento, opcional.
+    crypto_payment_price (FloatField): Campo para informar o preço atual da criptomoeda de pagamento, opcional.
+    crypto_payment_quantity (FloatField): Campo para informar a quantidade de criptomoeda de pagamento, opcional.
+    total_paid (FloatField): Campo para calcular ou informar o valor total pago, opcional.
+    crypto_fee (SelectField): Campo para selecionar a criptomoeda utilizada para taxas, opcional.
+    crypto_fee_price (FloatField): Campo para informar o preço atual da criptomoeda de taxa, opcional.
+    crypto_fee_quantity (FloatField): Campo para informar a quantidade de criptomoeda utilizada como taxa, opcional.
+    total_fee (FloatField): Campo para calcular ou informar o valor total da taxa, opcional.
+    crypto_receive (SelectField): Campo para selecionar a criptomoeda recebida, opcional.
+    crypto_receive_price (FloatField): Campo para informar o preço atual da criptomoeda recebida, opcional.
+    crypto_receive_quantity (FloatField): Campo para informar a quantidade de criptomoeda recebida, opcional.
+    total_received (FloatField): Campo para calcular ou informar o valor total recebido, opcional.
+    payment_wallet (SelectField): Campo para selecionar a carteira de onde sairá o pagamento, opcional.
+    receiving_wallet (SelectField): Campo para selecionar a carteira que receberá o pagamento, opcional.
+    transaction_date (DateField): Campo para informar a data da transação, opcional.
+    btn_add_transactions (SubmitField): Botão para enviar os dados do formulário e adicionar a transação.
+\end{DoxyVerb}
+ 
+
+Definido na linha \mbox{\hyperlink{forms_8py_source_l00009}{9}} do ficheiro \mbox{\hyperlink{forms_8py_source}{forms.\+py}}.
+
+
+
+\doxysubsection{Documentação dos dados membro}
+\Hypertarget{classcripto_control_1_1forms_1_1_transactions_form_a3636c75fa74afadf5ecdd453ed361b11}\index{criptoControl.forms.TransactionsForm@{criptoControl.forms.TransactionsForm}!btn\_add\_transactions@{btn\_add\_transactions}}
+\index{btn\_add\_transactions@{btn\_add\_transactions}!criptoControl.forms.TransactionsForm@{criptoControl.forms.TransactionsForm}}
+\doxysubsubsection{\texorpdfstring{btn\_add\_transactions}{btn\_add\_transactions}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1forms_1_1_transactions_form_a3636c75fa74afadf5ecdd453ed361b11} 
+cripto\+Control.\+forms.\+Transactions\+Form.\+btn\+\_\+add\+\_\+transactions = Submit\+Field(\textquotesingle{}Adicionar\textquotesingle{})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{forms_8py_source_l00048}{48}} do ficheiro \mbox{\hyperlink{forms_8py_source}{forms.\+py}}.
+
+\Hypertarget{classcripto_control_1_1forms_1_1_transactions_form_aca233fd352bb42ad9601e05a06bdfb1f}\index{criptoControl.forms.TransactionsForm@{criptoControl.forms.TransactionsForm}!crypto\_fee@{crypto\_fee}}
+\index{crypto\_fee@{crypto\_fee}!criptoControl.forms.TransactionsForm@{criptoControl.forms.TransactionsForm}}
+\doxysubsubsection{\texorpdfstring{crypto\_fee}{crypto\_fee}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1forms_1_1_transactions_form_aca233fd352bb42ad9601e05a06bdfb1f} 
+cripto\+Control.\+forms.\+Transactions\+Form.\+crypto\+\_\+fee = Select\+Field(\textquotesingle{}Moeda Taxa\textquotesingle{}, choices=\mbox{[}$\,$\mbox{]}, validators=\mbox{[}Optional()\mbox{]})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{forms_8py_source_l00037}{37}} do ficheiro \mbox{\hyperlink{forms_8py_source}{forms.\+py}}.
+
+\Hypertarget{classcripto_control_1_1forms_1_1_transactions_form_a48dc6140270b32488f640a21e7994bf5}\index{criptoControl.forms.TransactionsForm@{criptoControl.forms.TransactionsForm}!crypto\_fee\_price@{crypto\_fee\_price}}
+\index{crypto\_fee\_price@{crypto\_fee\_price}!criptoControl.forms.TransactionsForm@{criptoControl.forms.TransactionsForm}}
+\doxysubsubsection{\texorpdfstring{crypto\_fee\_price}{crypto\_fee\_price}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1forms_1_1_transactions_form_a48dc6140270b32488f640a21e7994bf5} 
+cripto\+Control.\+forms.\+Transactions\+Form.\+crypto\+\_\+fee\+\_\+price = Float\+Field(\textquotesingle{}Preço Atual\textquotesingle{}, validators=\mbox{[}Optional()\mbox{]})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{forms_8py_source_l00038}{38}} do ficheiro \mbox{\hyperlink{forms_8py_source}{forms.\+py}}.
+
+\Hypertarget{classcripto_control_1_1forms_1_1_transactions_form_ac512e0f8a4f895ef005412dee20d22fb}\index{criptoControl.forms.TransactionsForm@{criptoControl.forms.TransactionsForm}!crypto\_fee\_quantity@{crypto\_fee\_quantity}}
+\index{crypto\_fee\_quantity@{crypto\_fee\_quantity}!criptoControl.forms.TransactionsForm@{criptoControl.forms.TransactionsForm}}
+\doxysubsubsection{\texorpdfstring{crypto\_fee\_quantity}{crypto\_fee\_quantity}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1forms_1_1_transactions_form_ac512e0f8a4f895ef005412dee20d22fb} 
+cripto\+Control.\+forms.\+Transactions\+Form.\+crypto\+\_\+fee\+\_\+quantity = Float\+Field(\textquotesingle{}Quantidade\textquotesingle{}, validators=\mbox{[}Optional()\mbox{]})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{forms_8py_source_l00039}{39}} do ficheiro \mbox{\hyperlink{forms_8py_source}{forms.\+py}}.
+
+\Hypertarget{classcripto_control_1_1forms_1_1_transactions_form_a999a6ffd761da80e36c4948cd7e22a15}\index{criptoControl.forms.TransactionsForm@{criptoControl.forms.TransactionsForm}!crypto\_payment@{crypto\_payment}}
+\index{crypto\_payment@{crypto\_payment}!criptoControl.forms.TransactionsForm@{criptoControl.forms.TransactionsForm}}
+\doxysubsubsection{\texorpdfstring{crypto\_payment}{crypto\_payment}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1forms_1_1_transactions_form_a999a6ffd761da80e36c4948cd7e22a15} 
+cripto\+Control.\+forms.\+Transactions\+Form.\+crypto\+\_\+payment = Select\+Field(\textquotesingle{}Moeda\textquotesingle{}, choices=\mbox{[}$\,$\mbox{]},validators=\mbox{[}Optional()\mbox{]})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{forms_8py_source_l00033}{33}} do ficheiro \mbox{\hyperlink{forms_8py_source}{forms.\+py}}.
+
+\Hypertarget{classcripto_control_1_1forms_1_1_transactions_form_ae95fd1d023a7dc2f83a8b86fc5db129f}\index{criptoControl.forms.TransactionsForm@{criptoControl.forms.TransactionsForm}!crypto\_payment\_price@{crypto\_payment\_price}}
+\index{crypto\_payment\_price@{crypto\_payment\_price}!criptoControl.forms.TransactionsForm@{criptoControl.forms.TransactionsForm}}
+\doxysubsubsection{\texorpdfstring{crypto\_payment\_price}{crypto\_payment\_price}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1forms_1_1_transactions_form_ae95fd1d023a7dc2f83a8b86fc5db129f} 
+cripto\+Control.\+forms.\+Transactions\+Form.\+crypto\+\_\+payment\+\_\+price = Float\+Field(\textquotesingle{}Preço Atual\textquotesingle{}, validators=\mbox{[}Optional()\mbox{]})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{forms_8py_source_l00034}{34}} do ficheiro \mbox{\hyperlink{forms_8py_source}{forms.\+py}}.
+
+\Hypertarget{classcripto_control_1_1forms_1_1_transactions_form_a0017b8cb2a2b5895df657f76bf554317}\index{criptoControl.forms.TransactionsForm@{criptoControl.forms.TransactionsForm}!crypto\_payment\_quantity@{crypto\_payment\_quantity}}
+\index{crypto\_payment\_quantity@{crypto\_payment\_quantity}!criptoControl.forms.TransactionsForm@{criptoControl.forms.TransactionsForm}}
+\doxysubsubsection{\texorpdfstring{crypto\_payment\_quantity}{crypto\_payment\_quantity}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1forms_1_1_transactions_form_a0017b8cb2a2b5895df657f76bf554317} 
+cripto\+Control.\+forms.\+Transactions\+Form.\+crypto\+\_\+payment\+\_\+quantity = Float\+Field(\textquotesingle{}Quantidade\textquotesingle{}, validators=\mbox{[}Optional()\mbox{]})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{forms_8py_source_l00035}{35}} do ficheiro \mbox{\hyperlink{forms_8py_source}{forms.\+py}}.
+
+\Hypertarget{classcripto_control_1_1forms_1_1_transactions_form_adbd43bc0b3d1d996d8ba1d7c54e6a7c4}\index{criptoControl.forms.TransactionsForm@{criptoControl.forms.TransactionsForm}!crypto\_receive@{crypto\_receive}}
+\index{crypto\_receive@{crypto\_receive}!criptoControl.forms.TransactionsForm@{criptoControl.forms.TransactionsForm}}
+\doxysubsubsection{\texorpdfstring{crypto\_receive}{crypto\_receive}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1forms_1_1_transactions_form_adbd43bc0b3d1d996d8ba1d7c54e6a7c4} 
+cripto\+Control.\+forms.\+Transactions\+Form.\+crypto\+\_\+receive = Select\+Field(\textquotesingle{}Moeda Recebida\textquotesingle{}, choices=\mbox{[}$\,$\mbox{]},validators=\mbox{[}Optional()\mbox{]})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{forms_8py_source_l00041}{41}} do ficheiro \mbox{\hyperlink{forms_8py_source}{forms.\+py}}.
+
+\Hypertarget{classcripto_control_1_1forms_1_1_transactions_form_a47214541e994817a1dd349c2c973c22f}\index{criptoControl.forms.TransactionsForm@{criptoControl.forms.TransactionsForm}!crypto\_receive\_price@{crypto\_receive\_price}}
+\index{crypto\_receive\_price@{crypto\_receive\_price}!criptoControl.forms.TransactionsForm@{criptoControl.forms.TransactionsForm}}
+\doxysubsubsection{\texorpdfstring{crypto\_receive\_price}{crypto\_receive\_price}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1forms_1_1_transactions_form_a47214541e994817a1dd349c2c973c22f} 
+cripto\+Control.\+forms.\+Transactions\+Form.\+crypto\+\_\+receive\+\_\+price = Float\+Field(\textquotesingle{}Preço Atual\textquotesingle{}, validators=\mbox{[}Optional()\mbox{]})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{forms_8py_source_l00042}{42}} do ficheiro \mbox{\hyperlink{forms_8py_source}{forms.\+py}}.
+
+\Hypertarget{classcripto_control_1_1forms_1_1_transactions_form_a8011777803736ed5a4c5276ea82aac80}\index{criptoControl.forms.TransactionsForm@{criptoControl.forms.TransactionsForm}!crypto\_receive\_quantity@{crypto\_receive\_quantity}}
+\index{crypto\_receive\_quantity@{crypto\_receive\_quantity}!criptoControl.forms.TransactionsForm@{criptoControl.forms.TransactionsForm}}
+\doxysubsubsection{\texorpdfstring{crypto\_receive\_quantity}{crypto\_receive\_quantity}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1forms_1_1_transactions_form_a8011777803736ed5a4c5276ea82aac80} 
+cripto\+Control.\+forms.\+Transactions\+Form.\+crypto\+\_\+receive\+\_\+quantity = Float\+Field(\textquotesingle{}Quantidade\textquotesingle{}, validators=\mbox{[}Optional()\mbox{]})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{forms_8py_source_l00043}{43}} do ficheiro \mbox{\hyperlink{forms_8py_source}{forms.\+py}}.
+
+\Hypertarget{classcripto_control_1_1forms_1_1_transactions_form_a1b1f9602e25586d65a18a7603e9fd982}\index{criptoControl.forms.TransactionsForm@{criptoControl.forms.TransactionsForm}!payment\_wallet@{payment\_wallet}}
+\index{payment\_wallet@{payment\_wallet}!criptoControl.forms.TransactionsForm@{criptoControl.forms.TransactionsForm}}
+\doxysubsubsection{\texorpdfstring{payment\_wallet}{payment\_wallet}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1forms_1_1_transactions_form_a1b1f9602e25586d65a18a7603e9fd982} 
+cripto\+Control.\+forms.\+Transactions\+Form.\+payment\+\_\+wallet = Select\+Field(\textquotesingle{}Carteira Saída\textquotesingle{}, choices=\mbox{[}$\,$\mbox{]}, validators=\mbox{[}Optional()\mbox{]})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{forms_8py_source_l00045}{45}} do ficheiro \mbox{\hyperlink{forms_8py_source}{forms.\+py}}.
+
+\Hypertarget{classcripto_control_1_1forms_1_1_transactions_form_acd49584fdd36a99f5ad1ebcc537f086e}\index{criptoControl.forms.TransactionsForm@{criptoControl.forms.TransactionsForm}!receiving\_wallet@{receiving\_wallet}}
+\index{receiving\_wallet@{receiving\_wallet}!criptoControl.forms.TransactionsForm@{criptoControl.forms.TransactionsForm}}
+\doxysubsubsection{\texorpdfstring{receiving\_wallet}{receiving\_wallet}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1forms_1_1_transactions_form_acd49584fdd36a99f5ad1ebcc537f086e} 
+cripto\+Control.\+forms.\+Transactions\+Form.\+receiving\+\_\+wallet = Select\+Field(\textquotesingle{}Carteira Recebimento\textquotesingle{}, choices=\mbox{[}$\,$\mbox{]}, validators=\mbox{[}Optional()\mbox{]})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{forms_8py_source_l00046}{46}} do ficheiro \mbox{\hyperlink{forms_8py_source}{forms.\+py}}.
+
+\Hypertarget{classcripto_control_1_1forms_1_1_transactions_form_acb680ea1bc833744ee0dbe78c76d4958}\index{criptoControl.forms.TransactionsForm@{criptoControl.forms.TransactionsForm}!total\_fee@{total\_fee}}
+\index{total\_fee@{total\_fee}!criptoControl.forms.TransactionsForm@{criptoControl.forms.TransactionsForm}}
+\doxysubsubsection{\texorpdfstring{total\_fee}{total\_fee}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1forms_1_1_transactions_form_acb680ea1bc833744ee0dbe78c76d4958} 
+cripto\+Control.\+forms.\+Transactions\+Form.\+total\+\_\+fee = Float\+Field(\textquotesingle{}Total Taxa\textquotesingle{}, validators=\mbox{[}Optional()\mbox{]})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{forms_8py_source_l00040}{40}} do ficheiro \mbox{\hyperlink{forms_8py_source}{forms.\+py}}.
+
+\Hypertarget{classcripto_control_1_1forms_1_1_transactions_form_a6973e183dd1b1a27955c40fafb52dfcc}\index{criptoControl.forms.TransactionsForm@{criptoControl.forms.TransactionsForm}!total\_paid@{total\_paid}}
+\index{total\_paid@{total\_paid}!criptoControl.forms.TransactionsForm@{criptoControl.forms.TransactionsForm}}
+\doxysubsubsection{\texorpdfstring{total\_paid}{total\_paid}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1forms_1_1_transactions_form_a6973e183dd1b1a27955c40fafb52dfcc} 
+cripto\+Control.\+forms.\+Transactions\+Form.\+total\+\_\+paid = Float\+Field(\textquotesingle{}Total Transação\textquotesingle{}, validators=\mbox{[}Optional()\mbox{]})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{forms_8py_source_l00036}{36}} do ficheiro \mbox{\hyperlink{forms_8py_source}{forms.\+py}}.
+
+\Hypertarget{classcripto_control_1_1forms_1_1_transactions_form_a8a141bd7d72d2ddbdf4cbcecd4b92137}\index{criptoControl.forms.TransactionsForm@{criptoControl.forms.TransactionsForm}!total\_received@{total\_received}}
+\index{total\_received@{total\_received}!criptoControl.forms.TransactionsForm@{criptoControl.forms.TransactionsForm}}
+\doxysubsubsection{\texorpdfstring{total\_received}{total\_received}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1forms_1_1_transactions_form_a8a141bd7d72d2ddbdf4cbcecd4b92137} 
+cripto\+Control.\+forms.\+Transactions\+Form.\+total\+\_\+received = Float\+Field(\textquotesingle{}Total Recebido\textquotesingle{}, validators=\mbox{[}Optional()\mbox{]})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{forms_8py_source_l00044}{44}} do ficheiro \mbox{\hyperlink{forms_8py_source}{forms.\+py}}.
+
+\Hypertarget{classcripto_control_1_1forms_1_1_transactions_form_adaf3046b8dd3e84b08b957b6c35b4343}\index{criptoControl.forms.TransactionsForm@{criptoControl.forms.TransactionsForm}!transaction\_date@{transaction\_date}}
+\index{transaction\_date@{transaction\_date}!criptoControl.forms.TransactionsForm@{criptoControl.forms.TransactionsForm}}
+\doxysubsubsection{\texorpdfstring{transaction\_date}{transaction\_date}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1forms_1_1_transactions_form_adaf3046b8dd3e84b08b957b6c35b4343} 
+cripto\+Control.\+forms.\+Transactions\+Form.\+transaction\+\_\+date = Date\+Field(\textquotesingle{}Data da Transação\textquotesingle{}, format=\textquotesingle{}\%Y-\/\%m-\/\%d\textquotesingle{}, validators=\mbox{[}Optional()\mbox{]})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{forms_8py_source_l00047}{47}} do ficheiro \mbox{\hyperlink{forms_8py_source}{forms.\+py}}.
+
+\Hypertarget{classcripto_control_1_1forms_1_1_transactions_form_abe0edb236be3a6af21cb0c9c8ce5f4eb}\index{criptoControl.forms.TransactionsForm@{criptoControl.forms.TransactionsForm}!transaction\_type@{transaction\_type}}
+\index{transaction\_type@{transaction\_type}!criptoControl.forms.TransactionsForm@{criptoControl.forms.TransactionsForm}}
+\doxysubsubsection{\texorpdfstring{transaction\_type}{transaction\_type}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1forms_1_1_transactions_form_abe0edb236be3a6af21cb0c9c8ce5f4eb} 
+cripto\+Control.\+forms.\+Transactions\+Form.\+transaction\+\_\+type = Select\+Field(\textquotesingle{}Tipo Transação\textquotesingle{}, choices=\mbox{[}(\textquotesingle{}\textquotesingle{},\textquotesingle{}Selecione o Tipo\textquotesingle{}), (\textquotesingle{}Compra\textquotesingle{},\textquotesingle{}Compra\textquotesingle{}), (\textquotesingle{}Venda\textquotesingle{},\textquotesingle{}Venda\textquotesingle{}), (\textquotesingle{}Transferência\textquotesingle{},\textquotesingle{}Transferência\textquotesingle{}), (\textquotesingle{}Saldo\textquotesingle{},\textquotesingle{}Saldo\textquotesingle{})\mbox{]}, validators=\mbox{[}Data\+Required()\mbox{]})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{forms_8py_source_l00032}{32}} do ficheiro \mbox{\hyperlink{forms_8py_source}{forms.\+py}}.
+
+
+
+A documentação para esta classe foi gerada a partir do seguinte ficheiro\+:\begin{DoxyCompactItemize}
+\item 
+cripto\+Control/\mbox{\hyperlink{forms_8py}{forms.\+py}}\end{DoxyCompactItemize}

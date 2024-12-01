@@ -1,0 +1,16 @@
+\doxysection{docs.\+py}
+\hypertarget{docs_8py_source}{}\label{docs_8py_source}\index{criptoControl/routes/docs.py@{criptoControl/routes/docs.py}}
+\mbox{\hyperlink{docs_8py}{Ir para a documentação deste ficheiro.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{docs_8py_source_l00001}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1docs}{00001}}\ \textcolor{keyword}{from}\ flask\ \textcolor{keyword}{import}\ Blueprint,\ render\_template}
+\DoxyCodeLine{\Hypertarget{docs_8py_source_l00002}00002\ \textcolor{keyword}{from}\ flask\_login\ \textcolor{keyword}{import}\ login\_required}
+\DoxyCodeLine{\Hypertarget{docs_8py_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{docs_8py_source_l00004}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1docs_a728374218520ce58a49ec5b3ae0a181e}{00004}}\ docs\_db\_bp\ =\ Blueprint(\textcolor{stringliteral}{'docs'},\ \_\_name\_\_)}
+\DoxyCodeLine{\Hypertarget{docs_8py_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{docs_8py_source_l00006}00006\ \textcolor{preprocessor}{@docs\_db\_bp.route('/docs/html/index')}}
+\DoxyCodeLine{\Hypertarget{docs_8py_source_l00007}00007\ \textcolor{preprocessor}{@login\_required}}
+\DoxyCodeLine{\Hypertarget{docs_8py_source_l00008}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1docs_a8a3ea4ac593101fd4b03cf2a30e632ea}{00008}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1docs_a8a3ea4ac593101fd4b03cf2a30e632ea}{docs}}():}
+\DoxyCodeLine{\Hypertarget{docs_8py_source_l00009}00009\ \ \ \ \ \textcolor{keywordflow}{return}\ render\_template(\textcolor{stringliteral}{'docs/html/index.html'})\ \ \textcolor{comment}{\#\ Caminho\ completo\ para\ o\ template}}
+\DoxyCodeLine{\Hypertarget{docs_8py_source_l00010}00010\ }
+
+\end{DoxyCode}

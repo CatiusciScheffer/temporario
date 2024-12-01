@@ -1,0 +1,119 @@
+\doxysection{Referência à classe cripto\+Control.\+models.\+Wallet}
+\hypertarget{classcripto_control_1_1models_1_1_wallet}{}\label{classcripto_control_1_1models_1_1_wallet}\index{criptoControl.models.Wallet@{criptoControl.models.Wallet}}
+
+
+Diagrama de heranças da classe cripto\+Control.\+models.\+Wallet
+% FIG 0
+
+
+Diagrama de colaboração para cripto\+Control.\+models.\+Wallet\+:
+% FIG 1
+\doxysubsubsection*{Atributos Públicos Estáticos}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_wallet_a24f736be6ca303534d9cd27193015429}{wallet\+\_\+id}} = db.\+Column(db.\+Integer, primary\+\_\+key=True)
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_wallet_a356a3faca09a7890fb89f59ab703629a}{wallet\+\_\+user\+\_\+id}} = db.\+Column(db.\+Integer, db.\+Foreign\+Key(\textquotesingle{}users.\+user\+\_\+id\textquotesingle{}), nullable=False)
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_wallet_a8f9d1ff9aedaa1573fe501f0d746787b}{wallet\+\_\+name}} = db.\+Column(db.\+String, nullable=False)
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_wallet_a4ae970c85fb21a46fcd7b8af67033a65}{wallet\+\_\+network}} = db.\+Column(db.\+String, nullable=False)
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_wallet_a4bb6aeb01239463643ea0bb6557164b9}{wallet\+\_\+status}} = db.\+Column(db.\+String(1), nullable=False, default=\textquotesingle{}N\textquotesingle{} )
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_wallet_ae71049dec71325af89b7f66a93d0b3d7}{balances}} = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classcripto_control_1_1models_1_1_wallet_balance}{Wallet\+Balance}}\textquotesingle{}, back\+\_\+populates=\textquotesingle{}wallet\textquotesingle{})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Descrição detalhada}
+\begin{DoxyVerb}Representa uma carteira de um usuário no sistema.
+
+A classe Wallet mapeia para a tabela 'wallets' no banco de dados e contém informações
+sobre as carteiras de criptomoedas de um usuário, incluindo o nome, rede e status da carteira.
+Também define um relacionamento com a tabela 'WalletBalance', permitindo acessar os saldos
+das criptomoedas presentes na carteira.
+
+Atributos:
+    wallet_id (int): Identificador único da carteira (chave primária).
+    wallet_user_id (int): Identificador do usuário ao qual a carteira pertence (chave estrangeira para 'users').
+    wallet_name (str): Nome da carteira, identificador único para o usuário.
+    wallet_network (str): Rede da carteira (por exemplo, Bitcoin, Ethereum, etc.).
+    wallet_status (str): Status da carteira (geralmente 'N' para ativa e 'I' para inativa).
+    balances (list): Relacionamento de um para muitos com a tabela 'wallet_balances', 
+                      representando os saldos de criptomoedas na carteira.
+
+Métodos:
+    __repr__(self): Retorna uma representação legível do objeto Wallet, exibindo o nome da carteira.
+\end{DoxyVerb}
+ 
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00040}{40}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+
+
+\doxysubsection{Documentação dos dados membro}
+\Hypertarget{classcripto_control_1_1models_1_1_wallet_ae71049dec71325af89b7f66a93d0b3d7}\index{criptoControl.models.Wallet@{criptoControl.models.Wallet}!balances@{balances}}
+\index{balances@{balances}!criptoControl.models.Wallet@{criptoControl.models.Wallet}}
+\doxysubsubsection{\texorpdfstring{balances}{balances}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_wallet_ae71049dec71325af89b7f66a93d0b3d7} 
+cripto\+Control.\+models.\+Wallet.\+balances = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classcripto_control_1_1models_1_1_wallet_balance}{Wallet\+Balance}}\textquotesingle{}, back\+\_\+populates=\textquotesingle{}wallet\textquotesingle{})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00069}{69}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_wallet_a24f736be6ca303534d9cd27193015429}\index{criptoControl.models.Wallet@{criptoControl.models.Wallet}!wallet\_id@{wallet\_id}}
+\index{wallet\_id@{wallet\_id}!criptoControl.models.Wallet@{criptoControl.models.Wallet}}
+\doxysubsubsection{\texorpdfstring{wallet\_id}{wallet\_id}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_wallet_a24f736be6ca303534d9cd27193015429} 
+cripto\+Control.\+models.\+Wallet.\+wallet\+\_\+id = db.\+Column(db.\+Integer, primary\+\_\+key=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00062}{62}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_wallet_a8f9d1ff9aedaa1573fe501f0d746787b}\index{criptoControl.models.Wallet@{criptoControl.models.Wallet}!wallet\_name@{wallet\_name}}
+\index{wallet\_name@{wallet\_name}!criptoControl.models.Wallet@{criptoControl.models.Wallet}}
+\doxysubsubsection{\texorpdfstring{wallet\_name}{wallet\_name}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_wallet_a8f9d1ff9aedaa1573fe501f0d746787b} 
+cripto\+Control.\+models.\+Wallet.\+wallet\+\_\+name = db.\+Column(db.\+String, nullable=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00064}{64}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_wallet_a4ae970c85fb21a46fcd7b8af67033a65}\index{criptoControl.models.Wallet@{criptoControl.models.Wallet}!wallet\_network@{wallet\_network}}
+\index{wallet\_network@{wallet\_network}!criptoControl.models.Wallet@{criptoControl.models.Wallet}}
+\doxysubsubsection{\texorpdfstring{wallet\_network}{wallet\_network}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_wallet_a4ae970c85fb21a46fcd7b8af67033a65} 
+cripto\+Control.\+models.\+Wallet.\+wallet\+\_\+network = db.\+Column(db.\+String, nullable=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00065}{65}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_wallet_a4bb6aeb01239463643ea0bb6557164b9}\index{criptoControl.models.Wallet@{criptoControl.models.Wallet}!wallet\_status@{wallet\_status}}
+\index{wallet\_status@{wallet\_status}!criptoControl.models.Wallet@{criptoControl.models.Wallet}}
+\doxysubsubsection{\texorpdfstring{wallet\_status}{wallet\_status}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_wallet_a4bb6aeb01239463643ea0bb6557164b9} 
+cripto\+Control.\+models.\+Wallet.\+wallet\+\_\+status = db.\+Column(db.\+String(1), nullable=False, default=\textquotesingle{}N\textquotesingle{} )\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00066}{66}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_wallet_a356a3faca09a7890fb89f59ab703629a}\index{criptoControl.models.Wallet@{criptoControl.models.Wallet}!wallet\_user\_id@{wallet\_user\_id}}
+\index{wallet\_user\_id@{wallet\_user\_id}!criptoControl.models.Wallet@{criptoControl.models.Wallet}}
+\doxysubsubsection{\texorpdfstring{wallet\_user\_id}{wallet\_user\_id}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_wallet_a356a3faca09a7890fb89f59ab703629a} 
+cripto\+Control.\+models.\+Wallet.\+wallet\+\_\+user\+\_\+id = db.\+Column(db.\+Integer, db.\+Foreign\+Key(\textquotesingle{}users.\+user\+\_\+id\textquotesingle{}), nullable=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00063}{63}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+
+
+A documentação para esta classe foi gerada a partir do seguinte ficheiro\+:\begin{DoxyCompactItemize}
+\item 
+cripto\+Control/\mbox{\hyperlink{models_8py}{models.\+py}}\end{DoxyCompactItemize}

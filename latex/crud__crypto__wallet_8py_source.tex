@@ -1,0 +1,222 @@
+\doxysection{crud\+\_\+crypto\+\_\+wallet.\+py}
+\hypertarget{crud__crypto__wallet_8py_source}{}\label{crud__crypto__wallet_8py_source}\index{criptoControl/routes/crud\_crypto\_wallet.py@{criptoControl/routes/crud\_crypto\_wallet.py}}
+\mbox{\hyperlink{crud__crypto__wallet_8py}{Ir para a documentação deste ficheiro.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00001}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1crud__crypto__wallet}{00001}}\ \textcolor{keyword}{from}\ flask\ \textcolor{keyword}{import}\ Blueprint,\ render\_template,\ url\_for,\ flash,\ request,\ redirect}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00002}00002\ \textcolor{keyword}{from}\ sqlalchemy\ \textcolor{keyword}{import}\ or\_}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00003}00003\ \textcolor{keyword}{from}\ \mbox{\hyperlink{namespacecripto_control_1_1forms}{criptoControl.forms}}\ \textcolor{keyword}{import}\ AddWalletForm,\ AddCryptoForm}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00004}00004\ \textcolor{keyword}{from}\ \mbox{\hyperlink{namespacecripto_control_1_1models}{criptoControl.models}}\ \textcolor{keyword}{import}\ db,\ Wallet,\ Cryptocurrency,\ Transaction}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00005}00005\ \textcolor{keyword}{from}\ flask\_login\ \textcolor{keyword}{import}\ current\_user,\ login\_required}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00006}00006\ \textcolor{keyword}{import}\ logging}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00008}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1crud__crypto__wallet_ae19877f2e8d4208f3b420c8b8f754e40}{00008}}\ crypto\_wallet\_bp\ =\ Blueprint(\textcolor{stringliteral}{'crypto\_wallet'},\ \_\_name\_\_)}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00010}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1crud__crypto__wallet_abd83e56d140c4a9ed3e34e49bef2a16d}{00010}}\ logging.basicConfig(level=logging.DEBUG)}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00012}00012\ \textcolor{comment}{\#-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ \ Adicionar\ Carteira\ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00013}00013\ \textcolor{preprocessor}{@crypto\_wallet\_bp.route('/add\_wallet',\ methods=['GET',\ 'POST'])}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00014}00014\ \textcolor{preprocessor}{@login\_required}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00015}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1crud__crypto__wallet_a01e39131bf59d227fd28ad33a4fc449b}{00015}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1crud__crypto__wallet_a01e39131bf59d227fd28ad33a4fc449b}{add\_wallet}}():}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00016}00016\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00017}00017\ \textcolor{stringliteral}{\ \ \ \ Esta\ função\ lida\ com\ a\ adição\ de\ uma\ nova\ carteira\ de\ criptomoedas.\ Primeiro,\ valida\ os\ dados\ do\ formulário,}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00018}00018\ \textcolor{stringliteral}{\ \ \ \ verifica\ se\ a\ carteira\ já\ existe\ para\ o\ usuário\ atual\ e,\ em\ seguida,\ adiciona\ a\ nova\ carteira\ ao\ banco\ de\ dados.}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00019}00019\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00020}00020\ \textcolor{stringliteral}{\ \ \ \ Parâmetros:}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00021}00021\ \textcolor{stringliteral}{\ \ \ \ -\/\ formAddWallet:\ Uma\ instância\ da\ classe\ AddWalletForm,\ que\ contém\ os\ dados\ do\ formulário\ para\ adicionar\ uma\ carteira.}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00022}00022\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00023}00023\ \textcolor{stringliteral}{\ \ \ \ Retorna:}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00024}00024\ \textcolor{stringliteral}{\ \ \ \ -\/\ Se\ os\ dados\ do\ formulário\ são\ válidos\ e\ a\ carteira\ não\ existe,\ uma\ nova\ carteira\ é\ adicionada\ ao\ banco\ de\ dados,}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00025}00025\ \textcolor{stringliteral}{\ \ \ \ \ \ uma\ mensagem\ de\ flash\ de\ sucesso\ é\ exibida\ e\ o\ usuário\ é\ redirecionado\ para\ a\ página\ de\ carteiras.}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00026}00026\ \textcolor{stringliteral}{\ \ \ \ -\/\ Se\ os\ dados\ do\ formulário\ são\ inválidos\ ou\ a\ carteira\ já\ existe,\ uma\ mensagem\ de\ flash\ de\ erro\ é\ exibida.}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00027}00027\ \textcolor{stringliteral}{\ \ \ \ -\/\ Se\ ocorre\ uma\ exceção\ durante\ as\ operações\ de\ banco\ de\ dados,\ uma\ reversão\ é\ executada\ e\ uma\ mensagem\ de\ flash\ de\ erro\ é\ exibida.}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00028}00028\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00029}00029\ \ \ \ \ formAddWallet\ =\ \mbox{\hyperlink{classcripto_control_1_1forms_1_1_add_wallet_form}{AddWalletForm}}()\ \ \textcolor{comment}{\#\ Criação\ do\ formulário}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00030}00030\ \ \ \ \ \textcolor{keywordflow}{if}\ formAddWallet.validate\_on\_submit():}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00031}00031\ \ \ \ \ \ \ \ \ wallet\_name\ =\ formAddWallet.wallet\_name.data.strip().upper()}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00032}00032\ \ \ \ \ \ \ \ \ wallet\_network\ =\ formAddWallet.wallet\_network.data.strip().upper()}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00034}00034\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Verificar\ se\ a\ carteira\ já\ existe\ para\ o\ usuário\ atual}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ existing\_wallet\ =\ Wallet.query.filter\_by(wallet\_user\_id=current\_user.user\_id,\ wallet\_name=wallet\_name).first()}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ existing\_wallet:}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ flash(f\textcolor{stringliteral}{'A\ Carteira\ \{wallet\_name\}\ já\ está\ cadastrada.'},\ \textcolor{stringliteral}{'alert-\/warning'})}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ redirect(url\_for(\textcolor{stringliteral}{'views.wallets'}))}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Criar\ e\ adicionar\ a\ nova\ carteira}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ wallet\ =\ \mbox{\hyperlink{classcripto_control_1_1models_1_1_wallet}{Wallet}}(wallet\_user\_id=current\_user.user\_id,\ wallet\_name=wallet\_name,\ wallet\_network=wallet\_network)}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ db.session.add(wallet)}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ db.session.commit()}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ flash(f\textcolor{stringliteral}{'A\ Carteira\ \{wallet\_name\}\ foi\ adicionada\ com\ sucesso'},\ \textcolor{stringliteral}{'alert-\/success'})}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ redirect(url\_for(\textcolor{stringliteral}{'views.wallets'}))}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00047}00047\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{except}\ Exception\ \textcolor{keyword}{as}\ e:}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ db.session.rollback()}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ flash(f\textcolor{stringliteral}{'Erro\ ao\ tentar\ adicionar\ a\ carteira:\ \{e\}'},\ \textcolor{stringliteral}{'alert-\/danger'})}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00051}00051\ \ \ \ \ \textcolor{keywordflow}{return}\ render\_template(\textcolor{stringliteral}{'operacoes/add\_wallet.html'},\ formAddWallet=formAddWallet)}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00054}00054\ \textcolor{comment}{\#-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ Remover\ Carteira\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00055}00055\ \textcolor{preprocessor}{@crypto\_wallet\_bp.route('/delete\_wallet',\ methods=['POST'])}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00056}00056\ \textcolor{preprocessor}{@login\_required}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00057}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1crud__crypto__wallet_ad02347fd176f6fbdf3e5526b176c31af}{00057}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1crud__crypto__wallet_ad02347fd176f6fbdf3e5526b176c31af}{delete\_wallet}}():}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00058}00058\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00059}00059\ \textcolor{stringliteral}{\ \ \ \ Esta\ função\ lida\ com\ a\ exclusão\ de\ uma\ carteira\ de\ criptomoedas.\ Primeiro,\ verifica\ se\ o\ ID\ da\ carteira\ é\ fornecido,}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00060}00060\ \textcolor{stringliteral}{\ \ \ \ em\ seguida,\ verifica\ se\ a\ carteira\ existe\ para\ o\ usuário\ atual.\ Se\ a\ carteira\ existir,\ verifica\ se\ a\ carteira}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00061}00061\ \textcolor{stringliteral}{\ \ \ \ possui\ alguma\ transação\ associada.\ Se\ a\ carteira\ não\ possuir\ transações,\ ela\ é\ excluída\ do\ banco\ de\ dados.}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00062}00062\ \textcolor{stringliteral}{\ \ \ \ Se\ a\ carteira\ possuir\ transações,\ seu\ status\ é\ definido\ como\ 'S'.}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00063}00063\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00064}00064\ \textcolor{stringliteral}{\ \ \ \ Parâmetros:}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00065}00065\ \textcolor{stringliteral}{\ \ \ \ -\/\ wallet\_id\ (str):\ O\ ID\ da\ carteira\ a\ ser\ excluída.\ Este\ ID\ é\ obtido\ da\ solicitação\ POST\ do\ formulário.}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00066}00066\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00067}00067\ \textcolor{stringliteral}{\ \ \ \ Retorna:}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00068}00068\ \textcolor{stringliteral}{\ \ \ \ -\/\ Se\ o\ ID\ da\ carteira\ não\ for\ fornecido,\ uma\ mensagem\ flash\ é\ exibida\ indicando\ que\ o\ ID\ da\ carteira\ não\ foi\ fornecido.}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00069}00069\ \textcolor{stringliteral}{\ \ \ \ \ \ O\ usuário\ é\ então\ redirecionado\ para\ a\ página\ de\ carteiras.}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00070}00070\ \textcolor{stringliteral}{\ \ \ \ -\/\ Se\ a\ carteira\ não\ existir\ para\ o\ usuário\ atual,\ uma\ mensagem\ flash\ é\ exibida\ indicando\ que\ a\ carteira\ não\ foi\ encontrada.}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00071}00071\ \textcolor{stringliteral}{\ \ \ \ \ \ O\ usuário\ é\ então\ redirecionado\ para\ a\ página\ de\ carteiras.}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00072}00072\ \textcolor{stringliteral}{\ \ \ \ -\/\ Se\ a\ carteira\ não\ possuir\ transações\ associadas,\ ela\ é\ excluída\ do\ banco\ de\ dados\ e\ uma\ mensagem\ flash\ é\ exibida\ indicando}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00073}00073\ \textcolor{stringliteral}{\ \ \ \ \ \ que\ a\ carteira\ foi\ excluída\ com\ sucesso.\ O\ usuário\ é\ então\ redirecionado\ para\ a\ página\ de\ carteiras.}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00074}00074\ \textcolor{stringliteral}{\ \ \ \ -\/\ Se\ a\ carteira\ possuir\ transações\ associadas,\ seu\ status\ é\ definido\ como\ 'S'\ e\ uma\ mensagem\ flash\ é\ exibida\ indicando\ que}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00075}00075\ \textcolor{stringliteral}{\ \ \ \ \ \ a\ carteira\ foi\ desativada\ devido\ às\ transações\ existentes.\ O\ usuário\ é\ então\ redirecionado\ para\ a\ página\ de\ carteiras.}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00076}00076\ \textcolor{stringliteral}{\ \ \ \ -\/\ Se\ ocorrer\ uma\ exceção\ durante\ as\ operações\ de\ banco\ de\ dados,\ uma\ reversão\ é\ executada,\ e\ uma\ mensagem\ flash\ é\ exibida\ indicando}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00077}00077\ \textcolor{stringliteral}{\ \ \ \ \ \ o\ erro\ que\ ocorreu.\ O\ usuário\ é\ então\ redirecionado\ para\ a\ página\ de\ carteiras.}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00078}00078\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00079}00079\ \ \ \ \ wallet\_id\ =\ request.form.get(\textcolor{stringliteral}{'wallet\_id'})}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00080}00080\ \ \ \ \ \textcolor{keywordflow}{if}\ wallet\_id:}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00081}00081\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ wallet\ =\ Wallet.query.filter\_by(wallet\_id=wallet\_id,\ wallet\_user\_id=current\_user.user\_id).first()}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ wallet:}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ flash(\textcolor{stringliteral}{'Carteira\ não\ encontrada.'},\ \textcolor{stringliteral}{'alert-\/danger'})}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ redirect(url\_for(\textcolor{stringliteral}{'views.wallets'}))}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00086}00086\ }
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ wallet\_in\_transactions\ =\ Transaction.query.filter(}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ or\_(}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Transaction.payment\_wallet\_id\ ==\ wallet\_id,}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Transaction.receiving\_wallet\_id\ ==\ wallet\_id}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ ).first()}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ wallet\_in\_transactions:}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ db.session.delete(wallet)}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ db.session.commit()}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ flash(\textcolor{stringliteral}{'Carteira\ excluída\ com\ sucesso.'},\ \textcolor{stringliteral}{'alert-\/success'})}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ wallet.wallet\_status\ =\ \textcolor{stringliteral}{'S'}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ db.session.commit()}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ flash(\textcolor{stringliteral}{'Carteira\ desativada\ pois\ já\ teve\ transações\ com\ ela.'},\ \textcolor{stringliteral}{'alert-\/success'})}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00102}00102\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{except}\ Exception\ \textcolor{keyword}{as}\ e:}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ db.session.rollback()}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ flash(f\textcolor{stringliteral}{'Erro\ ao\ tentar\ desativar\ a\ carteira:\ \{e\}'},\ \textcolor{stringliteral}{'alert-\/danger'})}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00105}00105\ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00106}00106\ \ \ \ \ \ \ \ \ flash(\textcolor{stringliteral}{"{}ID\ da\ carteira\ não\ fornecido"{}},\ \textcolor{stringliteral}{'alert-\/danger'})}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00107}00107\ }
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00108}00108\ \ \ \ \ \textcolor{keywordflow}{return}\ redirect(url\_for(\textcolor{stringliteral}{'views.wallets'}))}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00109}00109\ }
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00110}00110\ }
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00111}00111\ }
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00112}00112\ \textcolor{comment}{\#\ Adicionar\ Moeda}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00113}00113\ \textcolor{preprocessor}{@crypto\_wallet\_bp.route('/add\_crypto',\ methods=['GET',\ 'POST'])}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00114}00114\ \textcolor{preprocessor}{@login\_required}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00115}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1crud__crypto__wallet_ab83cf7776791326be5ee566f696dc22c}{00115}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1crud__crypto__wallet_ab83cf7776791326be5ee566f696dc22c}{add\_crypto}}():}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00116}00116\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00117}00117\ \textcolor{stringliteral}{\ \ \ \ Esta\ função\ lida\ com\ a\ adição\ de\ uma\ nova\ criptomoeda.\ Primeiro,\ valida\ os\ dados\ do\ formulário,\ verifica\ se\ a\ criptomoeda}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00118}00118\ \textcolor{stringliteral}{\ \ \ \ já\ existe\ no\ banco\ de\ dados\ para\ o\ usuário\ atual\ e,\ em\ seguida,\ adiciona\ a\ nova\ criptomoeda\ ao\ banco\ de\ dados.}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00119}00119\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00120}00120\ \textcolor{stringliteral}{\ \ \ \ Parâmetros:}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00121}00121\ \textcolor{stringliteral}{\ \ \ \ -\/\ formAddCrypto:\ Uma\ instância\ da\ classe\ AddCryptoForm,\ que\ contém\ os\ dados\ do\ formulário\ para\ adicionar\ uma\ criptomoeda.}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00122}00122\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00123}00123\ \textcolor{stringliteral}{\ \ \ \ Retorna:}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00124}00124\ \textcolor{stringliteral}{\ \ \ \ -\/\ Se\ os\ dados\ do\ formulário\ são\ válidos\ e\ a\ criptomoeda\ não\ existe,\ uma\ nova\ criptomoeda\ é\ adicionada\ ao\ banco\ de\ dados,}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00125}00125\ \textcolor{stringliteral}{\ \ \ \ \ \ uma\ mensagem\ de\ flash\ de\ sucesso\ é\ exibida\ e\ o\ usuário\ é\ redirecionado\ para\ a\ página\ de\ criptomoedas.}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00126}00126\ \textcolor{stringliteral}{\ \ \ \ -\/\ Se\ os\ dados\ do\ formulário\ são\ inválidos\ ou\ a\ criptomoeda\ já\ existe,\ uma\ mensagem\ de\ flash\ de\ erro\ é\ exibida.}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00127}00127\ \textcolor{stringliteral}{\ \ \ \ -\/\ Se\ ocorre\ uma\ exceção\ durante\ as\ operações\ de\ banco\ de\ dados,\ uma\ reversão\ é\ executada\ e\ uma\ mensagem\ de\ flash\ de\ erro\ é\ exibida.}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00128}00128\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00129}00129\ \ \ \ \ formAddCrypto\ =\ \mbox{\hyperlink{classcripto_control_1_1forms_1_1_add_crypto_form}{AddCryptoForm}}()}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00130}00130\ \ \ \ \ \textcolor{keywordflow}{if}\ formAddCrypto.validate\_on\_submit():}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00131}00131\ \ \ \ \ \ \ \ \ crypto\_name\ =\ formAddCrypto.crypto\_name.data.strip().upper()}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00132}00132\ \ \ \ \ \ \ \ \ crypto\_symbol\ =\ formAddCrypto.crypto\_symbol.data.strip().upper()}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00133}00133\ }
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00134}00134\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Verificar\ se\ a\ criptomoeda\ já\ existe\ no\ banco\ de\ dados}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00135}00135\ \ \ \ \ \ \ \ \ existing\_crypto\ =\ Cryptocurrency.query.filter\_by(crypto\_name=crypto\_name).first()}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00136}00136\ }
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00137}00137\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ existing\_crypto:}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ flash(f\textcolor{stringliteral}{'A\ criptomoeda\ \{crypto\_name\}\ já\ existe\ no\ banco\ de\ dados.'},\ \textcolor{stringliteral}{'alert-\/warning'})}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ redirect(url\_for(\textcolor{stringliteral}{'views.cryptos'}))}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00140}00140\ }
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00141}00141\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Adiciona\ a\ nova\ criptomoeda\ ao\ banco\ de\ dados}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\ =\ \mbox{\hyperlink{classcripto_control_1_1models_1_1_cryptocurrency}{Cryptocurrency}}(crypto\_name=crypto\_name,\ crypto\_symbol=crypto\_symbol)}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ db.session.add(crypto)}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ db.session.commit()}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ flash(f\textcolor{stringliteral}{'A\ Criptomoeda\ \{crypto\_name\}\ foi\ adicionada\ com\ sucesso'},\ \textcolor{stringliteral}{'alert-\/success'})}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ redirect(url\_for(\textcolor{stringliteral}{'views.cryptos'}))}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00148}00148\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{except}\ Exception\ \textcolor{keyword}{as}\ e:}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ db.session.rollback()}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ flash(f\textcolor{stringliteral}{'Erro\ ao\ tentar\ adicionar\ a\ criptomoeda:\ \{e\}'},\ \textcolor{stringliteral}{'alert-\/danger'})}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00151}00151\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ redirect(url\_for(\textcolor{stringliteral}{'views.cryptos'}))}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00152}00152\ }
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00153}00153\ \ \ \ \ \textcolor{keywordflow}{return}\ render\_template(\textcolor{stringliteral}{'operacoes/add\_crypto.html'},\ formAddCrypto=formAddCrypto)}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00154}00154\ }
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00155}00155\ }
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00156}00156\ }
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00157}00157\ }
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00158}00158\ \textcolor{comment}{\#\ Remover\ Moeda}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00159}00159\ \textcolor{preprocessor}{@crypto\_wallet\_bp.route('/delete\_crypto',\ methods=['POST'])}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00160}00160\ \textcolor{preprocessor}{@login\_required}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00161}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1crud__crypto__wallet_a0bf83e652f0a56bdf451600e5d982d8e}{00161}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1crud__crypto__wallet_a0bf83e652f0a56bdf451600e5d982d8e}{delete\_crypto}}():}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00162}00162\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00163}00163\ \textcolor{stringliteral}{\ \ \ \ Esta\ função\ lida\ com\ a\ exclusão\ de\ uma\ criptomoeda.\ Primeiro,\ verifica\ se\ o\ crypto\_id\ é\ fornecido,}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00164}00164\ \textcolor{stringliteral}{\ \ \ \ em\ seguida,\ verifica\ se\ a\ criptomoeda\ existe\ no\ banco\ de\ dados\ para\ o\ usuário\ atual.\ Se\ a\ criptomoeda\ existir,}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00165}00165\ \textcolor{stringliteral}{\ \ \ \ verifica\ se\ a\ criptomoeda\ possui\ alguma\ transação\ associada.\ Se\ a\ criptomoeda\ não\ possuir\ transações,}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00166}00166\ \textcolor{stringliteral}{\ \ \ \ ela\ é\ excluída\ do\ banco\ de\ dados.\ Se\ a\ criptomoeda\ possuir\ transações,\ seu\ status\ é\ definido\ como\ 'S'.}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00167}00167\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00168}00168\ \textcolor{stringliteral}{\ \ \ \ Parâmetros:}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00169}00169\ \textcolor{stringliteral}{\ \ \ \ -\/\ crypto\_id\ (str):\ O\ ID\ da\ criptomoeda\ a\ ser\ excluída.\ Este\ ID\ é\ obtido\ da\ solicitação\ POST\ do\ formulário.}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00170}00170\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00171}00171\ \textcolor{stringliteral}{\ \ \ \ Retorna:}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00172}00172\ \textcolor{stringliteral}{\ \ \ \ -\/\ Se\ o\ crypto\_id\ não\ for\ fornecido,\ uma\ mensagem\ flash\ é\ exibida\ indicando\ que\ o\ crypto\_id\ não\ foi\ fornecido.}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00173}00173\ \textcolor{stringliteral}{\ \ \ \ \ \ O\ usuário\ é\ então\ redirecionado\ para\ a\ página\ de\ criptomoedas.}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00174}00174\ \textcolor{stringliteral}{\ \ \ \ -\/\ Se\ a\ criptomoeda\ não\ for\ encontrada\ para\ o\ usuário\ atual,\ uma\ mensagem\ flash\ é\ exibida\ indicando\ que\ a\ criptomoeda\ não\ foi\ encontrada.}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00175}00175\ \textcolor{stringliteral}{\ \ \ \ \ \ O\ usuário\ é\ então\ redirecionado\ para\ a\ página\ de\ criptomoedas.}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00176}00176\ \textcolor{stringliteral}{\ \ \ \ -\/\ Se\ a\ criptomoeda\ não\ possuir\ transações\ associadas,\ ela\ é\ excluída\ do\ banco\ de\ dados\ e\ uma\ mensagem\ flash\ é\ exibida\ indicando}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00177}00177\ \textcolor{stringliteral}{\ \ \ \ \ \ que\ a\ criptomoeda\ foi\ excluída\ com\ sucesso.\ O\ usuário\ é\ então\ redirecionado\ para\ a\ página\ de\ criptomoedas.}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00178}00178\ \textcolor{stringliteral}{\ \ \ \ -\/\ Se\ a\ criptomoeda\ possuir\ transações\ associadas,\ seu\ status\ é\ definido\ como\ 'S'\ e\ uma\ mensagem\ flash\ é\ exibida\ indicando\ que}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00179}00179\ \textcolor{stringliteral}{\ \ \ \ \ \ a\ criptomoeda\ foi\ desativada\ devido\ às\ transações\ existentes.\ O\ usuário\ é\ então\ redirecionado\ para\ a\ página\ de\ criptomoedas.}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00180}00180\ \textcolor{stringliteral}{\ \ \ \ -\/\ Se\ ocorrer\ uma\ exceção\ durante\ as\ operações\ de\ banco\ de\ dados,\ uma\ reversão\ é\ executada\ e\ uma\ mensagem\ flash\ é\ exibida\ indicando}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00181}00181\ \textcolor{stringliteral}{\ \ \ \ \ \ o\ erro\ que\ ocorreu.\ O\ usuário\ é\ então\ redirecionado\ para\ a\ página\ de\ criptomoedas.}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00182}00182\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00183}00183\ \ \ \ \ crypto\_id\ =\ request.form.get(\textcolor{stringliteral}{'crypto\_id'})}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00184}00184\ \ \ \ \ \textcolor{keywordflow}{if}\ crypto\_id:}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00185}00185\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\ =\ Cryptocurrency.query.filter\_by(crypto\_id=crypto\_id).first()}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ crypto:}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ flash(\textcolor{stringliteral}{'Criptomoeda\ não\ encontrada.'},\ \textcolor{stringliteral}{'alert-\/danger'})}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ redirect(url\_for(\textcolor{stringliteral}{'views.cryptos'}))}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00190}00190\ }
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_in\_transaction\ =\ Transaction.query.filter(}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ or\_(}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Transaction.crypto\_payment\_id\ ==\ crypto.crypto\_id,}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Transaction.crypto\_receive\_id\ ==\ crypto.crypto\_id,}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Transaction.crypto\_fee\_id\ ==\ crypto.crypto\_id}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ ).first()}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00198}00198\ }
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ crypto\_in\_transaction:}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ db.session.delete(crypto)}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ db.session.commit()}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ flash(\textcolor{stringliteral}{'Criptomoeda\ excluída\ com\ sucesso.'},\ \textcolor{stringliteral}{'alert-\/success'})}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto.crypto\_status\ =\ \textcolor{stringliteral}{'S'}}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00205}00205\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ db.session.commit()}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00206}00206\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ flash(\textcolor{stringliteral}{'Criptomoeda\ apenas\ desativada,\ pois\ teve\ transações\ com\ ela.'},\ \textcolor{stringliteral}{'alert-\/success'})}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00207}00207\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{except}\ Exception\ \textcolor{keyword}{as}\ e:}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00208}00208\ \ \ \ \ \ \ \ \ \ \ \ \ db.session.rollback()}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00209}00209\ \ \ \ \ \ \ \ \ \ \ \ \ flash(f\textcolor{stringliteral}{'Erro\ ao\ tentar\ desativar\ a\ criptomoeda:\ \{e\}'},\ \textcolor{stringliteral}{'alert-\/danger'})}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00210}00210\ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00211}00211\ \ \ \ \ \ \ \ \ flash(\textcolor{stringliteral}{"{}ID\ da\ criptomoeda\ não\ fornecido"{}},\ \textcolor{stringliteral}{'alert-\/danger'})}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00212}00212\ }
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00213}00213\ \ \ \ \ \textcolor{keywordflow}{return}\ redirect(url\_for(\textcolor{stringliteral}{'views.cryptos'}))}
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00214}00214\ }
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00215}00215\ }
+\DoxyCodeLine{\Hypertarget{crud__crypto__wallet_8py_source_l00216}00216\ }
+
+\end{DoxyCode}

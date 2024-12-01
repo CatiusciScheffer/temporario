@@ -1,0 +1,137 @@
+\doxysection{Referência à classe cripto\+Control.\+models.\+User}
+\hypertarget{classcripto_control_1_1models_1_1_user}{}\label{classcripto_control_1_1models_1_1_user}\index{criptoControl.models.User@{criptoControl.models.User}}
+
+
+Diagrama de heranças da classe cripto\+Control.\+models.\+User
+% FIG 0
+
+
+Diagrama de colaboração para cripto\+Control.\+models.\+User\+:
+% FIG 1
+\doxysubsubsection*{Membros públicos}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_user_a5ac6da2ff467547b45d2204da3baf366}{\+\_\+\+\_\+repr\+\_\+\+\_\+}} (self)
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_user_aec50cb8d630efdd12c7615452d406e19}{get\+\_\+id}} (self)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Atributos Públicos Estáticos}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_user_a0866c3414bb27e4456a22fdca5da4fcb}{user\+\_\+id}} = db.\+Column(db.\+Integer, primary\+\_\+key=True)
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_user_ac0bd35203d5eaa2bc5bc7c3fd23664e4}{username}} = db.\+Column(db.\+String, unique=True, nullable=False)
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_user_a9734a4be866957e913bcc122310fae17}{email}} = db.\+Column(db.\+String, unique=True, nullable=False)
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_user_ad8c81da7d8fde89a6e418a0bac1736c0}{password\+\_\+hash}} = db.\+Column(db.\+String, nullable=False)
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_user_ac624c696339f09acc42c977a9d0cc30d}{user\+\_\+wallets}} = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classcripto_control_1_1models_1_1_wallet}{Wallet}}\textquotesingle{}, backref=\textquotesingle{}user\textquotesingle{}, lazy=True)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Descrição detalhada}
+\begin{DoxyVerb}Representa um usuário no sistema.
+
+A classe User mapeia para a tabela 'users' no banco de dados e contém as informações
+principais de um usuário, como nome de usuário, e-mail e a senha criptografada.
+Além disso, define o relacionamento com as carteiras associadas ao usuário, 
+permitindo acessar as carteiras através do atributo 'user_wallets'.
+
+Atributos:
+    user_id (int): Identificador único do usuário (chave primária).
+    username (str): Nome de usuário único e obrigatório.
+    email (str): E-mail único e obrigatório.
+    password_hash (str): Senha do usuário, armazenada de forma segura.
+    user_wallets (list): Relacionamento de um para muitos com a tabela 'wallets', 
+                         onde o usuário pode ter várias carteiras.
+
+Métodos:
+    __repr__(self): Retorna uma representação legível do objeto User, exibindo o e-mail do usuário.
+    get_id(self): Retorna o identificador único do usuário.
+\end{DoxyVerb}
+ 
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00005}{5}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+
+
+\doxysubsection{Documentação das funções}
+\Hypertarget{classcripto_control_1_1models_1_1_user_a5ac6da2ff467547b45d2204da3baf366}\index{criptoControl.models.User@{criptoControl.models.User}!\_\_repr\_\_@{\_\_repr\_\_}}
+\index{\_\_repr\_\_@{\_\_repr\_\_}!criptoControl.models.User@{criptoControl.models.User}}
+\doxysubsubsection{\texorpdfstring{\_\_repr\_\_()}{\_\_repr\_\_()}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_user_a5ac6da2ff467547b45d2204da3baf366} 
+cripto\+Control.\+models.\+User.\+\_\+\+\_\+repr\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00033}{33}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_user_aec50cb8d630efdd12c7615452d406e19}\index{criptoControl.models.User@{criptoControl.models.User}!get\_id@{get\_id}}
+\index{get\_id@{get\_id}!criptoControl.models.User@{criptoControl.models.User}}
+\doxysubsubsection{\texorpdfstring{get\_id()}{get\_id()}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_user_aec50cb8d630efdd12c7615452d406e19} 
+cripto\+Control.\+models.\+User.\+get\+\_\+id (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00036}{36}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+
+
+\doxysubsection{Documentação dos dados membro}
+\Hypertarget{classcripto_control_1_1models_1_1_user_a9734a4be866957e913bcc122310fae17}\index{criptoControl.models.User@{criptoControl.models.User}!email@{email}}
+\index{email@{email}!criptoControl.models.User@{criptoControl.models.User}}
+\doxysubsubsection{\texorpdfstring{email}{email}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_user_a9734a4be866957e913bcc122310fae17} 
+cripto\+Control.\+models.\+User.\+email = db.\+Column(db.\+String, unique=True, nullable=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00029}{29}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_user_ad8c81da7d8fde89a6e418a0bac1736c0}\index{criptoControl.models.User@{criptoControl.models.User}!password\_hash@{password\_hash}}
+\index{password\_hash@{password\_hash}!criptoControl.models.User@{criptoControl.models.User}}
+\doxysubsubsection{\texorpdfstring{password\_hash}{password\_hash}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_user_ad8c81da7d8fde89a6e418a0bac1736c0} 
+cripto\+Control.\+models.\+User.\+password\+\_\+hash = db.\+Column(db.\+String, nullable=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00030}{30}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_user_a0866c3414bb27e4456a22fdca5da4fcb}\index{criptoControl.models.User@{criptoControl.models.User}!user\_id@{user\_id}}
+\index{user\_id@{user\_id}!criptoControl.models.User@{criptoControl.models.User}}
+\doxysubsubsection{\texorpdfstring{user\_id}{user\_id}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_user_a0866c3414bb27e4456a22fdca5da4fcb} 
+cripto\+Control.\+models.\+User.\+user\+\_\+id = db.\+Column(db.\+Integer, primary\+\_\+key=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00027}{27}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_user_ac624c696339f09acc42c977a9d0cc30d}\index{criptoControl.models.User@{criptoControl.models.User}!user\_wallets@{user\_wallets}}
+\index{user\_wallets@{user\_wallets}!criptoControl.models.User@{criptoControl.models.User}}
+\doxysubsubsection{\texorpdfstring{user\_wallets}{user\_wallets}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_user_ac624c696339f09acc42c977a9d0cc30d} 
+cripto\+Control.\+models.\+User.\+user\+\_\+wallets = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classcripto_control_1_1models_1_1_wallet}{Wallet}}\textquotesingle{}, backref=\textquotesingle{}user\textquotesingle{}, lazy=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00031}{31}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_user_ac0bd35203d5eaa2bc5bc7c3fd23664e4}\index{criptoControl.models.User@{criptoControl.models.User}!username@{username}}
+\index{username@{username}!criptoControl.models.User@{criptoControl.models.User}}
+\doxysubsubsection{\texorpdfstring{username}{username}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_user_ac0bd35203d5eaa2bc5bc7c3fd23664e4} 
+cripto\+Control.\+models.\+User.\+username = db.\+Column(db.\+String, unique=True, nullable=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00028}{28}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+
+
+A documentação para esta classe foi gerada a partir do seguinte ficheiro\+:\begin{DoxyCompactItemize}
+\item 
+cripto\+Control/\mbox{\hyperlink{models_8py}{models.\+py}}\end{DoxyCompactItemize}

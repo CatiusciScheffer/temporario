@@ -1,0 +1,70 @@
+\doxysection{update\+\_\+price.\+py}
+\hypertarget{update__price_8py_source}{}\label{update__price_8py_source}\index{criptoControl/routes/update\_price.py@{criptoControl/routes/update\_price.py}}
+\mbox{\hyperlink{update__price_8py}{Ir para a documentação deste ficheiro.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00001}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1update__price}{00001}}\ \textcolor{keyword}{from}\ flask\ \textcolor{keyword}{import}\ Blueprint,\ url\_for,\ flash,\ redirect}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00002}00002\ \textcolor{keyword}{from}\ \mbox{\hyperlink{namespacecripto_control_1_1models}{criptoControl.models}}\ \textcolor{keyword}{import}\ db,\ Cryptocurrency,\ Price}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00003}00003\ \textcolor{keyword}{from}\ \mbox{\hyperlink{namespacecripto_control_1_1api}{criptoControl.api}}\ \textcolor{keyword}{import}\ get\_crypto\_payment\_price}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00004}00004\ \textcolor{keyword}{from}\ datetime\ \textcolor{keyword}{import}\ datetime}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00005}00005\ \textcolor{keyword}{from}\ sqlalchemy.orm\ \textcolor{keyword}{import}\ sessionmaker}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00006}00006\ \textcolor{keyword}{from}\ dotenv\ \textcolor{keyword}{import}\ load\_dotenv}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00007}00007\ \textcolor{keyword}{import}\ os}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00008}00008\ \textcolor{keyword}{import}\ logging}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00010}00010\ load\_dotenv()}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00012}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1update__price_a664f84c7f019ebfa24a1cff9c99f3bce}{00012}}\ update\_price\_bp\ =\ Blueprint(\textcolor{stringliteral}{'update\_price'},\ \_\_name\_\_)}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00014}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1update__price_acff90ce1e68b4578466351e58d4e1de4}{00014}}\ logging.basicConfig(level=logging.DEBUG)}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00016}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1update__price_a0ff6feace36f341eb88c7e2ee5d0b336}{00016}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1update__price_a0ff6feace36f341eb88c7e2ee5d0b336}{create\_session}}():}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00017}00017\ \ \ \ \ \textcolor{keywordflow}{return}\ sessionmaker(bind=db.engine)()}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00020}00020\ \textcolor{comment}{\#Atualiza\ os\ preços\ das\ cryptos\ cadastradas\ pela\ API}}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00021}00021\ \textcolor{preprocessor}{@update\_price\_bp.route('/update\_prices',\ methods=['POST'])}}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00022}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1update__price_ae924fb354224e252db2a24fed9a08ec4}{00022}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1update__price_ae924fb354224e252db2a24fed9a08ec4}{update\_prices}}():}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00023}00023\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00024}00024\ \textcolor{stringliteral}{\ \ \ \ Esta\ função\ atualiza\ os\ preços\ das\ criptomoedas\ cadastradas\ no\ banco\ de\ dados\ consultando\ uma\ API.}}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00025}00025\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00026}00026\ \textcolor{stringliteral}{\ \ \ \ Parâmetros:}}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00027}00027\ \textcolor{stringliteral}{\ \ \ \ Nenhum}}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00028}00028\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00029}00029\ \textcolor{stringliteral}{\ \ \ \ Retorna:}}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00030}00030\ \textcolor{stringliteral}{\ \ \ \ redirect:\ Redireciona\ para\ a\ visualização\ 'prices'\ após\ a\ atualização\ dos\ preços.}}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00031}00031\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00032}00032\ \ \ \ \ session\ =\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00033}00033\ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00034}00034\ \ \ \ \ \ \ \ \ COINMARKETCAP\_API\_KEY\ =\ os.getenv(\textcolor{stringliteral}{'COINMARKETCAP\_API\_KEY'})}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00035}00035\ \ \ \ \ \ \ \ \ session\ =\ \mbox{\hyperlink{namespacecripto_control_1_1routes_1_1update__price_a0ff6feace36f341eb88c7e2ee5d0b336}{create\_session}}()}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00037}00037\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Obter\ os\ símbolos\ das\ criptomoedas\ com\ status\ 'N'}}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00038}00038\ \ \ \ \ \ \ \ \ cryptos\ =\ session.query(Cryptocurrency).filter\_by(crypto\_status=\textcolor{stringliteral}{'N'}).all()}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00039}00039\ \ \ \ \ \ \ \ \ symbols\ =\ [crypto.crypto\_symbol\ \textcolor{keywordflow}{for}\ crypto\ \textcolor{keywordflow}{in}\ cryptos\ \textcolor{keywordflow}{if}\ crypto.crypto\_symbol.isalnum()]}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00041}00041\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Consultar\ a\ API\ uma\ vez\ para\ todos\ os\ símbolos}}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00042}00042\ \ \ \ \ \ \ \ \ prices\ =\ get\_crypto\_payment\_price(COINMARKETCAP\_API\_KEY,\ symbols)}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00044}00044\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Atualizar\ o\ banco\ de\ dados\ com\ os\ preços\ obtidos}}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00045}00045\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ crypto\ \textcolor{keywordflow}{in}\ cryptos:}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ symbol\ =\ crypto.crypto\_symbol}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ symbol\ \textcolor{keywordflow}{in}\ prices:}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ price\ =\ prices[symbol]}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ timestamp\ =\ datetime.now().strftime(\textcolor{stringliteral}{'\%Y-\/\%m-\/\%d\ \%H:\%M:\%S'})}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_price\ =\ \mbox{\hyperlink{classcripto_control_1_1models_1_1_price}{Price}}(price\_crypto\_id=crypto.crypto\_id,\ price=price,price\_consult\_datetime=timestamp)}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ session.add(crypto\_price)}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ flash(f\textcolor{stringliteral}{'Preço\ da\ criptomoeda\ \{symbol\}\ atualizado\ com\ sucesso'},\ \textcolor{stringliteral}{'alert-\/success'})}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ flash(f\textcolor{stringliteral}{'Preço\ para\ a\ criptomoeda\ \{symbol\}\ não\ encontrado'},\ \textcolor{stringliteral}{'alert-\/warning'})}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00056}00056\ \ \ \ \ \ \ \ \ session.commit()}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00058}00058\ \ \ \ \ \textcolor{keywordflow}{except}\ Exception\ \textcolor{keyword}{as}\ e:}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00059}00059\ \ \ \ \ \ \ \ \ flash(f\textcolor{stringliteral}{'Erro\ ao\ tentar\ atualizar\ os\ preços:\ \{e\}'},\ \textcolor{stringliteral}{'alert-\/danger'})}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00060}00060\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ session:}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ session.rollback()}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00063}00063\ \ \ \ \ \textcolor{keywordflow}{return}\ redirect(url\_for(\textcolor{stringliteral}{'views.prices'}))}
+\DoxyCodeLine{\Hypertarget{update__price_8py_source_l00064}00064\ }
+
+\end{DoxyCode}

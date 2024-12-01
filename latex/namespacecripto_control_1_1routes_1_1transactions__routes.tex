@@ -1,0 +1,513 @@
+\doxysection{Referência ao namespace cripto\+Control.\+routes.\+transactions\+\_\+routes}
+\hypertarget{namespacecripto_control_1_1routes_1_1transactions__routes}{}\label{namespacecripto_control_1_1routes_1_1transactions__routes}\index{criptoControl.routes.transactions\_routes@{criptoControl.routes.transactions\_routes}}
+\doxysubsubsection*{Funções}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a51907abc78dec2948f9481c507811b7f}{create\+\_\+session}} ()
+\item 
+\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a799bbf626ed74a9a801b4a285851448a}{transactions}} ()
+\item 
+\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a7020c9e9128c66e957a7d80245673025}{get\+\_\+price}} (cryptocurrency\+\_\+id)
+\item 
+\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a7e920770a31bf86e7f96513bb8788f86}{add\+\_\+transactions}} ()
+\item 
+\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a2cb12e0d1f8a89a647f7ccdd8da3507f}{normalize\+\_\+decimal}} (value)
+\item 
+\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a0998e441a0d1093713d300edbb285ea1}{add\+\_\+transaction}} ()
+\item 
+\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_ace539ad0b5b24d48f30bb8653e773e64}{store\+\_\+data}} (transaction\+\_\+type, receiving\+\_\+wallet\+\_\+id=None, payment\+\_\+wallet\+\_\+id=None, crypto\+\_\+receive\+\_\+id=None, crypto\+\_\+receive\+\_\+price=None, crypto\+\_\+receive\+\_\+quantity=None, total\+\_\+received=None, crypto\+\_\+payment\+\_\+id=None, crypto\+\_\+payment\+\_\+price=None, crypto\+\_\+payment\+\_\+quantity=None, total\+\_\+paid=None, crypto\+\_\+fee\+\_\+id=None, crypto\+\_\+fee\+\_\+price=None, crypto\+\_\+fee\+\_\+quantity=None, total\+\_\+fee=None, transaction\+\_\+date=None)
+\item 
+\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a2065076de54c38452f6cf6c5bfa12789}{check\+\_\+mandatory\+\_\+fields\+\_\+in\+\_\+purchase}} (payment\+\_\+wallet\+\_\+id, receiving\+\_\+wallet\+\_\+id, crypto\+\_\+payment\+\_\+id, crypto\+\_\+payment\+\_\+price, crypto\+\_\+payment\+\_\+quantity, total\+\_\+paid, crypto\+\_\+receive\+\_\+id, crypto\+\_\+receive\+\_\+price, crypto\+\_\+receive\+\_\+quantity, total\+\_\+received, crypto\+\_\+fee\+\_\+id, crypto\+\_\+fee\+\_\+price, crypto\+\_\+fee\+\_\+quantity, total\+\_\+fee, transaction\+\_\+type, transaction\+\_\+date=None)
+\item 
+\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_adec42905ab9e30946975af46bf061e80}{realizar\+\_\+compra}} (session, transaction\+\_\+date, payment\+\_\+wallet\+\_\+id, receiving\+\_\+wallet\+\_\+id, crypto\+\_\+payment\+\_\+id, crypto\+\_\+payment\+\_\+price, crypto\+\_\+payment\+\_\+quantity, total\+\_\+paid, crypto\+\_\+receive\+\_\+id, crypto\+\_\+receive\+\_\+price, crypto\+\_\+receive\+\_\+quantity, total\+\_\+received, crypto\+\_\+fee\+\_\+id, crypto\+\_\+fee\+\_\+price, crypto\+\_\+fee\+\_\+quantity, total\+\_\+fee, transaction\+\_\+type)
+\item 
+\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a47dc4dc03fd0c904e075cb91ea8523e6}{check\+\_\+mandatory\+\_\+fields\+\_\+in\+\_\+balance}} (receiving\+\_\+wallet\+\_\+id, crypto\+\_\+receive\+\_\+id, crypto\+\_\+receive\+\_\+price, crypto\+\_\+receive\+\_\+quantity, total\+\_\+received, transaction\+\_\+date=None)
+\item 
+\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a356324d9eae8676bd56625b8748eda7d}{enter\+\_\+balance}} (db\+\_\+session, receiving\+\_\+wallet\+\_\+id, crypto\+\_\+receive\+\_\+id, crypto\+\_\+receive\+\_\+price, crypto\+\_\+receive\+\_\+quantity, total\+\_\+received, transaction\+\_\+date)
+\item 
+\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_ae81d1ec5876b560082c0303e45b2004b}{realizar\+\_\+venda}} (session, transaction\+\_\+date, payment\+\_\+wallet\+\_\+id, receiving\+\_\+wallet\+\_\+id, crypto\+\_\+payment\+\_\+id, crypto\+\_\+payment\+\_\+price, crypto\+\_\+payment\+\_\+quantity, total\+\_\+paid, crypto\+\_\+receive\+\_\+id, crypto\+\_\+receive\+\_\+price, crypto\+\_\+receive\+\_\+quantity, total\+\_\+received, crypto\+\_\+fee\+\_\+id, crypto\+\_\+fee\+\_\+price, crypto\+\_\+fee\+\_\+quantity, total\+\_\+fee, transaction\+\_\+type)
+\item 
+\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a3b240a4fdbcc3776d3134a08d21bdf65}{check\+\_\+mandatory\+\_\+fields\+\_\+in\+\_\+transf}} (payment\+\_\+wallet\+\_\+id, receiving\+\_\+wallet\+\_\+id, crypto\+\_\+receive\+\_\+id, crypto\+\_\+receive\+\_\+price, crypto\+\_\+receive\+\_\+quantity, total\+\_\+received, crypto\+\_\+fee\+\_\+id, crypto\+\_\+fee\+\_\+price, crypto\+\_\+fee\+\_\+quantity, total\+\_\+fee, transaction\+\_\+type, transaction\+\_\+date=None)
+\item 
+\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a4d01550b3acde636bac6dad4f79e0c66}{realizar\+\_\+transferencia}} (session, transaction\+\_\+date, payment\+\_\+wallet\+\_\+id, receiving\+\_\+wallet\+\_\+id, crypto\+\_\+receive\+\_\+id, crypto\+\_\+receive\+\_\+price, crypto\+\_\+receive\+\_\+quantity, total\+\_\+received, crypto\+\_\+fee\+\_\+id, crypto\+\_\+fee\+\_\+price, crypto\+\_\+fee\+\_\+quantity, total\+\_\+fee, transaction\+\_\+type)
+\item 
+\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_adcfd72af33f76853de8834bfebf580c4}{delete\+\_\+transaction}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variáveis}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_ac1c02e256cac998ebf313c9d1b8b0803}{transaction\+\_\+bp}} = Blueprint(\textquotesingle{}transaction\textquotesingle{}, \+\_\+\+\_\+name\+\_\+\+\_\+)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Documentação das funções}
+\Hypertarget{namespacecripto_control_1_1routes_1_1transactions__routes_a0998e441a0d1093713d300edbb285ea1}\index{criptoControl.routes.transactions\_routes@{criptoControl.routes.transactions\_routes}!add\_transaction@{add\_transaction}}
+\index{add\_transaction@{add\_transaction}!criptoControl.routes.transactions\_routes@{criptoControl.routes.transactions\_routes}}
+\doxysubsubsection{\texorpdfstring{add\_transaction()}{add\_transaction()}}
+{\footnotesize\ttfamily \label{namespacecripto_control_1_1routes_1_1transactions__routes_a0998e441a0d1093713d300edbb285ea1} 
+cripto\+Control.\+routes.\+transactions\+\_\+routes.\+add\+\_\+transaction (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Adiciona uma nova transação de criptomoedas.
+
+Esta função processa os dados da transação enviados via formulário e realiza a operação correspondente com base no tipo de transação 
+(compra, venda, saldo ou transferência). A função também normaliza e converte os valores monetários para o tipo float antes de 
+realizar as operações.
+
+A função segue os seguintes passos:
+1. Obtém os dados da transação do formulário.
+2. Normaliza e converte os valores de preço e quantidade para float.
+3. Cria uma sessão para interagir com o banco de dados.
+4. Chama a função apropriada para realizar a operação com base no tipo de transação.
+5. Em caso de erro, reverte as alterações na sessão e exibe uma mensagem de erro.
+
+Parâmetros:
+Nenhum. A função obtém os dados diretamente do formulário da requisição.
+
+Retorna:
+redirect: Redireciona para a página de adição de transações após a tentativa de adicionar a transação.
+
+Exceções:
+Levanta uma exceção em caso de erro durante o processo de adição da transação e reverte as alterações na sessão do banco de dados.
+\end{DoxyVerb}
+ 
+
+Definido na linha \mbox{\hyperlink{transactions__routes_8py_source_l00198}{198}} do ficheiro \mbox{\hyperlink{transactions__routes_8py_source}{transactions\+\_\+routes.\+py}}.
+
+Grafo de chamadas desta função\+:
+% FIG 0
+\Hypertarget{namespacecripto_control_1_1routes_1_1transactions__routes_a7e920770a31bf86e7f96513bb8788f86}\index{criptoControl.routes.transactions\_routes@{criptoControl.routes.transactions\_routes}!add\_transactions@{add\_transactions}}
+\index{add\_transactions@{add\_transactions}!criptoControl.routes.transactions\_routes@{criptoControl.routes.transactions\_routes}}
+\doxysubsubsection{\texorpdfstring{add\_transactions()}{add\_transactions()}}
+{\footnotesize\ttfamily \label{namespacecripto_control_1_1routes_1_1transactions__routes_a7e920770a31bf86e7f96513bb8788f86} 
+cripto\+Control.\+routes.\+transactions\+\_\+routes.\+add\+\_\+transactions (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Esta função renderiza o modelo HTML para adicionar transações.
+Ela recupera dados do banco de dados e preenche o formulário com esses dados.
+Se houver dados de formulário armazenados na sessão, ele preenche o formulário com esses dados armazenados.
+
+Parâmetros:
+Nenhum
+
+Retorna:
+render_template: Um modelo HTML renderizado com os dados necessários para adicionar transações.
+\end{DoxyVerb}
+ 
+
+Definido na linha \mbox{\hyperlink{transactions__routes_8py_source_l00107}{107}} do ficheiro \mbox{\hyperlink{transactions__routes_8py_source}{transactions\+\_\+routes.\+py}}.
+
+Grafo de chamadas desta função\+:
+% FIG 1
+\Hypertarget{namespacecripto_control_1_1routes_1_1transactions__routes_a47dc4dc03fd0c904e075cb91ea8523e6}\index{criptoControl.routes.transactions\_routes@{criptoControl.routes.transactions\_routes}!check\_mandatory\_fields\_in\_balance@{check\_mandatory\_fields\_in\_balance}}
+\index{check\_mandatory\_fields\_in\_balance@{check\_mandatory\_fields\_in\_balance}!criptoControl.routes.transactions\_routes@{criptoControl.routes.transactions\_routes}}
+\doxysubsubsection{\texorpdfstring{check\_mandatory\_fields\_in\_balance()}{check\_mandatory\_fields\_in\_balance()}}
+{\footnotesize\ttfamily \label{namespacecripto_control_1_1routes_1_1transactions__routes_a47dc4dc03fd0c904e075cb91ea8523e6} 
+cripto\+Control.\+routes.\+transactions\+\_\+routes.\+check\+\_\+mandatory\+\_\+fields\+\_\+in\+\_\+balance (\begin{DoxyParamCaption}\item[{}]{receiving\+\_\+wallet\+\_\+id}{, }\item[{}]{crypto\+\_\+receive\+\_\+id}{, }\item[{}]{crypto\+\_\+receive\+\_\+price}{, }\item[{}]{crypto\+\_\+receive\+\_\+quantity}{, }\item[{}]{total\+\_\+received}{, }\item[{}]{transaction\+\_\+date}{ = {\ttfamily None}}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Esta função verifica se todos os campos obrigatórios para uma transação de saldo estão preenchidos.
+
+Parâmetros:
+receiving_wallet_id (int): O ID da carteira recebendo.
+crypto_receive_id (int): O ID da criptomoeda a ser recebida.
+crypto_receive_price (float): O preço da criptomoeda a ser recebida.
+crypto_receive_quantity (float): A quantidade da criptomoeda a ser recebida.
+total_received (float): O total recebido.
+transaction_date (str, opcional): A data da transação. Padrão é None.
+
+Retorna:
+Se algum campo obrigatório estiver faltando ou a data da transação não for fornecida, redireciona para a página 'add_transactions' com uma mensagem de aviso.
+Se todos os campos obrigatórios estiverem preenchidos e a data da transação for fornecida, retorna None.
+\end{DoxyVerb}
+ 
+
+Definido na linha \mbox{\hyperlink{transactions__routes_8py_source_l00560}{560}} do ficheiro \mbox{\hyperlink{transactions__routes_8py_source}{transactions\+\_\+routes.\+py}}.
+
+Grafo de chamadas desta função\+:
+% FIG 2
+Este é o diagrama das funções que utilizam esta função\+:
+% FIG 3
+\Hypertarget{namespacecripto_control_1_1routes_1_1transactions__routes_a2065076de54c38452f6cf6c5bfa12789}\index{criptoControl.routes.transactions\_routes@{criptoControl.routes.transactions\_routes}!check\_mandatory\_fields\_in\_purchase@{check\_mandatory\_fields\_in\_purchase}}
+\index{check\_mandatory\_fields\_in\_purchase@{check\_mandatory\_fields\_in\_purchase}!criptoControl.routes.transactions\_routes@{criptoControl.routes.transactions\_routes}}
+\doxysubsubsection{\texorpdfstring{check\_mandatory\_fields\_in\_purchase()}{check\_mandatory\_fields\_in\_purchase()}}
+{\footnotesize\ttfamily \label{namespacecripto_control_1_1routes_1_1transactions__routes_a2065076de54c38452f6cf6c5bfa12789} 
+cripto\+Control.\+routes.\+transactions\+\_\+routes.\+check\+\_\+mandatory\+\_\+fields\+\_\+in\+\_\+purchase (\begin{DoxyParamCaption}\item[{}]{payment\+\_\+wallet\+\_\+id}{, }\item[{}]{receiving\+\_\+wallet\+\_\+id}{, }\item[{}]{crypto\+\_\+payment\+\_\+id}{, }\item[{}]{crypto\+\_\+payment\+\_\+price}{, }\item[{}]{crypto\+\_\+payment\+\_\+quantity}{, }\item[{}]{total\+\_\+paid}{, }\item[{}]{crypto\+\_\+receive\+\_\+id}{, }\item[{}]{crypto\+\_\+receive\+\_\+price}{, }\item[{}]{crypto\+\_\+receive\+\_\+quantity}{, }\item[{}]{total\+\_\+received}{, }\item[{}]{crypto\+\_\+fee\+\_\+id}{, }\item[{}]{crypto\+\_\+fee\+\_\+price}{, }\item[{}]{crypto\+\_\+fee\+\_\+quantity}{, }\item[{}]{total\+\_\+fee}{, }\item[{}]{transaction\+\_\+type}{, }\item[{}]{transaction\+\_\+date}{ = {\ttfamily None}}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Esta função verifica se todos os campos obrigatórios estão preenchidos em uma transação de compra.
+Se algum campo estiver faltando, armazena os dados da transação na sessão e redireciona para a página de transação com uma mensagem de erro.
+
+Parâmetros:
+payment_wallet_id (int): O ID da carteira de pagamento.
+receiving_wallet_id (int): O ID da carteira de recebimento.
+crypto_payment_id (int): O ID da criptomoeda usada para pagamento.
+crypto_payment_price (float): O preço da criptomoeda usada para pagamento.
+crypto_payment_quantity (float): A quantidade da criptomoeda usada para pagamento.
+total_paid (float): O total pago.
+crypto_receive_id (int): O ID da criptomoeda a ser recebida.
+crypto_receive_price (float): O preço da criptomoeda a ser recebida.
+crypto_receive_quantity (float): A quantidade da criptomoeda a ser recebida.
+total_received (float): O total recebido.
+crypto_fee_id (int): O ID da criptomoeda usada para a taxa de transação.
+crypto_fee_price (float): O preço da criptomoeda usada para a taxa de transação.
+crypto_fee_quantity (float): A quantidade da criptomoeda usada para a taxa de transação.
+total_fee (float): A taxa total da transação.
+transaction_type (str): O tipo da transação.
+transaction_date (str, opcional): A data da transação. Padrão é None.
+
+Retorna:
+redirect: Se algum campo estiver faltando, redireciona para a página de transação com uma mensagem de erro.
+\end{DoxyVerb}
+ 
+
+Definido na linha \mbox{\hyperlink{transactions__routes_8py_source_l00344}{344}} do ficheiro \mbox{\hyperlink{transactions__routes_8py_source}{transactions\+\_\+routes.\+py}}.
+
+Grafo de chamadas desta função\+:
+% FIG 4
+Este é o diagrama das funções que utilizam esta função\+:
+% FIG 5
+\Hypertarget{namespacecripto_control_1_1routes_1_1transactions__routes_a3b240a4fdbcc3776d3134a08d21bdf65}\index{criptoControl.routes.transactions\_routes@{criptoControl.routes.transactions\_routes}!check\_mandatory\_fields\_in\_transf@{check\_mandatory\_fields\_in\_transf}}
+\index{check\_mandatory\_fields\_in\_transf@{check\_mandatory\_fields\_in\_transf}!criptoControl.routes.transactions\_routes@{criptoControl.routes.transactions\_routes}}
+\doxysubsubsection{\texorpdfstring{check\_mandatory\_fields\_in\_transf()}{check\_mandatory\_fields\_in\_transf()}}
+{\footnotesize\ttfamily \label{namespacecripto_control_1_1routes_1_1transactions__routes_a3b240a4fdbcc3776d3134a08d21bdf65} 
+cripto\+Control.\+routes.\+transactions\+\_\+routes.\+check\+\_\+mandatory\+\_\+fields\+\_\+in\+\_\+transf (\begin{DoxyParamCaption}\item[{}]{payment\+\_\+wallet\+\_\+id}{, }\item[{}]{receiving\+\_\+wallet\+\_\+id}{, }\item[{}]{crypto\+\_\+receive\+\_\+id}{, }\item[{}]{crypto\+\_\+receive\+\_\+price}{, }\item[{}]{crypto\+\_\+receive\+\_\+quantity}{, }\item[{}]{total\+\_\+received}{, }\item[{}]{crypto\+\_\+fee\+\_\+id}{, }\item[{}]{crypto\+\_\+fee\+\_\+price}{, }\item[{}]{crypto\+\_\+fee\+\_\+quantity}{, }\item[{}]{total\+\_\+fee}{, }\item[{}]{transaction\+\_\+type}{, }\item[{}]{transaction\+\_\+date}{ = {\ttfamily None}}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Verifica se todos os campos obrigatórios para a transferência estão preenchidos.
+
+Esta função valida a presença de todos os campos necessários para realizar uma transferência de criptomoedas. Se algum campo obrigatório
+não estiver preenchido, os dados da transação são armazenados e uma mensagem de erro é exibida. A função redireciona o usuário para a
+página de adição de transações.
+
+Parâmetros:
+payment_wallet_id (str): O ID da carteira de pagamento.
+receiving_wallet_id (str): O ID da carteira de recebimento.
+crypto_receive_id (str): O ID da criptomoeda a ser recebida.
+crypto_receive_price (float): O preço da criptomoeda a ser recebida.
+crypto_receive_quantity (float): A quantidade da criptomoeda a ser recebida.
+total_received (float): O total recebido na transação.
+crypto_fee_id (str): O ID da criptomoeda utilizada para pagamento da taxa.
+crypto_fee_price (float): O preço da criptomoeda utilizada para pagamento da taxa.
+crypto_fee_quantity (float): A quantidade da criptomoeda utilizada para pagamento da taxa.
+total_fee (float): O total da taxa da transação.
+transaction_type (str): O tipo da transação (por exemplo, "transferência").
+transaction_date (str, opcional): A data da transação no formato 'YYYY-MM-DD'. O padrão é None.
+
+Retorna:
+redirect: Redireciona para a página de adição de transações se algum campo obrigatório não estiver preenchido ou se a data não estiver
+          informada. Caso contrário, não retorna nada.
+
+Exceções:
+Não levanta exceções, mas exibe mensagens de erro ao usuário se os campos obrigatórios não forem preenchidos.
+\end{DoxyVerb}
+ 
+
+Definido na linha \mbox{\hyperlink{transactions__routes_8py_source_l00810}{810}} do ficheiro \mbox{\hyperlink{transactions__routes_8py_source}{transactions\+\_\+routes.\+py}}.
+
+Grafo de chamadas desta função\+:
+% FIG 6
+Este é o diagrama das funções que utilizam esta função\+:
+% FIG 7
+\Hypertarget{namespacecripto_control_1_1routes_1_1transactions__routes_a51907abc78dec2948f9481c507811b7f}\index{criptoControl.routes.transactions\_routes@{criptoControl.routes.transactions\_routes}!create\_session@{create\_session}}
+\index{create\_session@{create\_session}!criptoControl.routes.transactions\_routes@{criptoControl.routes.transactions\_routes}}
+\doxysubsubsection{\texorpdfstring{create\_session()}{create\_session()}}
+{\footnotesize\ttfamily \label{namespacecripto_control_1_1routes_1_1transactions__routes_a51907abc78dec2948f9481c507811b7f} 
+cripto\+Control.\+routes.\+transactions\+\_\+routes.\+create\+\_\+session (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Definido na linha \mbox{\hyperlink{transactions__routes_8py_source_l00012}{12}} do ficheiro \mbox{\hyperlink{transactions__routes_8py_source}{transactions\+\_\+routes.\+py}}.
+
+Este é o diagrama das funções que utilizam esta função\+:
+% FIG 8
+\Hypertarget{namespacecripto_control_1_1routes_1_1transactions__routes_adcfd72af33f76853de8834bfebf580c4}\index{criptoControl.routes.transactions\_routes@{criptoControl.routes.transactions\_routes}!delete\_transaction@{delete\_transaction}}
+\index{delete\_transaction@{delete\_transaction}!criptoControl.routes.transactions\_routes@{criptoControl.routes.transactions\_routes}}
+\doxysubsubsection{\texorpdfstring{delete\_transaction()}{delete\_transaction()}}
+{\footnotesize\ttfamily \label{namespacecripto_control_1_1routes_1_1transactions__routes_adcfd72af33f76853de8834bfebf580c4} 
+cripto\+Control.\+routes.\+transactions\+\_\+routes.\+delete\+\_\+transaction (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Exclui uma transação do banco de dados e atualiza os saldos das carteiras.
+
+Parâmetros:
+session (sqlalchemy.orm.Session): A sessão do banco de dados.
+
+Retorna:
+redirect: Redireciona para a página de transações após excluir a transação.
+\end{DoxyVerb}
+ 
+
+Definido na linha \mbox{\hyperlink{transactions__routes_8py_source_l01027}{1027}} do ficheiro \mbox{\hyperlink{transactions__routes_8py_source}{transactions\+\_\+routes.\+py}}.
+
+Grafo de chamadas desta função\+:
+% FIG 9
+\Hypertarget{namespacecripto_control_1_1routes_1_1transactions__routes_a356324d9eae8676bd56625b8748eda7d}\index{criptoControl.routes.transactions\_routes@{criptoControl.routes.transactions\_routes}!enter\_balance@{enter\_balance}}
+\index{enter\_balance@{enter\_balance}!criptoControl.routes.transactions\_routes@{criptoControl.routes.transactions\_routes}}
+\doxysubsubsection{\texorpdfstring{enter\_balance()}{enter\_balance()}}
+{\footnotesize\ttfamily \label{namespacecripto_control_1_1routes_1_1transactions__routes_a356324d9eae8676bd56625b8748eda7d} 
+cripto\+Control.\+routes.\+transactions\+\_\+routes.\+enter\+\_\+balance (\begin{DoxyParamCaption}\item[{}]{db\+\_\+session}{, }\item[{}]{receiving\+\_\+wallet\+\_\+id}{, }\item[{}]{crypto\+\_\+receive\+\_\+id}{, }\item[{}]{crypto\+\_\+receive\+\_\+price}{, }\item[{}]{crypto\+\_\+receive\+\_\+quantity}{, }\item[{}]{total\+\_\+received}{, }\item[{}]{transaction\+\_\+date}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Esta função é usada para adicionar um saldo a uma carteira específica para uma criptomoeda específica.
+Ela cria um registro de transação e atualiza o saldo da carteira.
+
+Parâmetros:
+db_session (Sessão SQLAlchemy): O objeto de sessão do banco de dados.
+receiving_wallet_id (int): O ID da carteira que receberá o saldo.
+crypto_receive_id (int): O ID da criptomoeda que será recebida.
+crypto_receive_price (float): O preço da criptomoeda que será recebida.
+crypto_receive_quantity (float): A quantidade da criptomoeda que será recebida.
+total_received (float): O valor total recebido na transação.
+transaction_date (str): A data da transação no formato 'YYYY-MM-DD'.
+
+Retorna:
+None
+\end{DoxyVerb}
+ 
+
+Definido na linha \mbox{\hyperlink{transactions__routes_8py_source_l00604}{604}} do ficheiro \mbox{\hyperlink{transactions__routes_8py_source}{transactions\+\_\+routes.\+py}}.
+
+Grafo de chamadas desta função\+:
+% FIG 10
+Este é o diagrama das funções que utilizam esta função\+:
+% FIG 11
+\Hypertarget{namespacecripto_control_1_1routes_1_1transactions__routes_a7020c9e9128c66e957a7d80245673025}\index{criptoControl.routes.transactions\_routes@{criptoControl.routes.transactions\_routes}!get\_price@{get\_price}}
+\index{get\_price@{get\_price}!criptoControl.routes.transactions\_routes@{criptoControl.routes.transactions\_routes}}
+\doxysubsubsection{\texorpdfstring{get\_price()}{get\_price()}}
+{\footnotesize\ttfamily \label{namespacecripto_control_1_1routes_1_1transactions__routes_a7020c9e9128c66e957a7d80245673025} 
+cripto\+Control.\+routes.\+transactions\+\_\+routes.\+get\+\_\+price (\begin{DoxyParamCaption}\item[{}]{cryptocurrency\+\_\+id}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Esta função recupera o preço mais recente de uma criptomoeda específica.
+
+if latest_price:
+    return jsonify({'price': latest_price[0]})
+Parâmetros:
+id_criptomoeda (int): O identificador exclusivo da criptomoeda.
+
+Retorna:
+JSON: Um objeto JSON contendo o preço mais recente da criptomoeda. Se não for encontrado nenhum preço, retorna 0.
+\end{DoxyVerb}
+ 
+
+Definido na linha \mbox{\hyperlink{transactions__routes_8py_source_l00080}{80}} do ficheiro \mbox{\hyperlink{transactions__routes_8py_source}{transactions\+\_\+routes.\+py}}.
+
+Grafo de chamadas desta função\+:
+% FIG 12
+\Hypertarget{namespacecripto_control_1_1routes_1_1transactions__routes_a2cb12e0d1f8a89a647f7ccdd8da3507f}\index{criptoControl.routes.transactions\_routes@{criptoControl.routes.transactions\_routes}!normalize\_decimal@{normalize\_decimal}}
+\index{normalize\_decimal@{normalize\_decimal}!criptoControl.routes.transactions\_routes@{criptoControl.routes.transactions\_routes}}
+\doxysubsubsection{\texorpdfstring{normalize\_decimal()}{normalize\_decimal()}}
+{\footnotesize\ttfamily \label{namespacecripto_control_1_1routes_1_1transactions__routes_a2cb12e0d1f8a89a647f7ccdd8da3507f} 
+cripto\+Control.\+routes.\+transactions\+\_\+routes.\+normalize\+\_\+decimal (\begin{DoxyParamCaption}\item[{}]{value}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Função para substituir vírgulas por pontos em valores numéricos.
+
+Parâmetros:
+value (str, int, float): O valor a ser normalizado.
+
+Retorna:
+str: O valor normalizado. Se a entrada for uma string, substitui as vírgulas por pontos.
+     Se a entrada for um inteiro ou float, converte o número em uma string.
+     Levanta um ValueError se a entrada for de um tipo inesperado.
+\end{DoxyVerb}
+ 
+
+Definido na linha \mbox{\hyperlink{transactions__routes_8py_source_l00175}{175}} do ficheiro \mbox{\hyperlink{transactions__routes_8py_source}{transactions\+\_\+routes.\+py}}.
+
+Este é o diagrama das funções que utilizam esta função\+:
+% FIG 13
+\Hypertarget{namespacecripto_control_1_1routes_1_1transactions__routes_adec42905ab9e30946975af46bf061e80}\index{criptoControl.routes.transactions\_routes@{criptoControl.routes.transactions\_routes}!realizar\_compra@{realizar\_compra}}
+\index{realizar\_compra@{realizar\_compra}!criptoControl.routes.transactions\_routes@{criptoControl.routes.transactions\_routes}}
+\doxysubsubsection{\texorpdfstring{realizar\_compra()}{realizar\_compra()}}
+{\footnotesize\ttfamily \label{namespacecripto_control_1_1routes_1_1transactions__routes_adec42905ab9e30946975af46bf061e80} 
+cripto\+Control.\+routes.\+transactions\+\_\+routes.\+realizar\+\_\+compra (\begin{DoxyParamCaption}\item[{}]{session}{, }\item[{}]{transaction\+\_\+date}{, }\item[{}]{payment\+\_\+wallet\+\_\+id}{, }\item[{}]{receiving\+\_\+wallet\+\_\+id}{, }\item[{}]{crypto\+\_\+payment\+\_\+id}{, }\item[{}]{crypto\+\_\+payment\+\_\+price}{, }\item[{}]{crypto\+\_\+payment\+\_\+quantity}{, }\item[{}]{total\+\_\+paid}{, }\item[{}]{crypto\+\_\+receive\+\_\+id}{, }\item[{}]{crypto\+\_\+receive\+\_\+price}{, }\item[{}]{crypto\+\_\+receive\+\_\+quantity}{, }\item[{}]{total\+\_\+received}{, }\item[{}]{crypto\+\_\+fee\+\_\+id}{, }\item[{}]{crypto\+\_\+fee\+\_\+price}{, }\item[{}]{crypto\+\_\+fee\+\_\+quantity}{, }\item[{}]{total\+\_\+fee}{, }\item[{}]{transaction\+\_\+type}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Realiza uma compra de criptomoedas entre carteiras.
+
+Esta função verifica se todos os campos obrigatórios estão preenchidos e se há saldo suficiente nas carteiras para realizar a compra. 
+Se todas as condições forem atendidas, a transação é registrada no banco de dados e os saldos das carteiras são atualizados.
+Caso contrário, uma mensagem de erro é exibida e o usuário é redirecionado para a página de adição de transações.
+
+Parâmetros:
+session (Session): A sessão do banco de dados para realizar operações.
+transaction_date (str): A data da transação no formato 'YYYY-MM-DD'.
+payment_wallet_id (str): O ID da carteira de pagamento.
+receiving_wallet_id (str): O ID da carteira de recebimento.
+crypto_payment_id (str): O ID da criptomoeda utilizada para pagamento.
+crypto_payment_price (float): O preço da criptomoeda utilizada para pagamento.
+crypto_payment_quantity (float): A quantidade da criptomoeda a ser paga.
+total_paid (float): O total pago na transação.
+crypto_receive_id (str): O ID da criptomoeda a ser recebida.
+crypto_receive_price (float): O preço da criptomoeda a ser recebida.
+crypto_receive_quantity (float): A quantidade da criptomoeda a ser recebida.
+total_received (float): O total recebido na transação.
+crypto_fee_id (str): O ID da criptomoeda utilizada para pagamento da taxa.
+crypto_fee_price (float): O preço da criptomoeda utilizada para pagamento da taxa.
+crypto_fee_quantity (float): A quantidade da criptomoeda utilizada para pagamento da taxa.
+total_fee (float): O total da taxa da transação.
+transaction_type (str): O tipo da transação (por exemplo, "compra").
+
+Retorna:
+redirect: Redireciona para a página de adição de transações se houver saldo insuficiente ou se algum campo obrigatório não estiver preenchido.
+Caso contrário, não retorna nada.
+
+Exceções:
+Levanta uma exceção em caso de erro durante o processo de compra e reverte as alterações na sessão do banco de dados.
+\end{DoxyVerb}
+ 
+
+Definido na linha \mbox{\hyperlink{transactions__routes_8py_source_l00417}{417}} do ficheiro \mbox{\hyperlink{transactions__routes_8py_source}{transactions\+\_\+routes.\+py}}.
+
+Grafo de chamadas desta função\+:
+% FIG 14
+Este é o diagrama das funções que utilizam esta função\+:
+% FIG 15
+\Hypertarget{namespacecripto_control_1_1routes_1_1transactions__routes_a4d01550b3acde636bac6dad4f79e0c66}\index{criptoControl.routes.transactions\_routes@{criptoControl.routes.transactions\_routes}!realizar\_transferencia@{realizar\_transferencia}}
+\index{realizar\_transferencia@{realizar\_transferencia}!criptoControl.routes.transactions\_routes@{criptoControl.routes.transactions\_routes}}
+\doxysubsubsection{\texorpdfstring{realizar\_transferencia()}{realizar\_transferencia()}}
+{\footnotesize\ttfamily \label{namespacecripto_control_1_1routes_1_1transactions__routes_a4d01550b3acde636bac6dad4f79e0c66} 
+cripto\+Control.\+routes.\+transactions\+\_\+routes.\+realizar\+\_\+transferencia (\begin{DoxyParamCaption}\item[{}]{session}{, }\item[{}]{transaction\+\_\+date}{, }\item[{}]{payment\+\_\+wallet\+\_\+id}{, }\item[{}]{receiving\+\_\+wallet\+\_\+id}{, }\item[{}]{crypto\+\_\+receive\+\_\+id}{, }\item[{}]{crypto\+\_\+receive\+\_\+price}{, }\item[{}]{crypto\+\_\+receive\+\_\+quantity}{, }\item[{}]{total\+\_\+received}{, }\item[{}]{crypto\+\_\+fee\+\_\+id}{, }\item[{}]{crypto\+\_\+fee\+\_\+price}{, }\item[{}]{crypto\+\_\+fee\+\_\+quantity}{, }\item[{}]{total\+\_\+fee}{, }\item[{}]{transaction\+\_\+type}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Realiza uma transferência de criptomoedas entre carteiras.
+
+Esta função verifica se as carteiras de pagamento e recebimento existem, se há saldo suficiente para a transferência e para a taxa
+associada. Se todas as condições forem atendidas, a transação é registrada no banco de dados e os saldos das carteiras são atualizados.
+Caso contrário, uma mensagem de erro é exibida e as alterações são revertidas.
+
+Parâmetros:
+session (Session): A sessão do banco de dados para realizar operações.
+transaction_date (str): A data da transação no formato 'YYYY-MM-DD'.
+payment_wallet_id (str): O ID da carteira de pagamento.
+receiving_wallet_id (str): O ID da carteira de recebimento.
+crypto_receive_id (str): O ID da criptomoeda a ser recebida.
+crypto_receive_price (float): O preço da criptomoeda a ser recebida.
+crypto_receive_quantity (float): A quantidade da criptomoeda a ser recebida.
+total_received (float): O total recebido na transação.
+crypto_fee_id (str): O ID da criptomoeda utilizada para pagamento da taxa.
+crypto_fee_price (float): O preço da criptomoeda utilizada para pagamento da taxa.
+crypto_fee_quantity (float): A quantidade da criptomoeda utilizada para pagamento da taxa.
+total_fee (float): O total da taxa da transação.
+transaction_type (str): O tipo da transação (por exemplo, "transferência").
+
+Retorna:
+None: Se a transferência for realizada com sucesso, uma mensagem de sucesso é exibida. 
+      Se houver erro ou saldo insuficiente, uma mensagem de erro é exibida.
+
+Exceções:
+Levanta uma exceção em caso de erro durante o processo de transferência.
+\end{DoxyVerb}
+ 
+
+Definido na linha \mbox{\hyperlink{transactions__routes_8py_source_l00882}{882}} do ficheiro \mbox{\hyperlink{transactions__routes_8py_source}{transactions\+\_\+routes.\+py}}.
+
+Grafo de chamadas desta função\+:
+% FIG 16
+Este é o diagrama das funções que utilizam esta função\+:
+% FIG 17
+\Hypertarget{namespacecripto_control_1_1routes_1_1transactions__routes_ae81d1ec5876b560082c0303e45b2004b}\index{criptoControl.routes.transactions\_routes@{criptoControl.routes.transactions\_routes}!realizar\_venda@{realizar\_venda}}
+\index{realizar\_venda@{realizar\_venda}!criptoControl.routes.transactions\_routes@{criptoControl.routes.transactions\_routes}}
+\doxysubsubsection{\texorpdfstring{realizar\_venda()}{realizar\_venda()}}
+{\footnotesize\ttfamily \label{namespacecripto_control_1_1routes_1_1transactions__routes_ae81d1ec5876b560082c0303e45b2004b} 
+cripto\+Control.\+routes.\+transactions\+\_\+routes.\+realizar\+\_\+venda (\begin{DoxyParamCaption}\item[{}]{session}{, }\item[{}]{transaction\+\_\+date}{, }\item[{}]{payment\+\_\+wallet\+\_\+id}{, }\item[{}]{receiving\+\_\+wallet\+\_\+id}{, }\item[{}]{crypto\+\_\+payment\+\_\+id}{, }\item[{}]{crypto\+\_\+payment\+\_\+price}{, }\item[{}]{crypto\+\_\+payment\+\_\+quantity}{, }\item[{}]{total\+\_\+paid}{, }\item[{}]{crypto\+\_\+receive\+\_\+id}{, }\item[{}]{crypto\+\_\+receive\+\_\+price}{, }\item[{}]{crypto\+\_\+receive\+\_\+quantity}{, }\item[{}]{total\+\_\+received}{, }\item[{}]{crypto\+\_\+fee\+\_\+id}{, }\item[{}]{crypto\+\_\+fee\+\_\+price}{, }\item[{}]{crypto\+\_\+fee\+\_\+quantity}{, }\item[{}]{total\+\_\+fee}{, }\item[{}]{transaction\+\_\+type}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Realiza uma venda de criptomoedas entre carteiras.
+
+Esta função verifica se todos os campos obrigatórios estão preenchidos e se há saldo suficiente nas carteiras para realizar a venda. 
+Se todas as condições forem atendidas, a transação é registrada no banco de dados e os saldos das carteiras são atualizados.
+Caso contrário, uma mensagem de erro é exibida e o usuário é redirecionado para a página de adição de transações.
+
+Parâmetros:
+session (Session): A sessão do banco de dados para realizar operações.
+transaction_date (str): A data da transação no formato 'YYYY-MM-DD'.
+payment_wallet_id (str): O ID da carteira de pagamento.
+receiving_wallet_id (str): O ID da carteira de recebimento.
+crypto_payment_id (str): O ID da criptomoeda utilizada para pagamento.
+crypto_payment_price (float): O preço da criptomoeda utilizada para pagamento.
+crypto_payment_quantity (float): A quantidade da criptomoeda a ser paga.
+total_paid (float): O total pago na transação.
+crypto_receive_id (str): O ID da criptomoeda a ser recebida.
+crypto_receive_price (float): O preço da criptomoeda a ser recebida.
+crypto_receive_quantity (float): A quantidade da criptomoeda a ser recebida.
+total_received (float): O total recebido na transação.
+crypto_fee_id (str): O ID da criptomoeda utilizada para pagamento da taxa.
+crypto_fee_price (float): O preço da criptomoeda utilizada para pagamento da taxa.
+crypto_fee_quantity (float): A quantidade da criptomoeda utilizada para pagamento da taxa.
+total_fee (float): O total da taxa da transação.
+transaction_type (str): O tipo da transação (por exemplo, "venda").
+
+Retorna:
+redirect: Redireciona para a página de adição de transações se houver saldo insuficiente ou se algum campo obrigatório não estiver preenchido.
+Caso contrário, não retorna nada.
+
+Exceções:
+Levanta uma exceção em caso de erro durante o processo de venda e reverte as alterações na sessão do banco de dados.
+\end{DoxyVerb}
+ 
+
+Definido na linha \mbox{\hyperlink{transactions__routes_8py_source_l00667}{667}} do ficheiro \mbox{\hyperlink{transactions__routes_8py_source}{transactions\+\_\+routes.\+py}}.
+
+Grafo de chamadas desta função\+:
+% FIG 18
+Este é o diagrama das funções que utilizam esta função\+:
+% FIG 19
+\Hypertarget{namespacecripto_control_1_1routes_1_1transactions__routes_ace539ad0b5b24d48f30bb8653e773e64}\index{criptoControl.routes.transactions\_routes@{criptoControl.routes.transactions\_routes}!store\_data@{store\_data}}
+\index{store\_data@{store\_data}!criptoControl.routes.transactions\_routes@{criptoControl.routes.transactions\_routes}}
+\doxysubsubsection{\texorpdfstring{store\_data()}{store\_data()}}
+{\footnotesize\ttfamily \label{namespacecripto_control_1_1routes_1_1transactions__routes_ace539ad0b5b24d48f30bb8653e773e64} 
+cripto\+Control.\+routes.\+transactions\+\_\+routes.\+store\+\_\+data (\begin{DoxyParamCaption}\item[{}]{transaction\+\_\+type}{, }\item[{}]{receiving\+\_\+wallet\+\_\+id}{ = {\ttfamily None}, }\item[{}]{payment\+\_\+wallet\+\_\+id}{ = {\ttfamily None}, }\item[{}]{crypto\+\_\+receive\+\_\+id}{ = {\ttfamily None}, }\item[{}]{crypto\+\_\+receive\+\_\+price}{ = {\ttfamily None}, }\item[{}]{crypto\+\_\+receive\+\_\+quantity}{ = {\ttfamily None}, }\item[{}]{total\+\_\+received}{ = {\ttfamily None}, }\item[{}]{crypto\+\_\+payment\+\_\+id}{ = {\ttfamily None}, }\item[{}]{crypto\+\_\+payment\+\_\+price}{ = {\ttfamily None}, }\item[{}]{crypto\+\_\+payment\+\_\+quantity}{ = {\ttfamily None}, }\item[{}]{total\+\_\+paid}{ = {\ttfamily None}, }\item[{}]{crypto\+\_\+fee\+\_\+id}{ = {\ttfamily None}, }\item[{}]{crypto\+\_\+fee\+\_\+price}{ = {\ttfamily None}, }\item[{}]{crypto\+\_\+fee\+\_\+quantity}{ = {\ttfamily None}, }\item[{}]{total\+\_\+fee}{ = {\ttfamily None}, }\item[{}]{transaction\+\_\+date}{ = {\ttfamily None}}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Armazena dados de transação na sessão.
+
+Parâmetros:
+transaction_type (str): O tipo de transação.
+receiving_wallet_id (int, opcional): O ID da carteira de recebimento. Padrão é None.
+payment_wallet_id (int, opcional): O ID da carteira de pagamento. Padrão é None.
+crypto_receive_id (int, opcional): O ID da criptomoeda recebida. Padrão é None.
+crypto_receive_price (float, opcional): O preço da criptomoeda recebida. Padrão é None.
+crypto_receive_quantity (float, opcional): A quantidade da criptomoeda recebida. Padrão é None.
+total_received (float, opcional): O total recebido. Padrão é None.
+crypto_payment_id (int, opcional): O ID da criptomoeda paga. Padrão é None.
+crypto_payment_price (float, opcional): O preço da criptomoeda paga. Padrão é None.
+crypto_payment_quantity (float, opcional): A quantidade da criptomoeda paga. Padrão é None.
+total_paid (float, opcional): O total pago. Padrão é None.
+crypto_fee_id (int, opcional): O ID da criptomoeda de taxa. Padrão é None.
+crypto_fee_price (float, opcional): O preço da criptomoeda de taxa. Padrão é None.
+crypto_fee_quantity (float, opcional): A quantidade da criptomoeda de taxa. Padrão é None.
+total_fee (float, opcional): O total da taxa. Padrão é None.
+transaction_date (str, opcional): A data da transação. Padrão é None.
+
+Retorna:
+None
+\end{DoxyVerb}
+ 
+
+Definido na linha \mbox{\hyperlink{transactions__routes_8py_source_l00293}{293}} do ficheiro \mbox{\hyperlink{transactions__routes_8py_source}{transactions\+\_\+routes.\+py}}.
+
+Este é o diagrama das funções que utilizam esta função\+:
+% FIG 20
+\Hypertarget{namespacecripto_control_1_1routes_1_1transactions__routes_a799bbf626ed74a9a801b4a285851448a}\index{criptoControl.routes.transactions\_routes@{criptoControl.routes.transactions\_routes}!transactions@{transactions}}
+\index{transactions@{transactions}!criptoControl.routes.transactions\_routes@{criptoControl.routes.transactions\_routes}}
+\doxysubsubsection{\texorpdfstring{transactions()}{transactions()}}
+{\footnotesize\ttfamily \label{namespacecripto_control_1_1routes_1_1transactions__routes_a799bbf626ed74a9a801b4a285851448a} 
+cripto\+Control.\+routes.\+transactions\+\_\+routes.\+transactions (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Esta função lida com a exibição de transações para o usuário conectado.
+
+Parâmetros:
+Nenhum
+
+Retorna:
+render_template: Um modelo HTML renderizado com transações e informações de paginação.
+\end{DoxyVerb}
+ 
+
+Definido na linha \mbox{\hyperlink{transactions__routes_8py_source_l00020}{20}} do ficheiro \mbox{\hyperlink{transactions__routes_8py_source}{transactions\+\_\+routes.\+py}}.
+
+Grafo de chamadas desta função\+:
+% FIG 21
+
+
+\doxysubsection{Documentação das variáveis}
+\Hypertarget{namespacecripto_control_1_1routes_1_1transactions__routes_ac1c02e256cac998ebf313c9d1b8b0803}\index{criptoControl.routes.transactions\_routes@{criptoControl.routes.transactions\_routes}!transaction\_bp@{transaction\_bp}}
+\index{transaction\_bp@{transaction\_bp}!criptoControl.routes.transactions\_routes@{criptoControl.routes.transactions\_routes}}
+\doxysubsubsection{\texorpdfstring{transaction\_bp}{transaction\_bp}}
+{\footnotesize\ttfamily \label{namespacecripto_control_1_1routes_1_1transactions__routes_ac1c02e256cac998ebf313c9d1b8b0803} 
+cripto\+Control.\+routes.\+transactions\+\_\+routes.\+transaction\+\_\+bp = Blueprint(\textquotesingle{}transaction\textquotesingle{}, \+\_\+\+\_\+name\+\_\+\+\_\+)}
+
+
+
+Definido na linha \mbox{\hyperlink{transactions__routes_8py_source_l00010}{10}} do ficheiro \mbox{\hyperlink{transactions__routes_8py_source}{transactions\+\_\+routes.\+py}}.
+

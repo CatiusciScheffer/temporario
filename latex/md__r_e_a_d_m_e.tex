@@ -1,0 +1,147 @@
+\chapter{\texorpdfstring{$<$}{<}strong\texorpdfstring{$>$}{>}Gerenciador de Criptomoedas\texorpdfstring{$<$}{<}/strong\texorpdfstring{$>$}{>}}
+\hypertarget{md__r_e_a_d_m_e}{}\label{md__r_e_a_d_m_e}\index{$<$strong$>$Gerenciador de Criptomoedas$<$/strong$>$@{$<$strong$>$Gerenciador de Criptomoedas$<$/strong$>$}}
+\label{md__r_e_a_d_m_e_autotoc_md0}%
+\Hypertarget{md__r_e_a_d_m_e_autotoc_md0}%
+
+
+Este é um aplicativo de gerenciamento de criptomoedas desenvolvido com {\bfseries{Flask}}, projetado para ajudar usuários a rastrear suas transações, saldos e carteiras. Ideal para entusiastas de cripto e traders, o sistema também inclui suporte para cálculos de taxas e integração com preços dinâmicos. ~\newline
+
+
+\DoxyHorRuler{0}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md2}{}\doxysection{\texorpdfstring{🚀 {\bfseries{Funcionalidades}}}{🚀 {\bfseries{Funcionalidades}}}}\label{md__r_e_a_d_m_e_autotoc_md2}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md3}{}\doxysubsection{\texorpdfstring{{\bfseries{Gerenciamento de Carteiras}}}{{\bfseries{Gerenciamento de Carteiras}}}}\label{md__r_e_a_d_m_e_autotoc_md3}
+
+\begin{DoxyItemize}
+\item Criação, edição e exclusão de carteiras. ~\newline
+
+\item Após o login, o primeiro passo é criar uma carteira. ~\newline
+
+\item Verifique se a moeda desejada já está cadastrada; caso contrário, cadastre-\/a. ~\newline
+
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md4}{}\doxysubsection{\texorpdfstring{{\bfseries{Controle de Transações}}}{{\bfseries{Controle de Transações}}}}\label{md__r_e_a_d_m_e_autotoc_md4}
+
+\begin{DoxyItemize}
+\item Registre {\bfseries{compras}}, {\bfseries{vendas}}, {\bfseries{transferências}} e {\bfseries{adições de saldo}}. ~\newline
+
+\item O sistema valida saldos automaticamente para evitar transações inválidas. ~\newline
+
+\item Suporte para reversão de transações. ~\newline
+
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md5}{}\doxysubsection{\texorpdfstring{{\bfseries{Atualização de Preços}}}{{\bfseries{Atualização de Preços}}}}\label{md__r_e_a_d_m_e_autotoc_md5}
+
+\begin{DoxyItemize}
+\item Atualize os preços das criptomoedas em tempo real por meio de uma integração dedicada. ~\newline
+
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md6}{}\doxysubsection{\texorpdfstring{{\bfseries{Relatórios Detalhados e Análises}}}{{\bfseries{Relatórios Detalhados e Análises}}}}\label{md__r_e_a_d_m_e_autotoc_md6}
+
+\begin{DoxyItemize}
+\item Histórico completo de transações, com cálculos automáticos de taxas e totais. ~\newline
+
+\item Ferramentas para análises de DCA ({\itshape Dollar Cost Averaging}), lucro e prejuízo. ~\newline
+
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md7}{}\doxysubsection{\texorpdfstring{{\bfseries{Exportação para Declaração Tributária}} {\itshape (Em breve)}}{{\bfseries{Exportação para Declaração Tributária}} {\itshape (Em breve)}}}\label{md__r_e_a_d_m_e_autotoc_md7}
+
+\begin{DoxyItemize}
+\item Em breve, será possível gerar um arquivo compatível com o site da Receita Federal do Brasil (RFB) para facilitar a {\bfseries{Declaração de Bens e Direitos}}. ~\newline
+
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md9}{}\doxysection{\texorpdfstring{🛠️ {\bfseries{Tecnologias Utilizadas}}}{🛠️ {\bfseries{Tecnologias Utilizadas}}}}\label{md__r_e_a_d_m_e_autotoc_md9}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md10}{}\doxysubsection{\texorpdfstring{{\bfseries{Backend}}}{{\bfseries{Backend}}}}\label{md__r_e_a_d_m_e_autotoc_md10}
+
+\begin{DoxyItemize}
+\item Flask ~\newline
+
+\item SQLAlchemy ~\newline
+
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md11}{}\doxysubsection{\texorpdfstring{{\bfseries{Frontend}}}{{\bfseries{Frontend}}}}\label{md__r_e_a_d_m_e_autotoc_md11}
+
+\begin{DoxyItemize}
+\item HTML ~\newline
+
+\item CSS ~\newline
+
+\item Bootstrap ~\newline
+
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md12}{}\doxysubsection{\texorpdfstring{{\bfseries{Banco de Dados}}}{{\bfseries{Banco de Dados}}}}\label{md__r_e_a_d_m_e_autotoc_md12}
+
+\begin{DoxyItemize}
+\item SQLite ~\newline
+
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md13}{}\doxysubsection{\texorpdfstring{{\bfseries{Outras Bibliotecas}}}{{\bfseries{Outras Bibliotecas}}}}\label{md__r_e_a_d_m_e_autotoc_md13}
+
+\begin{DoxyItemize}
+\item Flask-\/\+WTF ~\newline
+
+\item WTForms ~\newline
+
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md15}{}\doxysection{\texorpdfstring{🗂️ {\bfseries{Estrutura do Projeto}}}{🗂️ {\bfseries{Estrutura do Projeto}}}}\label{md__r_e_a_d_m_e_autotoc_md15}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{CRYPTOS\_FLASK/}
+\DoxyCodeLine{├──\ criptoControl/\ \ }
+\DoxyCodeLine{│\ \ \ ├──\ routes/\ \ }
+\DoxyCodeLine{│\ \ \ │\ \ \ ├──\ \_\_init\_\_.py\ \ }
+\DoxyCodeLine{│\ \ \ │\ \ \ ├──\ auth\_routes.py\ \ }
+\DoxyCodeLine{│\ \ \ │\ \ \ ├──\ crud\_crypto\_wallet.py\ \ }
+\DoxyCodeLine{│\ \ \ │\ \ \ ├──\ main\_routes.py\ \ }
+\DoxyCodeLine{│\ \ \ │\ \ \ ├──\ transactions\_routes.py\ \ }
+\DoxyCodeLine{│\ \ \ │\ \ \ ├──\ update\_price.py\ \ }
+\DoxyCodeLine{│\ \ \ │\ \ \ └──\ views\_databases.py\ \ }
+\DoxyCodeLine{│\ \ \ ├──\ static/\ \ }
+\DoxyCodeLine{│\ \ \ │\ \ \ ├──\ css/\ \ }
+\DoxyCodeLine{│\ \ \ │\ \ \ │\ \ \ └──\ style.css\ \ }
+\DoxyCodeLine{│\ \ \ │\ \ \ ├──\ js/\ \ }
+\DoxyCodeLine{│\ \ \ │\ \ \ │\ \ \ ├──\ scripts\_consultaTransacoes.js\ \ }
+\DoxyCodeLine{│\ \ \ │\ \ \ │\ \ \ └──\ scripts\_transacoes.js\ \ }
+\DoxyCodeLine{│\ \ \ ├──\ templates/\ \ }
+\DoxyCodeLine{│\ \ \ │\ \ \ ├──\ auth/\ \ }
+\DoxyCodeLine{│\ \ \ │\ \ \ │\ \ \ ├──\ login.html\ \ }
+\DoxyCodeLine{│\ \ \ │\ \ \ │\ \ \ └──\ register.html\ \ }
+\DoxyCodeLine{│\ \ \ │\ \ \ ├──\ operacoes/\ \ }
+\DoxyCodeLine{│\ \ \ │\ \ \ │\ \ \ ├──\ add\_crypto.html\ \ }
+\DoxyCodeLine{│\ \ \ │\ \ \ │\ \ \ ├──\ add\_transactions.html\ \ }
+\DoxyCodeLine{│\ \ \ │\ \ \ │\ \ \ ├──\ add\_wallet.html\ \ }
+\DoxyCodeLine{│\ \ \ │\ \ \ │\ \ \ ├──\ cryptos.html\ \ }
+\DoxyCodeLine{│\ \ \ │\ \ \ │\ \ \ ├──\ modal\_confirm\_delete.html\ \ }
+\DoxyCodeLine{│\ \ \ │\ \ \ │\ \ \ ├──\ transactions.html\ \ }
+\DoxyCodeLine{│\ \ \ │\ \ \ │\ \ \ └──\ wallets.html\ \ }
+\DoxyCodeLine{│\ \ \ │\ \ \ ├──\ views\_databases/\ \ }
+\DoxyCodeLine{│\ \ \ │\ \ \ │\ \ \ ├──\ crypto\_DCA.html\ \ }
+\DoxyCodeLine{│\ \ \ │\ \ \ │\ \ \ ├──\ crypto\_lucroXprejuizo.html\ \ }
+\DoxyCodeLine{│\ \ \ │\ \ \ │\ \ \ ├──\ filtros\_transacoes.html\ \ }
+\DoxyCodeLine{│\ \ \ │\ \ \ │\ \ \ ├──\ prices.html\ \ }
+\DoxyCodeLine{│\ \ \ │\ \ \ │\ \ \ ├──\ transacoes\_filtradas.html\ \ }
+\DoxyCodeLine{│\ \ \ │\ \ \ │\ \ \ ├──\ wallet\_balances.html\ \ }
+\DoxyCodeLine{│\ \ \ │\ \ \ │\ \ \ └──\ wallet\_summary.html\ \ }
+\DoxyCodeLine{│\ \ \ │\ \ \ ├──\ index.html\ \ }
+\DoxyCodeLine{│\ \ \ │\ \ \ └──\ navibar.html\ \ }
+\DoxyCodeLine{│\ \ \ ├──\ \_\_init\_\_.py\ \ }
+\DoxyCodeLine{│\ \ \ ├──\ api.py\ \ }
+\DoxyCodeLine{│\ \ \ ├──\ forms.py\ \ }
+\DoxyCodeLine{│\ \ \ └──\ models.py\ \ }
+\DoxyCodeLine{├──\ env/\ \ }
+\DoxyCodeLine{├──\ instance/\ \ }
+\DoxyCodeLine{│\ \ \ └──\ crypto\_data.db\ \ }
+\DoxyCodeLine{├──\ main.py\ \ }
+\DoxyCodeLine{└──\ requirements.txt\ \ }
+
+\end{DoxyCode}
+ \hypertarget{md__r_e_a_d_m_e_autotoc_md16}{}\doxysection{\texorpdfstring{⚙️ {\bfseries{Instalação e Execução}}}{⚙️ {\bfseries{Instalação e Execução}}}}\label{md__r_e_a_d_m_e_autotoc_md16}
+
+\begin{DoxyEnumerate}
+\item {\bfseries{Clone o repositório}} ~\newline
+ \`{}\`{}\`{}bash git clone \href{https://github.com/CatiusciScheffer/ControleCriptos}{\texttt{ https\+://github.\+com/\+Catiusci\+Scheffer/\+Controle\+Criptos}}
+\end{DoxyEnumerate}\hypertarget{md__r_e_a_d_m_e_autotoc_md17}{}\doxysection{\texorpdfstring{🌐 {\bfseries{Demonstração Online}}}{🌐 {\bfseries{Demonstração Online}}}}\label{md__r_e_a_d_m_e_autotoc_md17}
+Acesse o projeto hospedado em\+: \href{https://controlecripto-18636635ed0d.herokuapp.com/}{\texttt{ https\+://controlecripto-\/18636635ed0d.\+herokuapp.\+com/}} Controle Criptos
+
+Login para teste\+:
+\begin{DoxyItemize}
+\item E-\/mail\+: \href{mailto:catiusci.ctadigital@gmail.com}{\texttt{ catiusci.\+ctadigital@gmail.\+com}}
+\item Senha\+: Chefa220408\# Ou crie sua própria conta para explorar!
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md18}{}\doxysection{\texorpdfstring{📬 {\bfseries{Contato}}}{📬 {\bfseries{Contato}}}}\label{md__r_e_a_d_m_e_autotoc_md18}
+E-\/mail\+: \href{mailto:cpcscheffer@outlook.com}{\texttt{ cpcscheffer@outlook.\+com}} Linked\+In\+: \href{https://www.linkedin.com/in/catiuscipagnonceli-cienciasdacomputacao/}{\texttt{ https\+://www.\+linkedin.\+com/in/catiuscipagnonceli-\/cienciasdacomputacao/}} 

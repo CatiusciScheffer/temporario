@@ -1,0 +1,107 @@
+\doxysection{Referência à classe cripto\+Control.\+models.\+Price}
+\hypertarget{classcripto_control_1_1models_1_1_price}{}\label{classcripto_control_1_1models_1_1_price}\index{criptoControl.models.Price@{criptoControl.models.Price}}
+
+
+Diagrama de heranças da classe cripto\+Control.\+models.\+Price
+% FIG 0
+
+
+Diagrama de colaboração para cripto\+Control.\+models.\+Price\+:
+% FIG 1
+\doxysubsubsection*{Atributos Públicos Estáticos}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_price_ad07f72e7f9e02c5fc116d259a3a01696}{price\+\_\+id}} = db.\+Column(db.\+Integer, primary\+\_\+key=True)
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_price_a86a3ccafcb3aa05b0b793adaf5408c7c}{price}} = db.\+Column(db.\+Float, nullable=False)
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_price_a1cd064667040b9beffda990f2df16411}{price\+\_\+consult\+\_\+datetime}} = db.\+Column(db.\+String, nullable=False)
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_price_a5af21b9eda1513593ee193021956c353}{price\+\_\+crypto\+\_\+id}} = db.\+Column(db.\+Integer, db.\+Foreign\+Key(\textquotesingle{}cryptocurrencies.\+crypto\+\_\+id\textquotesingle{}), nullable=False)
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_price_aede629480b2b5de1af3128e53abfd298}{price\+\_\+cryptocurrency}} = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classcripto_control_1_1models_1_1_cryptocurrency}{Cryptocurrency}}\textquotesingle{})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Descrição detalhada}
+\begin{DoxyVerb}Representa o preço de uma criptomoeda em um momento específico.
+
+A classe Price mapeia para a tabela 'prices' no banco de dados e armazena informações sobre os preços
+das criptomoedas, incluindo o valor do preço, a data e hora da consulta, e o relacionamento com a criptomoeda
+a qual o preço se refere.
+
+Atributos:
+    price_id (int): Identificador único do registro de preço (chave primária).
+    price (float): Valor do preço da criptomoeda no momento da consulta.
+    price_consult_datetime (str): Data e hora da consulta do preço, armazenado como uma string.
+    price_crypto_id (int): Identificador da criptomoeda à qual o preço se refere (chave estrangeira para a tabela 'cryptocurrencies').
+    price_cryptocurrency (Cryptocurrency): Relacionamento com a criptomoeda associada ao preço. Este atributo facilita a navegação entre os modelos no SQLAlchemy, mas não é armazenado diretamente no banco de dados.
+
+Relacionamentos:
+    price_cryptocurrency (Cryptocurrency): Relacionamento de muitos para um com a tabela 'cryptocurrencies', representando a criptomoeda associada ao preço.
+
+Métodos:
+    __repr__(self): Retorna uma representação legível do preço da criptomoeda, incluindo o nome da criptomoeda e o valor do preço.
+\end{DoxyVerb}
+ 
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00224}{224}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+
+
+\doxysubsection{Documentação dos dados membro}
+\Hypertarget{classcripto_control_1_1models_1_1_price_a86a3ccafcb3aa05b0b793adaf5408c7c}\index{criptoControl.models.Price@{criptoControl.models.Price}!price@{price}}
+\index{price@{price}!criptoControl.models.Price@{criptoControl.models.Price}}
+\doxysubsubsection{\texorpdfstring{price}{price}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_price_a86a3ccafcb3aa05b0b793adaf5408c7c} 
+cripto\+Control.\+models.\+Price.\+price = db.\+Column(db.\+Float, nullable=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00247}{247}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_price_a1cd064667040b9beffda990f2df16411}\index{criptoControl.models.Price@{criptoControl.models.Price}!price\_consult\_datetime@{price\_consult\_datetime}}
+\index{price\_consult\_datetime@{price\_consult\_datetime}!criptoControl.models.Price@{criptoControl.models.Price}}
+\doxysubsubsection{\texorpdfstring{price\_consult\_datetime}{price\_consult\_datetime}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_price_a1cd064667040b9beffda990f2df16411} 
+cripto\+Control.\+models.\+Price.\+price\+\_\+consult\+\_\+datetime = db.\+Column(db.\+String, nullable=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00248}{248}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_price_a5af21b9eda1513593ee193021956c353}\index{criptoControl.models.Price@{criptoControl.models.Price}!price\_crypto\_id@{price\_crypto\_id}}
+\index{price\_crypto\_id@{price\_crypto\_id}!criptoControl.models.Price@{criptoControl.models.Price}}
+\doxysubsubsection{\texorpdfstring{price\_crypto\_id}{price\_crypto\_id}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_price_a5af21b9eda1513593ee193021956c353} 
+cripto\+Control.\+models.\+Price.\+price\+\_\+crypto\+\_\+id = db.\+Column(db.\+Integer, db.\+Foreign\+Key(\textquotesingle{}cryptocurrencies.\+crypto\+\_\+id\textquotesingle{}), nullable=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00249}{249}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_price_aede629480b2b5de1af3128e53abfd298}\index{criptoControl.models.Price@{criptoControl.models.Price}!price\_cryptocurrency@{price\_cryptocurrency}}
+\index{price\_cryptocurrency@{price\_cryptocurrency}!criptoControl.models.Price@{criptoControl.models.Price}}
+\doxysubsubsection{\texorpdfstring{price\_cryptocurrency}{price\_cryptocurrency}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_price_aede629480b2b5de1af3128e53abfd298} 
+cripto\+Control.\+models.\+Price.\+price\+\_\+cryptocurrency = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classcripto_control_1_1models_1_1_cryptocurrency}{Cryptocurrency}}\textquotesingle{})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00250}{250}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_price_ad07f72e7f9e02c5fc116d259a3a01696}\index{criptoControl.models.Price@{criptoControl.models.Price}!price\_id@{price\_id}}
+\index{price\_id@{price\_id}!criptoControl.models.Price@{criptoControl.models.Price}}
+\doxysubsubsection{\texorpdfstring{price\_id}{price\_id}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_price_ad07f72e7f9e02c5fc116d259a3a01696} 
+cripto\+Control.\+models.\+Price.\+price\+\_\+id = db.\+Column(db.\+Integer, primary\+\_\+key=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00246}{246}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+
+
+A documentação para esta classe foi gerada a partir do seguinte ficheiro\+:\begin{DoxyCompactItemize}
+\item 
+cripto\+Control/\mbox{\hyperlink{models_8py}{models.\+py}}\end{DoxyCompactItemize}

@@ -1,0 +1,1116 @@
+\doxysection{transactions\+\_\+routes.\+py}
+\hypertarget{transactions__routes_8py_source}{}\label{transactions__routes_8py_source}\index{criptoControl/routes/transactions\_routes.py@{criptoControl/routes/transactions\_routes.py}}
+\mbox{\hyperlink{transactions__routes_8py}{Ir para a documentação deste ficheiro.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00001}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes}{00001}}\ \textcolor{keyword}{from}\ flask\ \textcolor{keyword}{import}\ Blueprint,\ render\_template,\ url\_for,\ flash,\ request,\ redirect,\ session,\ jsonify,\ request}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00002}00002\ \textcolor{keyword}{from}\ \mbox{\hyperlink{namespacecripto_control_1_1forms}{criptoControl.forms}}\ \textcolor{keyword}{import}\ TransactionsForm,\ AddWalletForm,\ AddCryptoForm}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00003}00003\ \textcolor{keyword}{from}\ \mbox{\hyperlink{namespacecripto_control_1_1models}{criptoControl.models}}\ \textcolor{keyword}{import}\ db,\ Wallet,\ Cryptocurrency,\ WalletBalance,\ Transaction,\ Price}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00004}00004\ \textcolor{keyword}{from}\ flask\_login\ \textcolor{keyword}{import}\ current\_user,\ login\_required}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00005}00005\ \textcolor{keyword}{from}\ sqlalchemy.orm\ \textcolor{keyword}{import}\ sessionmaker,\ joinedload}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00006}00006\ \textcolor{keyword}{from}\ datetime\ \textcolor{keyword}{import}\ datetime}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00007}00007\ \textcolor{keyword}{from}\ math\ \textcolor{keyword}{import}\ ceil}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00010}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_ac1c02e256cac998ebf313c9d1b8b0803}{00010}}\ transaction\_bp\ =\ Blueprint(\textcolor{stringliteral}{'transaction'},\ \_\_name\_\_)}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00012}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a51907abc78dec2948f9481c507811b7f}{00012}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a51907abc78dec2948f9481c507811b7f}{create\_session}}():}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00013}00013\ \ \ \ \ \textcolor{keywordflow}{return}\ sessionmaker(bind=db.engine)()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00016}00016\ \ \ \ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00017}00017\ \textcolor{comment}{\#Página\ que\ lista\ as\ transações}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00018}00018\ \textcolor{preprocessor}{@transaction\_bp.route('/transactions')}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00019}00019\ \textcolor{preprocessor}{@login\_required}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00020}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a799bbf626ed74a9a801b4a285851448a}{00020}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a799bbf626ed74a9a801b4a285851448a}{transactions}}():}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00021}00021\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00022}00022\ \textcolor{stringliteral}{\ \ \ \ Esta\ função\ lida\ com\ a\ exibição\ de\ transações\ para\ o\ usuário\ conectado.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00023}00023\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00024}00024\ \textcolor{stringliteral}{\ \ \ \ Parâmetros:}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00025}00025\ \textcolor{stringliteral}{\ \ \ \ Nenhum}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00026}00026\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00027}00027\ \textcolor{stringliteral}{\ \ \ \ Retorna:}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00028}00028\ \textcolor{stringliteral}{\ \ \ \ render\_template:\ Um\ modelo\ HTML\ renderizado\ com\ transações\ e\ informações\ de\ paginação.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00029}00029\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00030}00030\ \ \ \ \ \textcolor{comment}{\#\ Cria\ uma\ nova\ sessão\ de\ banco\ de\ dados}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00031}00031\ \ \ \ \ session\ =\ \mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a51907abc78dec2948f9481c507811b7f}{create\_session}}()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00033}00033\ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00034}00034\ \ \ \ \ \ \ \ \ user\_id\ =\ current\_user.user\_id\ \ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00036}00036\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Captura\ o\ número\ da\ página\ atual\ da\ query\ string,\ padrão\ é\ 1}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00037}00037\ \ \ \ \ \ \ \ \ page\ =\ request.args.get(\textcolor{stringliteral}{'page'},\ 1,\ type=int)}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00038}00038\ \ \ \ \ \ \ \ \ per\_page\ =\ 10\ \ \textcolor{comment}{\#\ Número\ de\ transações\ por\ página}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00040}00040\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Cria\ a\ consulta\ base}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00041}00041\ \ \ \ \ \ \ \ \ query\ =\ session.query(Transaction).options(}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ joinedload(Transaction.payment\_wallet),}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ joinedload(Transaction.receiving\_wallet),}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ joinedload(Transaction.crypto\_payment),}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ joinedload(Transaction.crypto\_receive),}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ joinedload(Transaction.crypto\_fee)}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00047}00047\ \ \ \ \ \ \ \ \ ).join(}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ Transaction.receiving\_wallet}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00049}00049\ \ \ \ \ \ \ \ \ ).filter(}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ Wallet.wallet\_user\_id\ ==\ user\_id}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00051}00051\ \ \ \ \ \ \ \ \ ).order\_by(}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ Transaction.transaction\_date.desc(),}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ Transaction.transactions\_id.desc()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00054}00054\ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00056}00056\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Total\ de\ transações\ antes\ da\ paginação}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00057}00057\ \ \ \ \ \ \ \ \ total\_transactions\ =\ query.count()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00059}00059\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Aplica\ a\ paginação}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00060}00060\ \ \ \ \ \ \ \ \ cons\_transactions\ =\ query.limit(per\_page).offset((page\ -\/\ 1)\ *\ per\_page).all()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00061}00061\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00062}00062\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Calcula\ o\ total\ de\ páginas}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00063}00063\ \ \ \ \ \ \ \ \ total\_pages\ =\ ceil(total\_transactions\ /\ per\_page)}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00065}00065\ \ \ \ \ \textcolor{keywordflow}{finally}:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00066}00066\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Garante\ que\ a\ sessão\ seja\ fechada\ corretamente}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00067}00067\ \ \ \ \ \ \ \ \ session.close()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00069}00069\ \ \ \ \ \textcolor{comment}{\#\ Renderiza\ o\ template\ com\ as\ transações\ e\ informações\ de\ paginação}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00070}00070\ \ \ \ \ \textcolor{keywordflow}{return}\ render\_template(}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00071}00071\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'operacoes/transactions.html'},\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00072}00072\ \ \ \ \ \ \ \ \ cons\_transactions=cons\_transactions,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00073}00073\ \ \ \ \ \ \ \ \ current\_page=page,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00074}00074\ \ \ \ \ \ \ \ \ total\_pages=total\_pages}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00075}00075\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00076}00076\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00077}00077\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00078}00078\ \textcolor{comment}{\#Pega\ preço\ atual\ da\ morda\ para\ preencher\ campos\ tela\ transsação}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00079}00079\ \textcolor{preprocessor}{@transaction\_bp.route('/get\_price/<int:cryptocurrency\_id>',\ methods=['GET'])}\textcolor{comment}{\#-\/}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00080}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a7020c9e9128c66e957a7d80245673025}{00080}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a7020c9e9128c66e957a7d80245673025}{get\_price}}(cryptocurrency\_id):}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00081}00081\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00082}00082\ \textcolor{stringliteral}{\ \ \ \ Esta\ função\ recupera\ o\ preço\ mais\ recente\ de\ uma\ criptomoeda\ específica.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00083}00083\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00084}00084\ \textcolor{stringliteral}{\ \ \ \ if\ latest\_price:}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00085}00085\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ return\ jsonify(\{'price':\ latest\_price[0]\})}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00086}00086\ \textcolor{stringliteral}{\ \ \ \ Parâmetros:}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00087}00087\ \textcolor{stringliteral}{\ \ \ \ id\_criptomoeda\ (int):\ O\ identificador\ exclusivo\ da\ criptomoeda.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00088}00088\ \textcolor{stringliteral}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00089}00089\ \textcolor{stringliteral}{\ \ \ \ Retorna:}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00090}00090\ \textcolor{stringliteral}{\ \ \ \ JSON:\ Um\ objeto\ JSON\ contendo\ o\ preço\ mais\ recente\ da\ criptomoeda.\ Se\ não\ for\ encontrado\ nenhum\ preço,\ retorna\ 0.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00091}00091\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00092}00092\ \ \ \ \ session\ =\ \mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a51907abc78dec2948f9481c507811b7f}{create\_session}}()\ \ \ \ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00093}00093\ \ \ \ \ \textcolor{comment}{\#\ Busca\ o\ preço\ mais\ recente\ da\ crypto\ selecionada}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00094}00094\ \ \ \ \ latest\_price\ =\ session.query(Price.price).filter(Price.price\_crypto\_id\ ==\ cryptocurrency\_id).order\_by(Price.price\_consult\_datetime.desc()).first()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00096}00096\ \ \ \ \ \textcolor{keywordflow}{if}\ latest\_price:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00097}00097\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ jsonify(\{\textcolor{stringliteral}{'price'}:\ latest\_price[0]\})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00098}00098\ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00099}00099\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ jsonify(\{\textcolor{stringliteral}{'price'}:\ 0\})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00100}00100\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00101}00101\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00102}00102\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00103}00103\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00104}00104\ \textcolor{comment}{\#Fromulário\ de\ adicionar\ transação}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00105}00105\ \textcolor{preprocessor}{@transaction\_bp.route('/add\_transactions')}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00106}00106\ \textcolor{preprocessor}{@login\_required}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00107}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a7e920770a31bf86e7f96513bb8788f86}{00107}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a7e920770a31bf86e7f96513bb8788f86}{add\_transactions}}():\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00108}00108\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00109}00109\ \textcolor{stringliteral}{\ \ \ \ Esta\ função\ renderiza\ o\ modelo\ HTML\ para\ adicionar\ transações.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00110}00110\ \textcolor{stringliteral}{\ \ \ \ Ela\ recupera\ dados\ do\ banco\ de\ dados\ e\ preenche\ o\ formulário\ com\ esses\ dados.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00111}00111\ \textcolor{stringliteral}{\ \ \ \ Se\ houver\ dados\ de\ formulário\ armazenados\ na\ sessão,\ ele\ preenche\ o\ formulário\ com\ esses\ dados\ armazenados.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00112}00112\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00113}00113\ \textcolor{stringliteral}{\ \ \ \ Parâmetros:}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00114}00114\ \textcolor{stringliteral}{\ \ \ \ Nenhum}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00115}00115\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00116}00116\ \textcolor{stringliteral}{\ \ \ \ Retorna:}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00117}00117\ \textcolor{stringliteral}{\ \ \ \ render\_template:\ Um\ modelo\ HTML\ renderizado\ com\ os\ dados\ necessários\ para\ adicionar\ transações.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00118}00118\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00119}00119\ \ \ \ \ formTransactions\ =\ \mbox{\hyperlink{classcripto_control_1_1forms_1_1_transactions_form}{TransactionsForm}}()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00120}00120\ \ \ \ \ formAddWallet\ =\ \mbox{\hyperlink{classcripto_control_1_1forms_1_1_add_wallet_form}{AddWalletForm}}()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00121}00121\ \ \ \ \ formAddCrypto\ =\ \mbox{\hyperlink{classcripto_control_1_1forms_1_1_add_crypto_form}{AddCryptoForm}}()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00122}00122\ \ \ \ \ db\_session\ =\ \mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a51907abc78dec2948f9481c507811b7f}{create\_session}}()\ \ \textcolor{comment}{\#\ Renomeado\ para\ evitar\ conflito\ com\ flask.session}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00123}00123\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00124}00124\ \ \ \ \ \textcolor{keywordflow}{try}:\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00125}00125\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Busca\ as\ informações\ no\ banco}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00126}00126\ \ \ \ \ \ \ \ \ transactions\ =\ db\_session.query(Transaction).all()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00127}00127\ \ \ \ \ \ \ \ \ wallets\ =\ db\_session.query(Wallet).filter(}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ Wallet.wallet\_status==\textcolor{stringliteral}{'N'},}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ Wallet.wallet\_user\_id\ ==\ current\_user.user\_id}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00130}00130\ \ \ \ \ \ \ \ \ ).all()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00131}00131\ \ \ \ \ \ \ \ \ cryptos\ =\ db\_session.query(Cryptocurrency).filter(Cryptocurrency.crypto\_status==\textcolor{stringliteral}{'N'}).order\_by(Cryptocurrency.crypto\_symbol).all()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00132}00132\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00133}00133\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Preencher\ as\ informações\ do\ banco\ no\ HTML}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00134}00134\ \ \ \ \ \ \ \ \ formTransactions.crypto\_payment.choices\ =\ [(\textcolor{stringliteral}{''},\ \textcolor{stringliteral}{''})]\ +\ [(crypto.crypto\_id,\ f\textcolor{stringliteral}{"{}\{crypto.crypto\_symbol\}\ -\/\ (\{crypto.crypto\_name\})"{}})\ \textcolor{keywordflow}{for}\ crypto\ \textcolor{keywordflow}{in}\ cryptos]}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00135}00135\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00136}00136\ \ \ \ \ \ \ \ \ formTransactions.crypto\_fee.choices\ =\ [(\textcolor{stringliteral}{''},\ \textcolor{stringliteral}{''})]\ +\ [(crypto.crypto\_id,\ f\textcolor{stringliteral}{"{}\{crypto.crypto\_symbol\}\ -\/\ (\{crypto.crypto\_name\})"{}})\ \textcolor{keywordflow}{for}\ crypto\ \textcolor{keywordflow}{in}\ cryptos]}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00137}00137\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00138}00138\ \ \ \ \ \ \ \ \ formTransactions.crypto\_receive.choices\ =\ [(\textcolor{stringliteral}{''},\ \textcolor{stringliteral}{''})]\ +\ [(crypto.crypto\_id,\ f\textcolor{stringliteral}{"{}\{crypto.crypto\_symbol\}\ -\/\ (\{crypto.crypto\_name\})"{}})\ \textcolor{keywordflow}{for}\ crypto\ \textcolor{keywordflow}{in}\ cryptos]}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00139}00139\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00140}00140\ \ \ \ \ \ \ \ \ formTransactions.payment\_wallet.choices\ =\ [(\textcolor{stringliteral}{''},\ \textcolor{stringliteral}{''})]\ +\ [(wallet.wallet\_id,\ wallet.wallet\_name)\ \textcolor{keywordflow}{for}\ wallet\ \textcolor{keywordflow}{in}\ wallets]}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00141}00141\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00142}00142\ \ \ \ \ \ \ \ \ formTransactions.receiving\_wallet.choices\ =\ [(\textcolor{stringliteral}{''},\ \textcolor{stringliteral}{''})]\ +\ [(wallet.wallet\_id,\ wallet.wallet\_name)\ \textcolor{keywordflow}{for}\ wallet\ \textcolor{keywordflow}{in}\ wallets]}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00143}00143\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00144}00144\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Verificar\ se\ existem\ dados\ armazenados\ na\ sessão\ para\ recuperar\ preenchimento}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00145}00145\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{stringliteral}{'form\_data'}\ \textcolor{keywordflow}{in}\ session:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ form\_data\ =\ session.pop(\textcolor{stringliteral}{'form\_data'})\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00147}00147\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Preencher\ o\ formulário\ com\ os\ dados\ recuperados}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ formTransactions.transaction\_type.data\ =\ form\_data.get(\textcolor{stringliteral}{'transaction\_type'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ formTransactions.transaction\_date.data\ =\ form\_data.get(\textcolor{stringliteral}{'transaction\_date'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ formTransactions.receiving\_wallet.data\ =\ form\_data.get(\textcolor{stringliteral}{'receiving\_wallet\_id'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ formTransactions.payment\_wallet.data\ =\ form\_data.get(\textcolor{stringliteral}{'payment\_wallet\_id'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ formTransactions.crypto\_payment.data\ =\ form\_data.get(\textcolor{stringliteral}{'crypto\_payment\_id'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ formTransactions.crypto\_payment\_price.data\ =\ form\_data.get(\textcolor{stringliteral}{'crypto\_payment\_price'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ formTransactions.crypto\_payment\_quantity.data\ =\ form\_data.get(\textcolor{stringliteral}{'crypto\_payment\_quantity'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ formTransactions.total\_paid.data\ =\ form\_data.get(\textcolor{stringliteral}{'total\_paid'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ formTransactions.crypto\_receive.data\ =\ form\_data.get(\textcolor{stringliteral}{'crypto\_receive\_id'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ formTransactions.crypto\_receive\_price.data\ =\ form\_data.get(\textcolor{stringliteral}{'crypto\_receive\_price'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ formTransactions.crypto\_receive\_quantity.data\ =\ form\_data.get(\textcolor{stringliteral}{'crypto\_receive\_quantity'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ formTransactions.total\_received.data\ =\ form\_data.get(\textcolor{stringliteral}{'total\_received'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ formTransactions.crypto\_fee.data\ =\ form\_data.get(\textcolor{stringliteral}{'crypto\_fee\_id'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ formTransactions.crypto\_fee\_price.data\ =\ form\_data.get(\textcolor{stringliteral}{'crypto\_fee\_price'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ formTransactions.crypto\_fee\_quantity.data\ =\ form\_data.get(\textcolor{stringliteral}{'crypto\_fee\_quantity'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ formTransactions.total\_fee.data\ =\ form\_data.get(\textcolor{stringliteral}{'total\_fee'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00165}00165\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00166}00166\ \ \ \ \ \textcolor{keywordflow}{finally}:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00167}00167\ \ \ \ \ \ \ \ \ db\_session.close()\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00168}00168\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00169}00169\ \ \ \ \ \textcolor{keywordflow}{return}\ render\_template(\textcolor{stringliteral}{'operacoes/add\_transactions.html'},\ transactions=transactions,\ wallets=wallets,\ cryptos=cryptos,\ formTransactions=formTransactions,\ formAddWallet=formAddWallet,\ formAddCrypto=formAddCrypto)}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00170}00170\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00171}00171\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00172}00172\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00173}00173\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00174}00174\ \textcolor{comment}{\#\ Função\ normalize\_decimal\ (exemplo)}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00175}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a2cb12e0d1f8a89a647f7ccdd8da3507f}{00175}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a2cb12e0d1f8a89a647f7ccdd8da3507f}{normalize\_decimal}}(value):}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00176}00176\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00177}00177\ \textcolor{stringliteral}{\ \ \ \ Função\ para\ substituir\ vírgulas\ por\ pontos\ em\ valores\ numéricos.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00178}00178\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00179}00179\ \textcolor{stringliteral}{\ \ \ \ Parâmetros:}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00180}00180\ \textcolor{stringliteral}{\ \ \ \ value\ (str,\ int,\ float):\ O\ valor\ a\ ser\ normalizado.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00181}00181\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00182}00182\ \textcolor{stringliteral}{\ \ \ \ Retorna:}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00183}00183\ \textcolor{stringliteral}{\ \ \ \ str:\ O\ valor\ normalizado.\ Se\ a\ entrada\ for\ uma\ string,\ substitui\ as\ vírgulas\ por\ pontos.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00184}00184\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ Se\ a\ entrada\ for\ um\ inteiro\ ou\ float,\ converte\ o\ número\ em\ uma\ string.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00185}00185\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ Levanta\ um\ ValueError\ se\ a\ entrada\ for\ de\ um\ tipo\ inesperado.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00186}00186\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00187}00187\ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(value,\ str):}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00188}00188\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ value.replace(\textcolor{stringliteral}{','},\ \textcolor{stringliteral}{'.'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00189}00189\ \ \ \ \ \textcolor{keywordflow}{elif}\ isinstance(value,\ (int,\ float)):}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00190}00190\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ str(value)\ \ \textcolor{comment}{\#\ Converte\ números\ diretamente\ em\ string}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00191}00191\ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00192}00192\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(f\textcolor{stringliteral}{"{}Tipo\ de\ valor\ inesperado:\ \{type(value)\}"{}})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00193}00193\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00194}00194\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00195}00195\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00196}00196\ \textcolor{comment}{\#função\ chamada\ no\ formulário\ de\ adicionar\ transação\ para\ inserir\ a\ transação\ no\ banco}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00197}00197\ \textcolor{preprocessor}{@transaction\_bp.route('/add\_transaction',\ methods=['POST'])}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00198}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a0998e441a0d1093713d300edbb285ea1}{00198}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a0998e441a0d1093713d300edbb285ea1}{add\_transaction}}():}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00199}00199\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00200}00200\ \textcolor{stringliteral}{\ \ \ \ Adiciona\ uma\ nova\ transação\ de\ criptomoedas.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00201}00201\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00202}00202\ \textcolor{stringliteral}{\ \ \ \ Esta\ função\ processa\ os\ dados\ da\ transação\ enviados\ via\ formulário\ e\ realiza\ a\ operação\ correspondente\ com\ base\ no\ tipo\ de\ transação\ }}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00203}00203\ \textcolor{stringliteral}{\ \ \ \ (compra,\ venda,\ saldo\ ou\ transferência).\ A\ função\ também\ normaliza\ e\ converte\ os\ valores\ monetários\ para\ o\ tipo\ float\ antes\ de\ }}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00204}00204\ \textcolor{stringliteral}{\ \ \ \ realizar\ as\ operações.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00205}00205\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00206}00206\ \textcolor{stringliteral}{\ \ \ \ A\ função\ segue\ os\ seguintes\ passos:}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00207}00207\ \textcolor{stringliteral}{\ \ \ \ 1.\ Obtém\ os\ dados\ da\ transação\ do\ formulário.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00208}00208\ \textcolor{stringliteral}{\ \ \ \ 2.\ Normaliza\ e\ converte\ os\ valores\ de\ preço\ e\ quantidade\ para\ float.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00209}00209\ \textcolor{stringliteral}{\ \ \ \ 3.\ Cria\ uma\ sessão\ para\ interagir\ com\ o\ banco\ de\ dados.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00210}00210\ \textcolor{stringliteral}{\ \ \ \ 4.\ Chama\ a\ função\ apropriada\ para\ realizar\ a\ operação\ com\ base\ no\ tipo\ de\ transação.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00211}00211\ \textcolor{stringliteral}{\ \ \ \ 5.\ Em\ caso\ de\ erro,\ reverte\ as\ alterações\ na\ sessão\ e\ exibe\ uma\ mensagem\ de\ erro.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00212}00212\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00213}00213\ \textcolor{stringliteral}{\ \ \ \ Parâmetros:}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00214}00214\ \textcolor{stringliteral}{\ \ \ \ Nenhum.\ A\ função\ obtém\ os\ dados\ diretamente\ do\ formulário\ da\ requisição.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00215}00215\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00216}00216\ \textcolor{stringliteral}{\ \ \ \ Retorna:}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00217}00217\ \textcolor{stringliteral}{\ \ \ \ redirect:\ Redireciona\ para\ a\ página\ de\ adição\ de\ transações\ após\ a\ tentativa\ de\ adicionar\ a\ transação.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00218}00218\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00219}00219\ \textcolor{stringliteral}{\ \ \ \ Exceções:}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00220}00220\ \textcolor{stringliteral}{\ \ \ \ Levanta\ uma\ exceção\ em\ caso\ de\ erro\ durante\ o\ processo\ de\ adição\ da\ transação\ e\ reverte\ as\ alterações\ na\ sessão\ do\ banco\ de\ dados.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00221}00221\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00222}00222\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00223}00223\ \ \ \ \ session\ =\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00224}00224\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00225}00225\ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00226}00226\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Dados\ gerais\ da\ transação}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00227}00227\ \ \ \ \ \ \ \ \ transaction\_type\ =\ request.form.get(\textcolor{stringliteral}{'transaction\_type'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00228}00228\ \ \ \ \ \ \ \ \ transaction\_date\ =\ request.form.get(\textcolor{stringliteral}{'transaction\_date'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00229}00229\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00230}00230\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Dados\ carteiras\ da\ transação\ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00231}00231\ \ \ \ \ \ \ \ \ receiving\_wallet\_id\ =\ request.form.get(\textcolor{stringliteral}{'receiving\_wallet'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00232}00232\ \ \ \ \ \ \ \ \ payment\_wallet\_id\ =\ request.form.get(\textcolor{stringliteral}{'payment\_wallet'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00233}00233\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00234}00234\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Dados\ das\ moedas\ pagadoras}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00235}00235\ \ \ \ \ \ \ \ \ crypto\_payment\_id\ =\ request.form.get(\textcolor{stringliteral}{'crypto\_payment'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00236}00236\ \ \ \ \ \ \ \ \ crypto\_payment\_price\ =\ request.form.get(\textcolor{stringliteral}{'crypto\_payment\_price'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00237}00237\ \ \ \ \ \ \ \ \ crypto\_payment\_quantity\ =\ request.form.get(\textcolor{stringliteral}{'crypto\_payment\_quantity'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00238}00238\ \ \ \ \ \ \ \ \ total\_paid\ =\ request.form.get(\textcolor{stringliteral}{'total\_paid'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00239}00239\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00240}00240\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Normalizando\ e\ convertendo\ para\ float}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00241}00241\ \ \ \ \ \ \ \ \ crypto\_payment\_price\ =\ float(\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a2cb12e0d1f8a89a647f7ccdd8da3507f}{normalize\_decimal}}(crypto\_payment\_price))\ \textcolor{keywordflow}{if}\ crypto\_payment\_price\ \textcolor{keywordflow}{else}\ 0.0}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00242}00242\ \ \ \ \ \ \ \ \ crypto\_payment\_quantity\ =\ float(\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a2cb12e0d1f8a89a647f7ccdd8da3507f}{normalize\_decimal}}(crypto\_payment\_quantity))\ \textcolor{keywordflow}{if}\ crypto\_payment\_quantity\ \textcolor{keywordflow}{else}\ 0.0}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00243}00243\ \ \ \ \ \ \ \ \ total\_paid\ =\ float(\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a2cb12e0d1f8a89a647f7ccdd8da3507f}{normalize\_decimal}}(total\_paid))\ \textcolor{keywordflow}{if}\ total\_paid\ \textcolor{keywordflow}{else}\ 0.0}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00244}00244\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00245}00245\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Dados\ da\ moeda\ recebedora}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00246}00246\ \ \ \ \ \ \ \ \ crypto\_receive\_id\ =\ request.form.get(\textcolor{stringliteral}{'crypto\_receive'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00247}00247\ \ \ \ \ \ \ \ \ crypto\_receive\_price\ =\ request.form.get(\textcolor{stringliteral}{'crypto\_receive\_price'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00248}00248\ \ \ \ \ \ \ \ \ crypto\_receive\_quantity\ =\ request.form.get(\textcolor{stringliteral}{'crypto\_receive\_quantity'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00249}00249\ \ \ \ \ \ \ \ \ total\_received\ =\ request.form.get(\textcolor{stringliteral}{'total\_received'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00250}00250\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00251}00251\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Normalizando\ e\ convertendo\ para\ float}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00252}00252\ \ \ \ \ \ \ \ \ crypto\_receive\_price\ =\ float(\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a2cb12e0d1f8a89a647f7ccdd8da3507f}{normalize\_decimal}}(crypto\_receive\_price))\ \textcolor{keywordflow}{if}\ crypto\_receive\_price\ \textcolor{keywordflow}{else}\ 0.0}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00253}00253\ \ \ \ \ \ \ \ \ crypto\_receive\_quantity\ =\ float(\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a2cb12e0d1f8a89a647f7ccdd8da3507f}{normalize\_decimal}}(crypto\_receive\_quantity))\ \textcolor{keywordflow}{if}\ crypto\_receive\_quantity\ \textcolor{keywordflow}{else}\ 0.0}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00254}00254\ \ \ \ \ \ \ \ \ total\_received\ =\ float(\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a2cb12e0d1f8a89a647f7ccdd8da3507f}{normalize\_decimal}}(total\_received))\ \textcolor{keywordflow}{if}\ total\_received\ \textcolor{keywordflow}{else}\ 0.0}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00255}00255\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00256}00256\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00257}00257\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Dados\ da\ taxa}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00258}00258\ \ \ \ \ \ \ \ \ crypto\_fee\_id\ =\ request.form.get(\textcolor{stringliteral}{'crypto\_fee'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00259}00259\ \ \ \ \ \ \ \ \ crypto\_fee\_price\ =\ request.form.get(\textcolor{stringliteral}{'crypto\_fee\_price'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00260}00260\ \ \ \ \ \ \ \ \ crypto\_fee\_quantity\ =\ request.form.get(\textcolor{stringliteral}{'crypto\_fee\_quantity'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00261}00261\ \ \ \ \ \ \ \ \ total\_fee\ =\ request.form.get(\textcolor{stringliteral}{'total\_fee'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00262}00262\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00263}00263\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Normalizando\ e\ convertendo\ para\ float}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00264}00264\ \ \ \ \ \ \ \ \ crypto\_fee\_price\ =\ float(\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a2cb12e0d1f8a89a647f7ccdd8da3507f}{normalize\_decimal}}(crypto\_fee\_price))\ \textcolor{keywordflow}{if}\ crypto\_fee\_price\ \textcolor{keywordflow}{else}\ 0.0}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00265}00265\ \ \ \ \ \ \ \ \ crypto\_fee\_quantity\ =\ float(\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a2cb12e0d1f8a89a647f7ccdd8da3507f}{normalize\_decimal}}(crypto\_fee\_quantity))\ \textcolor{keywordflow}{if}\ crypto\_fee\_quantity\ \textcolor{keywordflow}{else}\ 0.0}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00266}00266\ \ \ \ \ \ \ \ \ total\_fee\ =\ float(\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a2cb12e0d1f8a89a647f7ccdd8da3507f}{normalize\_decimal}}(total\_fee))\ \textcolor{keywordflow}{if}\ total\_fee\ \textcolor{keywordflow}{else}\ 0.0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00267}00267\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00268}00268\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Cria\ a\ sessão}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00269}00269\ \ \ \ \ \ \ \ \ session\ =\ \mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a51907abc78dec2948f9481c507811b7f}{create\_session}}()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00270}00270\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00271}00271\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Realizar\ operações\ baseadas\ no\ tipo\ de\ transação}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00272}00272\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ transaction\_type\ ==\ \textcolor{stringliteral}{'Compra'}:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00273}00273\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_adec42905ab9e30946975af46bf061e80}{realizar\_compra}}(session,\ transaction\_date,\ payment\_wallet\_id,\ receiving\_wallet\_id,crypto\_payment\_id,\ crypto\_payment\_price,\ crypto\_payment\_quantity,\ total\_paid,crypto\_receive\_id,\ crypto\_receive\_price,\ crypto\_receive\_quantity,\ total\_received,crypto\_fee\_id,\ crypto\_fee\_price,\ crypto\_fee\_quantity,\ total\_fee,transaction\_type=\textcolor{stringliteral}{'Compra'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00274}00274\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ transaction\_type\ ==\ \textcolor{stringliteral}{'Saldo'}:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00275}00275\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a356324d9eae8676bd56625b8748eda7d}{enter\_balance}}(session,\ receiving\_wallet\_id,\ crypto\_receive\_id,\ crypto\_receive\_price,\ crypto\_receive\_quantity,\ total\_received,\ transaction\_date)}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00276}00276\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ transaction\_type\ ==\ \textcolor{stringliteral}{'Venda'}:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00277}00277\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_ae81d1ec5876b560082c0303e45b2004b}{realizar\_venda}}(session,\ transaction\_date,\ payment\_wallet\_id,\ receiving\_wallet\_id,\ crypto\_payment\_id,\ crypto\_payment\_price,\ crypto\_payment\_quantity,\ total\_paid,\ crypto\_receive\_id,\ crypto\_receive\_price,\ crypto\_receive\_quantity,\ total\_received,\ crypto\_fee\_id,\ crypto\_fee\_price,\ crypto\_fee\_quantity,\ total\_fee,\ transaction\_type=\textcolor{stringliteral}{'Venda'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00278}00278\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ transaction\_type\ ==\ \textcolor{stringliteral}{'Transferência'}:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00279}00279\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a4d01550b3acde636bac6dad4f79e0c66}{realizar\_transferencia}}(session,\ transaction\_date,\ payment\_wallet\_id,\ receiving\_wallet\_id,\ crypto\_receive\_id,\ crypto\_receive\_price,\ crypto\_receive\_quantity,\ total\_received,\ crypto\_fee\_id,\ crypto\_fee\_price,\ crypto\_fee\_quantity,\ total\_fee,\ transaction\_type=\textcolor{stringliteral}{'Transferência'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00280}00280\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00281}00281\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00282}00282\ \ \ \ \ \textcolor{keywordflow}{except}\ Exception\ \textcolor{keyword}{as}\ e:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00283}00283\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ session\ \textcolor{keywordflow}{is}\ \textcolor{keywordflow}{not}\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00284}00284\ \ \ \ \ \ \ \ \ \ \ \ \ session.rollback()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00285}00285\ \ \ \ \ \ \ \ \ flash(f\textcolor{stringliteral}{'Erro\ ao\ tentar\ adicionar\ transação:\ \{e\}'},\ \textcolor{stringliteral}{'alert-\/danger'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00286}00286\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00287}00287\ \ \ \ \ \textcolor{keywordflow}{return}\ redirect(url\_for(\textcolor{stringliteral}{'transaction.add\_transactions'}))}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00288}00288\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00289}00289\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00290}00290\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00291}00291\ \textcolor{comment}{\#********\ \ \ \ \ COMPRA\ \ \ \ *******\ \ \ \ \ COMPRA\ \ \ \ ********}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00292}00292\ \textcolor{comment}{\#armazenar\ dados\ do\ formulário\ de\ transações\ para\ qualquer\ transação}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00293}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_ace539ad0b5b24d48f30bb8653e773e64}{00293}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_ace539ad0b5b24d48f30bb8653e773e64}{store\_data}}(transaction\_type,\ receiving\_wallet\_id=None,\ payment\_wallet\_id=None,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00294}00294\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_id=None,\ crypto\_receive\_price=None,\ crypto\_receive\_quantity=None,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00295}00295\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ total\_received=None,\ crypto\_payment\_id=None,\ crypto\_payment\_price=None,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00296}00296\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_payment\_quantity=None,\ total\_paid=None,\ crypto\_fee\_id=None,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00297}00297\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_fee\_price=None,\ crypto\_fee\_quantity=None,\ total\_fee=None,\ transaction\_date=None):}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00298}00298\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00299}00299\ \textcolor{stringliteral}{\ \ \ \ Armazena\ dados\ de\ transação\ na\ sessão.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00300}00300\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00301}00301\ \textcolor{stringliteral}{\ \ \ \ Parâmetros:}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00302}00302\ \textcolor{stringliteral}{\ \ \ \ transaction\_type\ (str):\ O\ tipo\ de\ transação.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00303}00303\ \textcolor{stringliteral}{\ \ \ \ receiving\_wallet\_id\ (int,\ opcional):\ O\ ID\ da\ carteira\ de\ recebimento.\ Padrão\ é\ None.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00304}00304\ \textcolor{stringliteral}{\ \ \ \ payment\_wallet\_id\ (int,\ opcional):\ O\ ID\ da\ carteira\ de\ pagamento.\ Padrão\ é\ None.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00305}00305\ \textcolor{stringliteral}{\ \ \ \ crypto\_receive\_id\ (int,\ opcional):\ O\ ID\ da\ criptomoeda\ recebida.\ Padrão\ é\ None.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00306}00306\ \textcolor{stringliteral}{\ \ \ \ crypto\_receive\_price\ (float,\ opcional):\ O\ preço\ da\ criptomoeda\ recebida.\ Padrão\ é\ None.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00307}00307\ \textcolor{stringliteral}{\ \ \ \ crypto\_receive\_quantity\ (float,\ opcional):\ A\ quantidade\ da\ criptomoeda\ recebida.\ Padrão\ é\ None.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00308}00308\ \textcolor{stringliteral}{\ \ \ \ total\_received\ (float,\ opcional):\ O\ total\ recebido.\ Padrão\ é\ None.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00309}00309\ \textcolor{stringliteral}{\ \ \ \ crypto\_payment\_id\ (int,\ opcional):\ O\ ID\ da\ criptomoeda\ paga.\ Padrão\ é\ None.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00310}00310\ \textcolor{stringliteral}{\ \ \ \ crypto\_payment\_price\ (float,\ opcional):\ O\ preço\ da\ criptomoeda\ paga.\ Padrão\ é\ None.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00311}00311\ \textcolor{stringliteral}{\ \ \ \ crypto\_payment\_quantity\ (float,\ opcional):\ A\ quantidade\ da\ criptomoeda\ paga.\ Padrão\ é\ None.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00312}00312\ \textcolor{stringliteral}{\ \ \ \ total\_paid\ (float,\ opcional):\ O\ total\ pago.\ Padrão\ é\ None.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00313}00313\ \textcolor{stringliteral}{\ \ \ \ crypto\_fee\_id\ (int,\ opcional):\ O\ ID\ da\ criptomoeda\ de\ taxa.\ Padrão\ é\ None.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00314}00314\ \textcolor{stringliteral}{\ \ \ \ crypto\_fee\_price\ (float,\ opcional):\ O\ preço\ da\ criptomoeda\ de\ taxa.\ Padrão\ é\ None.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00315}00315\ \textcolor{stringliteral}{\ \ \ \ crypto\_fee\_quantity\ (float,\ opcional):\ A\ quantidade\ da\ criptomoeda\ de\ taxa.\ Padrão\ é\ None.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00316}00316\ \textcolor{stringliteral}{\ \ \ \ total\_fee\ (float,\ opcional):\ O\ total\ da\ taxa.\ Padrão\ é\ None.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00317}00317\ \textcolor{stringliteral}{\ \ \ \ transaction\_date\ (str,\ opcional):\ A\ data\ da\ transação.\ Padrão\ é\ None.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00318}00318\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00319}00319\ \textcolor{stringliteral}{\ \ \ \ Retorna:}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00320}00320\ \textcolor{stringliteral}{\ \ \ \ None}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00321}00321\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00322}00322\ \ \ \ \ session[\textcolor{stringliteral}{'form\_data'}]\ =\ \{}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00323}00323\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'transaction\_type'}:\ transaction\_type,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00324}00324\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'transaction\_date'}:\ transaction\_date,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00325}00325\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'payment\_wallet\_id'}:\ payment\_wallet\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00326}00326\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'receiving\_wallet\_id'}:\ receiving\_wallet\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00327}00327\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'crypto\_payment\_id'}:\ crypto\_payment\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00328}00328\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'crypto\_payment\_price'}:\ crypto\_payment\_price,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00329}00329\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'crypto\_payment\_quantity'}:\ crypto\_payment\_quantity,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00330}00330\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'total\_paid'}:\ total\_paid,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00331}00331\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'crypto\_receive\_id'}:\ crypto\_receive\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00332}00332\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'crypto\_receive\_price'}:\ crypto\_receive\_price,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00333}00333\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'crypto\_receive\_quantity'}:\ crypto\_receive\_quantity,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00334}00334\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'total\_received'}:\ total\_received,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00335}00335\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'crypto\_fee\_id'}:\ crypto\_fee\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00336}00336\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'crypto\_fee\_price'}:\ crypto\_fee\_price,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00337}00337\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'crypto\_fee\_quantity'}:\ crypto\_fee\_quantity,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00338}00338\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'total\_fee'}:\ total\_fee}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00339}00339\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00340}00340\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00341}00341\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00342}00342\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00343}00343\ \textcolor{comment}{\#esta\ função\ é\ usada\ na\ transação\ da\ compra\ e\ da\ venda}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00344}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a2065076de54c38452f6cf6c5bfa12789}{00344}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a2065076de54c38452f6cf6c5bfa12789}{check\_mandatory\_fields\_in\_purchase}}(payment\_wallet\_id,\ receiving\_wallet\_id,\ crypto\_payment\_id,\ crypto\_payment\_price,\ crypto\_payment\_quantity,\ total\_paid,\ crypto\_receive\_id,\ crypto\_receive\_price,\ crypto\_receive\_quantity,\ total\_received,\ crypto\_fee\_id,\ crypto\_fee\_price,\ crypto\_fee\_quantity,\ total\_fee,\ transaction\_type,\ transaction\_date=None):}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00345}00345\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00346}00346\ \textcolor{stringliteral}{\ \ \ \ Esta\ função\ verifica\ se\ todos\ os\ campos\ obrigatórios\ estão\ preenchidos\ em\ uma\ transação\ de\ compra.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00347}00347\ \textcolor{stringliteral}{\ \ \ \ Se\ algum\ campo\ estiver\ faltando,\ armazena\ os\ dados\ da\ transação\ na\ sessão\ e\ redireciona\ para\ a\ página\ de\ transação\ com\ uma\ mensagem\ de\ erro.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00348}00348\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00349}00349\ \textcolor{stringliteral}{\ \ \ \ Parâmetros:}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00350}00350\ \textcolor{stringliteral}{\ \ \ \ payment\_wallet\_id\ (int):\ O\ ID\ da\ carteira\ de\ pagamento.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00351}00351\ \textcolor{stringliteral}{\ \ \ \ receiving\_wallet\_id\ (int):\ O\ ID\ da\ carteira\ de\ recebimento.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00352}00352\ \textcolor{stringliteral}{\ \ \ \ crypto\_payment\_id\ (int):\ O\ ID\ da\ criptomoeda\ usada\ para\ pagamento.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00353}00353\ \textcolor{stringliteral}{\ \ \ \ crypto\_payment\_price\ (float):\ O\ preço\ da\ criptomoeda\ usada\ para\ pagamento.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00354}00354\ \textcolor{stringliteral}{\ \ \ \ crypto\_payment\_quantity\ (float):\ A\ quantidade\ da\ criptomoeda\ usada\ para\ pagamento.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00355}00355\ \textcolor{stringliteral}{\ \ \ \ total\_paid\ (float):\ O\ total\ pago.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00356}00356\ \textcolor{stringliteral}{\ \ \ \ crypto\_receive\_id\ (int):\ O\ ID\ da\ criptomoeda\ a\ ser\ recebida.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00357}00357\ \textcolor{stringliteral}{\ \ \ \ crypto\_receive\_price\ (float):\ O\ preço\ da\ criptomoeda\ a\ ser\ recebida.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00358}00358\ \textcolor{stringliteral}{\ \ \ \ crypto\_receive\_quantity\ (float):\ A\ quantidade\ da\ criptomoeda\ a\ ser\ recebida.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00359}00359\ \textcolor{stringliteral}{\ \ \ \ total\_received\ (float):\ O\ total\ recebido.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00360}00360\ \textcolor{stringliteral}{\ \ \ \ crypto\_fee\_id\ (int):\ O\ ID\ da\ criptomoeda\ usada\ para\ a\ taxa\ de\ transação.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00361}00361\ \textcolor{stringliteral}{\ \ \ \ crypto\_fee\_price\ (float):\ O\ preço\ da\ criptomoeda\ usada\ para\ a\ taxa\ de\ transação.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00362}00362\ \textcolor{stringliteral}{\ \ \ \ crypto\_fee\_quantity\ (float):\ A\ quantidade\ da\ criptomoeda\ usada\ para\ a\ taxa\ de\ transação.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00363}00363\ \textcolor{stringliteral}{\ \ \ \ total\_fee\ (float):\ A\ taxa\ total\ da\ transação.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00364}00364\ \textcolor{stringliteral}{\ \ \ \ transaction\_type\ (str):\ O\ tipo\ da\ transação.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00365}00365\ \textcolor{stringliteral}{\ \ \ \ transaction\_date\ (str,\ opcional):\ A\ data\ da\ transação.\ Padrão\ é\ None.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00366}00366\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00367}00367\ \textcolor{stringliteral}{\ \ \ \ Retorna:}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00368}00368\ \textcolor{stringliteral}{\ \ \ \ redirect:\ Se\ algum\ campo\ estiver\ faltando,\ redireciona\ para\ a\ página\ de\ transação\ com\ uma\ mensagem\ de\ erro.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00369}00369\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00370}00370\ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ all([payment\_wallet\_id,\ receiving\_wallet\_id,\ crypto\_payment\_id,\ crypto\_payment\_price,\ crypto\_payment\_quantity,\ total\_paid,\ crypto\_receive\_id,\ crypto\_receive\_price,\ crypto\_receive\_quantity,\ total\_received,\ crypto\_fee\_id,\ crypto\_fee\_price,\ crypto\_fee\_quantity,\ total\_fee,\ transaction\_type]):}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00371}00371\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_ace539ad0b5b24d48f30bb8653e773e64}{store\_data}}(}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00372}00372\ \ \ \ \ \ \ \ \ \ \ \ \ transaction\_type=transaction\_type,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00373}00373\ \ \ \ \ \ \ \ \ \ \ \ \ payment\_wallet\_id=payment\_wallet\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00374}00374\ \ \ \ \ \ \ \ \ \ \ \ \ receiving\_wallet\_id=receiving\_wallet\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00375}00375\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_payment\_id=crypto\_payment\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00376}00376\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_payment\_price=crypto\_payment\_price,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00377}00377\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_payment\_quantity=crypto\_payment\_quantity,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00378}00378\ \ \ \ \ \ \ \ \ \ \ \ \ total\_paid=total\_paid,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00379}00379\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_id=crypto\_receive\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00380}00380\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_price=crypto\_receive\_price,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00381}00381\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_quantity=crypto\_receive\_quantity,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00382}00382\ \ \ \ \ \ \ \ \ \ \ \ \ total\_received=total\_received,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00383}00383\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_fee\_id=crypto\_fee\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00384}00384\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_fee\_price=crypto\_fee\_price,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00385}00385\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_fee\_quantity=crypto\_fee\_quantity,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00386}00386\ \ \ \ \ \ \ \ \ \ \ \ \ total\_fee=total\_fee,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00387}00387\ \ \ \ \ \ \ \ \ \ \ \ \ transaction\_date=transaction\_date}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00388}00388\ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00389}00389\ \ \ \ \ \ \ \ \ flash(\textcolor{stringliteral}{'Preencha/Verifique\ todos\ os\ campos!'},\ \textcolor{stringliteral}{'alert-\/danger'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00390}00390\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ redirect(url\_for(\textcolor{stringliteral}{'transaction.add\_transactions'}))}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00391}00391\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00392}00392\ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ transaction\_date:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00393}00393\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_ace539ad0b5b24d48f30bb8653e773e64}{store\_data}}(}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00394}00394\ \ \ \ \ \ \ \ \ \ \ \ \ transaction\_type=transaction\_type,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00395}00395\ \ \ \ \ \ \ \ \ \ \ \ \ payment\_wallet\_id=payment\_wallet\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00396}00396\ \ \ \ \ \ \ \ \ \ \ \ \ receiving\_wallet\_id=receiving\_wallet\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00397}00397\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_payment\_id=crypto\_payment\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00398}00398\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_payment\_price=crypto\_payment\_price,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00399}00399\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_payment\_quantity=crypto\_payment\_quantity,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00400}00400\ \ \ \ \ \ \ \ \ \ \ \ \ total\_paid=total\_paid,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00401}00401\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_id=crypto\_receive\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00402}00402\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_price=crypto\_receive\_price,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00403}00403\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_quantity=crypto\_receive\_quantity,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00404}00404\ \ \ \ \ \ \ \ \ \ \ \ \ total\_received=total\_received,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00405}00405\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_fee\_id=crypto\_fee\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00406}00406\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_fee\_price=crypto\_fee\_price,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00407}00407\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_fee\_quantity=crypto\_fee\_quantity,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00408}00408\ \ \ \ \ \ \ \ \ \ \ \ \ total\_fee=total\_fee}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00409}00409\ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00410}00410\ \ \ \ \ \ \ \ \ flash(\textcolor{stringliteral}{'Preencha\ a\ data!'},\ \textcolor{stringliteral}{'alert-\/danger'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00411}00411\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ redirect(url\_for(\textcolor{stringliteral}{'transaction.add\_transactions'}))}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00412}00412\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00413}00413\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00414}00414\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00415}00415\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00416}00416\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00417}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_adec42905ab9e30946975af46bf061e80}{00417}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_adec42905ab9e30946975af46bf061e80}{realizar\_compra}}(session,\ transaction\_date,\ payment\_wallet\_id,\ receiving\_wallet\_id,\ crypto\_payment\_id,\ crypto\_payment\_price,\ crypto\_payment\_quantity,\ total\_paid,\ crypto\_receive\_id,\ crypto\_receive\_price,\ crypto\_receive\_quantity,\ total\_received,\ crypto\_fee\_id,\ crypto\_fee\_price,\ crypto\_fee\_quantity,\ total\_fee,\ transaction\_type):}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00418}00418\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00419}00419\ \textcolor{stringliteral}{\ \ \ \ Realiza\ uma\ compra\ de\ criptomoedas\ entre\ carteiras.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00420}00420\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00421}00421\ \textcolor{stringliteral}{\ \ \ \ Esta\ função\ verifica\ se\ todos\ os\ campos\ obrigatórios\ estão\ preenchidos\ e\ se\ há\ saldo\ suficiente\ nas\ carteiras\ para\ realizar\ a\ compra.\ }}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00422}00422\ \textcolor{stringliteral}{\ \ \ \ Se\ todas\ as\ condições\ forem\ atendidas,\ a\ transação\ é\ registrada\ no\ banco\ de\ dados\ e\ os\ saldos\ das\ carteiras\ são\ atualizados.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00423}00423\ \textcolor{stringliteral}{\ \ \ \ Caso\ contrário,\ uma\ mensagem\ de\ erro\ é\ exibida\ e\ o\ usuário\ é\ redirecionado\ para\ a\ página\ de\ adição\ de\ transações.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00424}00424\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00425}00425\ \textcolor{stringliteral}{\ \ \ \ Parâmetros:}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00426}00426\ \textcolor{stringliteral}{\ \ \ \ session\ (Session):\ A\ sessão\ do\ banco\ de\ dados\ para\ realizar\ operações.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00427}00427\ \textcolor{stringliteral}{\ \ \ \ transaction\_date\ (str):\ A\ data\ da\ transação\ no\ formato\ 'YYYY-\/MM-\/DD'.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00428}00428\ \textcolor{stringliteral}{\ \ \ \ payment\_wallet\_id\ (str):\ O\ ID\ da\ carteira\ de\ pagamento.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00429}00429\ \textcolor{stringliteral}{\ \ \ \ receiving\_wallet\_id\ (str):\ O\ ID\ da\ carteira\ de\ recebimento.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00430}00430\ \textcolor{stringliteral}{\ \ \ \ crypto\_payment\_id\ (str):\ O\ ID\ da\ criptomoeda\ utilizada\ para\ pagamento.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00431}00431\ \textcolor{stringliteral}{\ \ \ \ crypto\_payment\_price\ (float):\ O\ preço\ da\ criptomoeda\ utilizada\ para\ pagamento.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00432}00432\ \textcolor{stringliteral}{\ \ \ \ crypto\_payment\_quantity\ (float):\ A\ quantidade\ da\ criptomoeda\ a\ ser\ paga.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00433}00433\ \textcolor{stringliteral}{\ \ \ \ total\_paid\ (float):\ O\ total\ pago\ na\ transação.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00434}00434\ \textcolor{stringliteral}{\ \ \ \ crypto\_receive\_id\ (str):\ O\ ID\ da\ criptomoeda\ a\ ser\ recebida.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00435}00435\ \textcolor{stringliteral}{\ \ \ \ crypto\_receive\_price\ (float):\ O\ preço\ da\ criptomoeda\ a\ ser\ recebida.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00436}00436\ \textcolor{stringliteral}{\ \ \ \ crypto\_receive\_quantity\ (float):\ A\ quantidade\ da\ criptomoeda\ a\ ser\ recebida.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00437}00437\ \textcolor{stringliteral}{\ \ \ \ total\_received\ (float):\ O\ total\ recebido\ na\ transação.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00438}00438\ \textcolor{stringliteral}{\ \ \ \ crypto\_fee\_id\ (str):\ O\ ID\ da\ criptomoeda\ utilizada\ para\ pagamento\ da\ taxa.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00439}00439\ \textcolor{stringliteral}{\ \ \ \ crypto\_fee\_price\ (float):\ O\ preço\ da\ criptomoeda\ utilizada\ para\ pagamento\ da\ taxa.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00440}00440\ \textcolor{stringliteral}{\ \ \ \ crypto\_fee\_quantity\ (float):\ A\ quantidade\ da\ criptomoeda\ utilizada\ para\ pagamento\ da\ taxa.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00441}00441\ \textcolor{stringliteral}{\ \ \ \ total\_fee\ (float):\ O\ total\ da\ taxa\ da\ transação.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00442}00442\ \textcolor{stringliteral}{\ \ \ \ transaction\_type\ (str):\ O\ tipo\ da\ transação\ (por\ exemplo,\ "{}compra"{}).}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00443}00443\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00444}00444\ \textcolor{stringliteral}{\ \ \ \ Retorna:}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00445}00445\ \textcolor{stringliteral}{\ \ \ \ redirect:\ Redireciona\ para\ a\ página\ de\ adição\ de\ transações\ se\ houver\ saldo\ insuficiente\ ou\ se\ algum\ campo\ obrigatório\ não\ estiver\ preenchido.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00446}00446\ \textcolor{stringliteral}{\ \ \ \ Caso\ contrário,\ não\ retorna\ nada.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00447}00447\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00448}00448\ \textcolor{stringliteral}{\ \ \ \ Exceções:}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00449}00449\ \textcolor{stringliteral}{\ \ \ \ Levanta\ uma\ exceção\ em\ caso\ de\ erro\ durante\ o\ processo\ de\ compra\ e\ reverte\ as\ alterações\ na\ sessão\ do\ banco\ de\ dados.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00450}00450\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00451}00451\ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00452}00452\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Verificar\ campos\ obrigatórios}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00453}00453\ \ \ \ \ \ \ \ \ redirect\_result\_com\ =\ \mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a2065076de54c38452f6cf6c5bfa12789}{check\_mandatory\_fields\_in\_purchase}}(payment\_wallet\_id,\ receiving\_wallet\_id,\ crypto\_payment\_id,\ crypto\_payment\_price,\ crypto\_payment\_quantity,\ total\_paid,\ crypto\_receive\_id,\ crypto\_receive\_price,\ crypto\_receive\_quantity,\ total\_received,\ crypto\_fee\_id,\ crypto\_fee\_price,\ crypto\_fee\_quantity,\ total\_fee,\ transaction\_type,\ transaction\_date)}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00454}00454\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ redirect\_result\_com:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00455}00455\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ redirect\_result\_com}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00456}00456\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00457}00457\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Carteira\ de\ pagamento}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00458}00458\ \ \ \ \ \ \ \ \ payment\_wallet\ =\ session.query(WalletBalance).filter\_by(balance\_wallet\_id=payment\_wallet\_id,\ balance\_crypto\_id=crypto\_payment\_id).first()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00459}00459\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Carteira\ de\ recebimento}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00460}00460\ \ \ \ \ \ \ \ \ receiving\_wallet\ =\ session.query(WalletBalance).filter\_by(balance\_wallet\_id=receiving\_wallet\_id,\ balance\_crypto\_id=crypto\_receive\_id).first()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00461}00461\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00462}00462\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00463}00463\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Consulta\ se\ tem\ saldo\ suficiente\ para\ a\ taxa\ na\ carteira\ da\ transação}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00464}00464\ \ \ \ \ \ \ \ \ fee\_wallet\_balance\ =\ session.query(WalletBalance).filter\_by(}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00465}00465\ \ \ \ \ \ \ \ \ \ \ \ \ balance\_wallet\_id=payment\_wallet\_id,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00466}00466\ \ \ \ \ \ \ \ \ \ \ \ \ balance\_crypto\_id=crypto\_fee\_id}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00467}00467\ \ \ \ \ \ \ \ \ ).first()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00468}00468\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00469}00469\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Consulta\ saldo\ da\ moeda\ pagadora\ na\ carteira\ da\ transação}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00470}00470\ \ \ \ \ \ \ \ \ crypto\_wallet\_balance\ =\ session.query(WalletBalance).filter\_by(}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00471}00471\ \ \ \ \ \ \ \ \ \ \ \ \ balance\_wallet\_id=payment\_wallet\_id,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00472}00472\ \ \ \ \ \ \ \ \ \ \ \ \ balance\_crypto\_id=crypto\_payment\_id}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00473}00473\ \ \ \ \ \ \ \ \ ).first()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00474}00474\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00475}00475\ \ \ \ \ \ \ \ \ saldo\_pagto\_tran\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00476}00476\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00477}00477\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ crypto\_payment\_id\ !=\ crypto\_fee\_id:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00478}00478\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ fee\_wallet\_balance\ \textcolor{keywordflow}{and}\ crypto\_wallet\_balance:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00479}00479\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ saldo\_pagto\_tran\ =\ (fee\_wallet\_balance.balance\ >=\ crypto\_fee\_quantity)\ \textcolor{keywordflow}{and}\ (crypto\_wallet\_balance.balance\ >=\ crypto\_payment\_quantity)}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00480}00480\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00481}00481\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ fee\_wallet\_balance\ \textcolor{keywordflow}{and}\ crypto\_wallet\_balance:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00482}00482\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ saldo\_pagto\_tran\ =\ (crypto\_wallet\_balance.balance\ >=\ (crypto\_fee\_quantity\ +\ crypto\_payment\_quantity))}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00483}00483\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00484}00484\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Verifica\ se\ tem\ saldo\ da\ crypto\ da\ taxa}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00485}00485\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ saldo\_pagto\_tran:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00486}00486\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00487}00487\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Criar\ a\ transação}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00488}00488\ \ \ \ \ \ \ \ \ \ \ \ \ transaction\ =\ \mbox{\hyperlink{classcripto_control_1_1models_1_1_transaction}{Transaction}}(}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00489}00489\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ transaction\_type=transaction\_type,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00490}00490\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ transaction\_date=datetime.strptime(transaction\_date,\ \textcolor{stringliteral}{'\%Y-\/\%m-\/\%d'}),\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00491}00491\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ payment\_wallet\_id=payment\_wallet\_id,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00492}00492\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ receiving\_wallet\_id=receiving\_wallet\_id,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00493}00493\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_payment\_id=crypto\_payment\_id,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00494}00494\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_payment\_price=crypto\_payment\_price,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00495}00495\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_payment\_quantity=crypto\_payment\_quantity,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00496}00496\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ total\_paid=total\_paid,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00497}00497\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_id=crypto\_receive\_id,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00498}00498\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_price=crypto\_receive\_price,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00499}00499\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_quantity=crypto\_receive\_quantity,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00500}00500\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ total\_received=total\_received,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00501}00501\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_fee\_id=crypto\_fee\_id,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00502}00502\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_fee\_price=crypto\_fee\_price,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00503}00503\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_fee\_quantity=crypto\_fee\_quantity,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00504}00504\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ total\_fee=total\_fee}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00505}00505\ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00506}00506\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00507}00507\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Registrar\ a\ transação}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00508}00508\ \ \ \ \ \ \ \ \ \ \ \ \ session.add(transaction)}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00509}00509\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00510}00510\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Atualizar\ saldo\ das\ carteiras}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00511}00511\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ fee\_wallet\_balance:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00512}00512\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fee\_wallet\_balance.balance\ -\/=\ crypto\_fee\_quantity}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00513}00513\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00514}00514\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ crypto\_wallet\_balance:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00515}00515\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_wallet\_balance.balance\ -\/=\ crypto\_payment\_quantity}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00516}00516\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00517}00517\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ receiving\_wallet:\ \textcolor{comment}{\#\ carteira\ de\ recebimento\ existe}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00518}00518\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ receiving\_wallet.balance\ +=\ crypto\_receive\_quantity}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00519}00519\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00520}00520\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Se\ a\ crypto\ não\ existe\ em\ balance,\ insere}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00521}00521\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ novo\_saldo\ =\ \mbox{\hyperlink{classcripto_control_1_1models_1_1_wallet_balance}{WalletBalance}}(}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00522}00522\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ balance\_wallet\_id=receiving\_wallet\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00523}00523\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ balance\_crypto\_id=crypto\_receive\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00524}00524\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ balance=crypto\_receive\_quantity}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00525}00525\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00526}00526\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ session.add(novo\_saldo)}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00527}00527\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00528}00528\ \ \ \ \ \ \ \ \ \ \ \ \ session.commit()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00529}00529\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00530}00530\ \ \ \ \ \ \ \ \ \ \ \ \ flash(\textcolor{stringliteral}{'Transação\ realizada\ com\ sucesso!'},\ \textcolor{stringliteral}{'alert-\/success'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00531}00531\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00532}00532\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_ace539ad0b5b24d48f30bb8653e773e64}{store\_data}}(}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00533}00533\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ transaction\_type=transaction\_type,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00534}00534\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ payment\_wallet\_id=payment\_wallet\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00535}00535\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ receiving\_wallet\_id=receiving\_wallet\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00536}00536\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_payment\_id=crypto\_payment\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00537}00537\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_payment\_price=crypto\_payment\_price,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00538}00538\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_payment\_quantity=crypto\_payment\_quantity,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00539}00539\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ total\_paid=total\_paid,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00540}00540\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_id=crypto\_receive\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00541}00541\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_price=crypto\_receive\_price,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00542}00542\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_quantity=crypto\_receive\_quantity,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00543}00543\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ total\_received=total\_received,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00544}00544\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_fee\_id=crypto\_fee\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00545}00545\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_fee\_price=crypto\_fee\_price,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00546}00546\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_fee\_quantity=crypto\_fee\_quantity,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00547}00547\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ total\_fee=total\_fee,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00548}00548\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ transaction\_date=transaction\_date}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00549}00549\ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00550}00550\ \ \ \ \ \ \ \ \ \ \ \ \ flash(\textcolor{stringliteral}{'Saldo\ Insuficiente'},\ \textcolor{stringliteral}{'alert-\/danger'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00551}00551\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ redirect(url\_for(\textcolor{stringliteral}{'transaction.add\_transactions'}))}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00552}00552\ \ \ \ \ \textcolor{keywordflow}{except}\ Exception\ \textcolor{keyword}{as}\ e:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00553}00553\ \ \ \ \ \ \ \ \ session.rollback()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00554}00554\ \ \ \ \ \ \ \ \ flash(f\textcolor{stringliteral}{'Erro\ na\ Transação\ de\ Compra:\ \{e\}'},\ \textcolor{stringliteral}{'alert-\/danger'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00555}00555\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00556}00556\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00557}00557\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00558}00558\ \textcolor{comment}{\#********\ \ \ \ \ SALDO\ \ \ \ *******\ \ \ \ \ SALDO\ \ \ \ ********}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00559}00559\ \textcolor{comment}{\#verifica\ campos\ obrigatórios}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00560}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a47dc4dc03fd0c904e075cb91ea8523e6}{00560}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a47dc4dc03fd0c904e075cb91ea8523e6}{check\_mandatory\_fields\_in\_balance}}(receiving\_wallet\_id,\ crypto\_receive\_id,\ crypto\_receive\_price,\ crypto\_receive\_quantity,\ total\_received,\ transaction\_date=None):}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00561}00561\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00562}00562\ \textcolor{stringliteral}{\ \ \ \ Esta\ função\ verifica\ se\ todos\ os\ campos\ obrigatórios\ para\ uma\ transação\ de\ saldo\ estão\ preenchidos.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00563}00563\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00564}00564\ \textcolor{stringliteral}{\ \ \ \ Parâmetros:}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00565}00565\ \textcolor{stringliteral}{\ \ \ \ receiving\_wallet\_id\ (int):\ O\ ID\ da\ carteira\ recebendo.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00566}00566\ \textcolor{stringliteral}{\ \ \ \ crypto\_receive\_id\ (int):\ O\ ID\ da\ criptomoeda\ a\ ser\ recebida.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00567}00567\ \textcolor{stringliteral}{\ \ \ \ crypto\_receive\_price\ (float):\ O\ preço\ da\ criptomoeda\ a\ ser\ recebida.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00568}00568\ \textcolor{stringliteral}{\ \ \ \ crypto\_receive\_quantity\ (float):\ A\ quantidade\ da\ criptomoeda\ a\ ser\ recebida.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00569}00569\ \textcolor{stringliteral}{\ \ \ \ total\_received\ (float):\ O\ total\ recebido.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00570}00570\ \textcolor{stringliteral}{\ \ \ \ transaction\_date\ (str,\ opcional):\ A\ data\ da\ transação.\ Padrão\ é\ None.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00571}00571\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00572}00572\ \textcolor{stringliteral}{\ \ \ \ Retorna:}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00573}00573\ \textcolor{stringliteral}{\ \ \ \ Se\ algum\ campo\ obrigatório\ estiver\ faltando\ ou\ a\ data\ da\ transação\ não\ for\ fornecida,\ redireciona\ para\ a\ página\ 'add\_transactions'\ com\ uma\ mensagem\ de\ aviso.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00574}00574\ \textcolor{stringliteral}{\ \ \ \ Se\ todos\ os\ campos\ obrigatórios\ estiverem\ preenchidos\ e\ a\ data\ da\ transação\ for\ fornecida,\ retorna\ None.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00575}00575\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00576}00576\ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ all([receiving\_wallet\_id,\ crypto\_receive\_id,\ crypto\_receive\_price,\ crypto\_receive\_quantity,\ total\_received]):}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00577}00577\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_ace539ad0b5b24d48f30bb8653e773e64}{store\_data}}(}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00578}00578\ \ \ \ \ \ \ \ \ \ \ \ \ transaction\_type=\textcolor{stringliteral}{'Saldo'},}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00579}00579\ \ \ \ \ \ \ \ \ \ \ \ \ receiving\_wallet\_id=receiving\_wallet\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00580}00580\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_id=crypto\_receive\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00581}00581\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_price=crypto\_receive\_price,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00582}00582\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_quantity=crypto\_receive\_quantity,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00583}00583\ \ \ \ \ \ \ \ \ \ \ \ \ total\_received=total\_received,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00584}00584\ \ \ \ \ \ \ \ \ \ \ \ \ transaction\_date=transaction\_date}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00585}00585\ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00586}00586\ \ \ \ \ \ \ \ \ flash(\textcolor{stringliteral}{'Preencha/Verifique\ todos\ os\ campos!'},\ \textcolor{stringliteral}{'alert-\/danger'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00587}00587\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ redirect(url\_for(\textcolor{stringliteral}{'transaction.add\_transactions'}))}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00588}00588\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00589}00589\ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ transaction\_date:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00590}00590\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_ace539ad0b5b24d48f30bb8653e773e64}{store\_data}}(}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00591}00591\ \ \ \ \ \ \ \ \ \ \ \ \ transaction\_type=\textcolor{stringliteral}{'Saldo'},}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00592}00592\ \ \ \ \ \ \ \ \ \ \ \ \ receiving\_wallet\_id=receiving\_wallet\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00593}00593\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_id=crypto\_receive\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00594}00594\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_price=crypto\_receive\_price,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00595}00595\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_quantity=crypto\_receive\_quantity,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00596}00596\ \ \ \ \ \ \ \ \ \ \ \ \ total\_received=total\_received}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00597}00597\ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00598}00598\ \ \ \ \ \ \ \ \ flash(\textcolor{stringliteral}{'Preencha\ a\ data!'},\ \textcolor{stringliteral}{'alert-\/danger'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00599}00599\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ redirect(url\_for(\textcolor{stringliteral}{'transaction.add\_transactions'}))}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00600}00600\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00601}00601\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00602}00602\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00603}00603\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00604}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a356324d9eae8676bd56625b8748eda7d}{00604}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a356324d9eae8676bd56625b8748eda7d}{enter\_balance}}(db\_session,\ receiving\_wallet\_id,\ crypto\_receive\_id,\ crypto\_receive\_price,\ crypto\_receive\_quantity,\ total\_received,\ transaction\_date):}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00605}00605\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00606}00606\ \textcolor{stringliteral}{\ \ \ \ Esta\ função\ é\ usada\ para\ adicionar\ um\ saldo\ a\ uma\ carteira\ específica\ para\ uma\ criptomoeda\ específica.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00607}00607\ \textcolor{stringliteral}{\ \ \ \ Ela\ cria\ um\ registro\ de\ transação\ e\ atualiza\ o\ saldo\ da\ carteira.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00608}00608\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00609}00609\ \textcolor{stringliteral}{\ \ \ \ Parâmetros:}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00610}00610\ \textcolor{stringliteral}{\ \ \ \ db\_session\ (Sessão\ SQLAlchemy):\ O\ objeto\ de\ sessão\ do\ banco\ de\ dados.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00611}00611\ \textcolor{stringliteral}{\ \ \ \ receiving\_wallet\_id\ (int):\ O\ ID\ da\ carteira\ que\ receberá\ o\ saldo.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00612}00612\ \textcolor{stringliteral}{\ \ \ \ crypto\_receive\_id\ (int):\ O\ ID\ da\ criptomoeda\ que\ será\ recebida.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00613}00613\ \textcolor{stringliteral}{\ \ \ \ crypto\_receive\_price\ (float):\ O\ preço\ da\ criptomoeda\ que\ será\ recebida.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00614}00614\ \textcolor{stringliteral}{\ \ \ \ crypto\_receive\_quantity\ (float):\ A\ quantidade\ da\ criptomoeda\ que\ será\ recebida.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00615}00615\ \textcolor{stringliteral}{\ \ \ \ total\_received\ (float):\ O\ valor\ total\ recebido\ na\ transação.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00616}00616\ \textcolor{stringliteral}{\ \ \ \ transaction\_date\ (str):\ A\ data\ da\ transação\ no\ formato\ 'YYYY-\/MM-\/DD'.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00617}00617\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00618}00618\ \textcolor{stringliteral}{\ \ \ \ Retorna:}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00619}00619\ \textcolor{stringliteral}{\ \ \ \ None}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00620}00620\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00621}00621\ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00622}00622\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Verificar\ campos\ obrigatórios}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00623}00623\ \ \ \ \ \ \ \ \ redirect\_result\ =\ \mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a47dc4dc03fd0c904e075cb91ea8523e6}{check\_mandatory\_fields\_in\_balance}}(receiving\_wallet\_id,\ crypto\_receive\_id,\ crypto\_receive\_price,\ crypto\_receive\_quantity,\ total\_received,\ transaction\_date)}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00624}00624\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ redirect\_result:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00625}00625\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ redirect\_result}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00626}00626\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00627}00627\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Obter\ o\ saldo\ atual\ da\ carteira\ para\ a\ criptomoeda\ específica}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00628}00628\ \ \ \ \ \ \ \ \ balance\_wallet\ =\ db\_session.query(WalletBalance).filter\_by(balance\_wallet\_id=receiving\_wallet\_id,\ balance\_crypto\_id=crypto\_receive\_id).first()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00629}00629\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00630}00630\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Criar\ um\ registro\ de\ transação}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00631}00631\ \ \ \ \ \ \ \ \ transaction\ =\ \mbox{\hyperlink{classcripto_control_1_1models_1_1_transaction}{Transaction}}(}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00632}00632\ \ \ \ \ \ \ \ \ \ \ \ \ transaction\_type=\textcolor{stringliteral}{'Saldo'},}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00633}00633\ \ \ \ \ \ \ \ \ \ \ \ \ transaction\_date=datetime.strptime(transaction\_date,\ \textcolor{stringliteral}{'\%Y-\/\%m-\/\%d'}),}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00634}00634\ \ \ \ \ \ \ \ \ \ \ \ \ receiving\_wallet\_id=receiving\_wallet\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00635}00635\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_id=crypto\_receive\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00636}00636\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_price=crypto\_receive\_price,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00637}00637\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_quantity=crypto\_receive\_quantity,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00638}00638\ \ \ \ \ \ \ \ \ \ \ \ \ total\_received=total\_received}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00639}00639\ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00640}00640\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00641}00641\ \ \ \ \ \ \ \ \ db\_session.add(transaction)}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00642}00642\ \ \ \ \ \ \ \ \ db\_session.commit()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00643}00643\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00644}00644\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Atualizar\ o\ saldo\ da\ carteira}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00645}00645\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ balance\_wallet:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00646}00646\ \ \ \ \ \ \ \ \ \ \ \ \ balance\_wallet.balance\ +=\ crypto\_receive\_quantity}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00647}00647\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00648}00648\ \ \ \ \ \ \ \ \ \ \ \ \ novo\_saldo\ =\ \mbox{\hyperlink{classcripto_control_1_1models_1_1_wallet_balance}{WalletBalance}}(}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00649}00649\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ balance\_wallet\_id=receiving\_wallet\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00650}00650\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ balance\_crypto\_id=crypto\_receive\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00651}00651\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ balance=crypto\_receive\_quantity}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00652}00652\ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00653}00653\ \ \ \ \ \ \ \ \ \ \ \ \ db\_session.add(novo\_saldo)}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00654}00654\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00655}00655\ \ \ \ \ \ \ \ \ db\_session.commit()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00656}00656\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00657}00657\ \ \ \ \ \ \ \ \ flash(\textcolor{stringliteral}{'Saldo\ adicionado\ com\ sucesso!'},\ \textcolor{stringliteral}{'alert-\/success'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00658}00658\ \ \ \ \ \textcolor{keywordflow}{except}\ Exception\ \textcolor{keyword}{as}\ e:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00659}00659\ \ \ \ \ \ \ \ \ db\_session.rollback()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00660}00660\ \ \ \ \ \ \ \ \ flash(f\textcolor{stringliteral}{'Erro\ na\ Transação\ de\ Compra:\ \{e\}'},\ \textcolor{stringliteral}{'alert-\/danger'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00661}00661\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00662}00662\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00663}00663\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00664}00664\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00665}00665\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00666}00666\ \textcolor{comment}{\#************************************************************************************************}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00667}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_ae81d1ec5876b560082c0303e45b2004b}{00667}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_ae81d1ec5876b560082c0303e45b2004b}{realizar\_venda}}(session,\ transaction\_date,\ payment\_wallet\_id,\ receiving\_wallet\_id,\ crypto\_payment\_id,\ crypto\_payment\_price,\ crypto\_payment\_quantity,\ total\_paid,\ crypto\_receive\_id,\ crypto\_receive\_price,\ crypto\_receive\_quantity,\ total\_received,\ crypto\_fee\_id,\ crypto\_fee\_price,\ crypto\_fee\_quantity,\ total\_fee,\ transaction\_type):}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00668}00668\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00669}00669\ \textcolor{stringliteral}{\ \ \ \ Realiza\ uma\ venda\ de\ criptomoedas\ entre\ carteiras.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00670}00670\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00671}00671\ \textcolor{stringliteral}{\ \ \ \ Esta\ função\ verifica\ se\ todos\ os\ campos\ obrigatórios\ estão\ preenchidos\ e\ se\ há\ saldo\ suficiente\ nas\ carteiras\ para\ realizar\ a\ venda.\ }}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00672}00672\ \textcolor{stringliteral}{\ \ \ \ Se\ todas\ as\ condições\ forem\ atendidas,\ a\ transação\ é\ registrada\ no\ banco\ de\ dados\ e\ os\ saldos\ das\ carteiras\ são\ atualizados.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00673}00673\ \textcolor{stringliteral}{\ \ \ \ Caso\ contrário,\ uma\ mensagem\ de\ erro\ é\ exibida\ e\ o\ usuário\ é\ redirecionado\ para\ a\ página\ de\ adição\ de\ transações.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00674}00674\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00675}00675\ \textcolor{stringliteral}{\ \ \ \ Parâmetros:}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00676}00676\ \textcolor{stringliteral}{\ \ \ \ session\ (Session):\ A\ sessão\ do\ banco\ de\ dados\ para\ realizar\ operações.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00677}00677\ \textcolor{stringliteral}{\ \ \ \ transaction\_date\ (str):\ A\ data\ da\ transação\ no\ formato\ 'YYYY-\/MM-\/DD'.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00678}00678\ \textcolor{stringliteral}{\ \ \ \ payment\_wallet\_id\ (str):\ O\ ID\ da\ carteira\ de\ pagamento.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00679}00679\ \textcolor{stringliteral}{\ \ \ \ receiving\_wallet\_id\ (str):\ O\ ID\ da\ carteira\ de\ recebimento.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00680}00680\ \textcolor{stringliteral}{\ \ \ \ crypto\_payment\_id\ (str):\ O\ ID\ da\ criptomoeda\ utilizada\ para\ pagamento.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00681}00681\ \textcolor{stringliteral}{\ \ \ \ crypto\_payment\_price\ (float):\ O\ preço\ da\ criptomoeda\ utilizada\ para\ pagamento.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00682}00682\ \textcolor{stringliteral}{\ \ \ \ crypto\_payment\_quantity\ (float):\ A\ quantidade\ da\ criptomoeda\ a\ ser\ paga.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00683}00683\ \textcolor{stringliteral}{\ \ \ \ total\_paid\ (float):\ O\ total\ pago\ na\ transação.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00684}00684\ \textcolor{stringliteral}{\ \ \ \ crypto\_receive\_id\ (str):\ O\ ID\ da\ criptomoeda\ a\ ser\ recebida.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00685}00685\ \textcolor{stringliteral}{\ \ \ \ crypto\_receive\_price\ (float):\ O\ preço\ da\ criptomoeda\ a\ ser\ recebida.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00686}00686\ \textcolor{stringliteral}{\ \ \ \ crypto\_receive\_quantity\ (float):\ A\ quantidade\ da\ criptomoeda\ a\ ser\ recebida.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00687}00687\ \textcolor{stringliteral}{\ \ \ \ total\_received\ (float):\ O\ total\ recebido\ na\ transação.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00688}00688\ \textcolor{stringliteral}{\ \ \ \ crypto\_fee\_id\ (str):\ O\ ID\ da\ criptomoeda\ utilizada\ para\ pagamento\ da\ taxa.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00689}00689\ \textcolor{stringliteral}{\ \ \ \ crypto\_fee\_price\ (float):\ O\ preço\ da\ criptomoeda\ utilizada\ para\ pagamento\ da\ taxa.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00690}00690\ \textcolor{stringliteral}{\ \ \ \ crypto\_fee\_quantity\ (float):\ A\ quantidade\ da\ criptomoeda\ utilizada\ para\ pagamento\ da\ taxa.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00691}00691\ \textcolor{stringliteral}{\ \ \ \ total\_fee\ (float):\ O\ total\ da\ taxa\ da\ transação.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00692}00692\ \textcolor{stringliteral}{\ \ \ \ transaction\_type\ (str):\ O\ tipo\ da\ transação\ (por\ exemplo,\ "{}venda"{}).}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00693}00693\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00694}00694\ \textcolor{stringliteral}{\ \ \ \ Retorna:}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00695}00695\ \textcolor{stringliteral}{\ \ \ \ redirect:\ Redireciona\ para\ a\ página\ de\ adição\ de\ transações\ se\ houver\ saldo\ insuficiente\ ou\ se\ algum\ campo\ obrigatório\ não\ estiver\ preenchido.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00696}00696\ \textcolor{stringliteral}{\ \ \ \ Caso\ contrário,\ não\ retorna\ nada.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00697}00697\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00698}00698\ \textcolor{stringliteral}{\ \ \ \ Exceções:}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00699}00699\ \textcolor{stringliteral}{\ \ \ \ Levanta\ uma\ exceção\ em\ caso\ de\ erro\ durante\ o\ processo\ de\ venda\ e\ reverte\ as\ alterações\ na\ sessão\ do\ banco\ de\ dados.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00700}00700\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00701}00701\ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00702}00702\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00703}00703\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Verificar\ campos\ obrigatórios}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00704}00704\ \ \ \ \ \ \ \ \ redirect\_result\_com\ =\ \mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a2065076de54c38452f6cf6c5bfa12789}{check\_mandatory\_fields\_in\_purchase}}(payment\_wallet\_id,\ receiving\_wallet\_id,\ crypto\_payment\_id,\ crypto\_payment\_price,\ crypto\_payment\_quantity,\ total\_paid,\ crypto\_receive\_id,\ crypto\_receive\_price,\ crypto\_receive\_quantity,\ total\_received,\ crypto\_fee\_id,\ crypto\_fee\_price,\ crypto\_fee\_quantity,\ total\_fee,\ transaction\_type,\ transaction\_date)}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00705}00705\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ redirect\_result\_com:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00706}00706\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ redirect\_result\_com}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00707}00707\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00708}00708\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Carteira\ de\ pagamento}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00709}00709\ \ \ \ \ \ \ \ \ payment\_wallet\ =\ session.query(WalletBalance).filter\_by(balance\_wallet\_id=payment\_wallet\_id,\ balance\_crypto\_id=crypto\_payment\_id).first()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00710}00710\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Carteira\ de\ recebimento}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00711}00711\ \ \ \ \ \ \ \ \ receiving\_wallet\ =\ session.query(WalletBalance).filter\_by(balance\_wallet\_id=receiving\_wallet\_id,\ balance\_crypto\_id=crypto\_receive\_id).first()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00712}00712\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00713}00713\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Consulta\ se\ tem\ saldo\ suficiente\ para\ a\ taxa\ na\ carteira\ da\ transação}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00714}00714\ \ \ \ \ \ \ \ \ fee\_wallet\_balance\ =\ session.query(WalletBalance).filter\_by(}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00715}00715\ \ \ \ \ \ \ \ \ \ \ \ \ balance\_wallet\_id=payment\_wallet\_id,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00716}00716\ \ \ \ \ \ \ \ \ \ \ \ \ balance\_crypto\_id=crypto\_fee\_id}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00717}00717\ \ \ \ \ \ \ \ \ ).first()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00718}00718\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00719}00719\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Consulta\ saldo\ da\ moeda\ pagadora\ na\ carteira\ da\ transação}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00720}00720\ \ \ \ \ \ \ \ \ crypto\_wallet\_balance\ =\ session.query(WalletBalance).filter\_by(}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00721}00721\ \ \ \ \ \ \ \ \ \ \ \ \ balance\_wallet\_id=payment\_wallet\_id,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00722}00722\ \ \ \ \ \ \ \ \ \ \ \ \ balance\_crypto\_id=crypto\_payment\_id}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00723}00723\ \ \ \ \ \ \ \ \ ).first()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00724}00724\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00725}00725\ \ \ \ \ \ \ \ \ saldo\_pagto\_tran\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00726}00726\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00727}00727\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ crypto\_payment\_id\ !=\ crypto\_fee\_id:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00728}00728\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ fee\_wallet\_balance\ \textcolor{keywordflow}{and}\ crypto\_wallet\_balance:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00729}00729\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ saldo\_pagto\_tran\ =\ (fee\_wallet\_balance.balance\ >=\ crypto\_fee\_quantity)\ \textcolor{keywordflow}{and}\ (crypto\_wallet\_balance.balance\ >=\ crypto\_payment\_quantity)}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00730}00730\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00731}00731\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ fee\_wallet\_balance\ \textcolor{keywordflow}{and}\ crypto\_wallet\_balance:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00732}00732\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ saldo\_pagto\_tran\ =\ (crypto\_wallet\_balance.balance\ >=\ (crypto\_fee\_quantity\ +\ crypto\_payment\_quantity))}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00733}00733\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00734}00734\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Verifica\ se\ tem\ saldo\ da\ crypto\ da\ taxa}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00735}00735\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ saldo\_pagto\_tran:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00736}00736\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00737}00737\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Criar\ a\ transação}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00738}00738\ \ \ \ \ \ \ \ \ \ \ \ \ transaction\ =\ \mbox{\hyperlink{classcripto_control_1_1models_1_1_transaction}{Transaction}}(}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00739}00739\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ transaction\_type=transaction\_type,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00740}00740\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ transaction\_date=datetime.strptime(transaction\_date,\ \textcolor{stringliteral}{'\%Y-\/\%m-\/\%d'}),\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00741}00741\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ payment\_wallet\_id=payment\_wallet\_id,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00742}00742\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ receiving\_wallet\_id=receiving\_wallet\_id,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00743}00743\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_payment\_id=crypto\_payment\_id,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00744}00744\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_payment\_price=crypto\_payment\_price,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00745}00745\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_payment\_quantity=crypto\_payment\_quantity,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00746}00746\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ total\_paid=total\_paid,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00747}00747\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_id=crypto\_receive\_id,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00748}00748\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_price=crypto\_receive\_price,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00749}00749\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_quantity=crypto\_receive\_quantity,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00750}00750\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ total\_received=total\_received,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00751}00751\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_fee\_id=crypto\_fee\_id,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00752}00752\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_fee\_price=crypto\_fee\_price,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00753}00753\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_fee\_quantity=crypto\_fee\_quantity,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00754}00754\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ total\_fee=total\_fee}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00755}00755\ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00756}00756\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00757}00757\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Registrar\ a\ transação}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00758}00758\ \ \ \ \ \ \ \ \ \ \ \ \ session.add(transaction)}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00759}00759\ \ \ \ \ \ \ \ \ \ \ \ \ session.commit()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00760}00760\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00761}00761\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ fee\_wallet\_balance:\ \textcolor{comment}{\#\ tem\ saldo\ para\ taxa}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00762}00762\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fee\_wallet\_balance.balance\ -\/=\ crypto\_fee\_quantity}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00763}00763\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00764}00764\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ crypto\_wallet\_balance:\ \textcolor{comment}{\#\ tem\ saldo\ para\ pagamento}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00765}00765\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_wallet\_balance.balance\ -\/=\ crypto\_payment\_quantity}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00766}00766\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00767}00767\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ receiving\_wallet:\ \textcolor{comment}{\#\ carteira\ de\ recebimento\ existe}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00768}00768\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ receiving\_wallet.balance\ +=\ crypto\_receive\_quantity}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00769}00769\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00770}00770\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Se\ a\ crypto\ não\ existe\ em\ balance,\ insere}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00771}00771\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ novo\_saldo\ =\ \mbox{\hyperlink{classcripto_control_1_1models_1_1_wallet_balance}{WalletBalance}}(}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00772}00772\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ balance\_wallet\_id=receiving\_wallet\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00773}00773\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ balance\_crypto\_id=crypto\_receive\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00774}00774\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ balance=crypto\_receive\_quantity}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00775}00775\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00776}00776\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ session.add(novo\_saldo)}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00777}00777\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00778}00778\ \ \ \ \ \ \ \ \ \ \ \ \ session.commit()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00779}00779\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00780}00780\ \ \ \ \ \ \ \ \ \ \ \ \ flash(\textcolor{stringliteral}{'Transação\ realizada\ com\ sucesso!'},\ \textcolor{stringliteral}{'alert-\/success'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00781}00781\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00782}00782\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_ace539ad0b5b24d48f30bb8653e773e64}{store\_data}}(}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00783}00783\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ transaction\_type=transaction\_type,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00784}00784\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ payment\_wallet\_id=payment\_wallet\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00785}00785\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ receiving\_wallet\_id=receiving\_wallet\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00786}00786\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_payment\_id=crypto\_payment\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00787}00787\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_payment\_price=crypto\_payment\_price,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00788}00788\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_payment\_quantity=crypto\_payment\_quantity,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00789}00789\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ total\_paid=total\_paid,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00790}00790\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_id=crypto\_receive\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00791}00791\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_price=crypto\_receive\_price,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00792}00792\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_quantity=crypto\_receive\_quantity,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00793}00793\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ total\_received=total\_received,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00794}00794\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_fee\_id=crypto\_fee\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00795}00795\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_fee\_price=crypto\_fee\_price,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00796}00796\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_fee\_quantity=crypto\_fee\_quantity,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00797}00797\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ total\_fee=total\_fee,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00798}00798\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ transaction\_date=transaction\_date}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00799}00799\ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00800}00800\ \ \ \ \ \ \ \ \ \ \ \ \ flash(\textcolor{stringliteral}{'Saldo\ Insuficiente!'},\ \textcolor{stringliteral}{'alert-\/danger'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00801}00801\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ redirect(url\_for(\textcolor{stringliteral}{'transaction.add\_transactions'}))}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00802}00802\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00803}00803\ \ \ \ \ \textcolor{keywordflow}{except}\ Exception\ \textcolor{keyword}{as}\ e:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00804}00804\ \ \ \ \ \ \ \ \ session.rollback()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00805}00805\ \ \ \ \ \ \ \ \ flash(f\textcolor{stringliteral}{'Erro\ na\ Transação\ de\ Venda:\ \{e\}'},\ \textcolor{stringliteral}{'alert-\/danger'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00806}00806\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00807}00807\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00808}00808\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00809}00809\ \textcolor{comment}{\#*************\ REALIZANDO\ TRANSFERÊNCIA\ *******************}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00810}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a3b240a4fdbcc3776d3134a08d21bdf65}{00810}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a3b240a4fdbcc3776d3134a08d21bdf65}{check\_mandatory\_fields\_in\_transf}}(}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00811}00811\ \ \ \ \ payment\_wallet\_id,\ receiving\_wallet\_id,\ crypto\_receive\_id,\ crypto\_receive\_price,\ crypto\_receive\_quantity,\ total\_received,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00812}00812\ \ \ \ \ crypto\_fee\_id,\ crypto\_fee\_price,\ crypto\_fee\_quantity,\ total\_fee,\ transaction\_type,\ transaction\_date=None}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00813}00813\ \ \ \ \ ):}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00814}00814\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00815}00815\ \textcolor{stringliteral}{\ \ \ \ Verifica\ se\ todos\ os\ campos\ obrigatórios\ para\ a\ transferência\ estão\ preenchidos.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00816}00816\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00817}00817\ \textcolor{stringliteral}{\ \ \ \ Esta\ função\ valida\ a\ presença\ de\ todos\ os\ campos\ necessários\ para\ realizar\ uma\ transferência\ de\ criptomoedas.\ Se\ algum\ campo\ obrigatório}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00818}00818\ \textcolor{stringliteral}{\ \ \ \ não\ estiver\ preenchido,\ os\ dados\ da\ transação\ são\ armazenados\ e\ uma\ mensagem\ de\ erro\ é\ exibida.\ A\ função\ redireciona\ o\ usuário\ para\ a}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00819}00819\ \textcolor{stringliteral}{\ \ \ \ página\ de\ adição\ de\ transações.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00820}00820\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00821}00821\ \textcolor{stringliteral}{\ \ \ \ Parâmetros:}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00822}00822\ \textcolor{stringliteral}{\ \ \ \ payment\_wallet\_id\ (str):\ O\ ID\ da\ carteira\ de\ pagamento.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00823}00823\ \textcolor{stringliteral}{\ \ \ \ receiving\_wallet\_id\ (str):\ O\ ID\ da\ carteira\ de\ recebimento.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00824}00824\ \textcolor{stringliteral}{\ \ \ \ crypto\_receive\_id\ (str):\ O\ ID\ da\ criptomoeda\ a\ ser\ recebida.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00825}00825\ \textcolor{stringliteral}{\ \ \ \ crypto\_receive\_price\ (float):\ O\ preço\ da\ criptomoeda\ a\ ser\ recebida.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00826}00826\ \textcolor{stringliteral}{\ \ \ \ crypto\_receive\_quantity\ (float):\ A\ quantidade\ da\ criptomoeda\ a\ ser\ recebida.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00827}00827\ \textcolor{stringliteral}{\ \ \ \ total\_received\ (float):\ O\ total\ recebido\ na\ transação.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00828}00828\ \textcolor{stringliteral}{\ \ \ \ crypto\_fee\_id\ (str):\ O\ ID\ da\ criptomoeda\ utilizada\ para\ pagamento\ da\ taxa.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00829}00829\ \textcolor{stringliteral}{\ \ \ \ crypto\_fee\_price\ (float):\ O\ preço\ da\ criptomoeda\ utilizada\ para\ pagamento\ da\ taxa.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00830}00830\ \textcolor{stringliteral}{\ \ \ \ crypto\_fee\_quantity\ (float):\ A\ quantidade\ da\ criptomoeda\ utilizada\ para\ pagamento\ da\ taxa.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00831}00831\ \textcolor{stringliteral}{\ \ \ \ total\_fee\ (float):\ O\ total\ da\ taxa\ da\ transação.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00832}00832\ \textcolor{stringliteral}{\ \ \ \ transaction\_type\ (str):\ O\ tipo\ da\ transação\ (por\ exemplo,\ "{}transferência"{}).}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00833}00833\ \textcolor{stringliteral}{\ \ \ \ transaction\_date\ (str,\ opcional):\ A\ data\ da\ transação\ no\ formato\ 'YYYY-\/MM-\/DD'.\ O\ padrão\ é\ None.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00834}00834\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00835}00835\ \textcolor{stringliteral}{\ \ \ \ Retorna:}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00836}00836\ \textcolor{stringliteral}{\ \ \ \ redirect:\ Redireciona\ para\ a\ página\ de\ adição\ de\ transações\ se\ algum\ campo\ obrigatório\ não\ estiver\ preenchido\ ou\ se\ a\ data\ não\ estiver}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00837}00837\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ informada.\ Caso\ contrário,\ não\ retorna\ nada.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00838}00838\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00839}00839\ \textcolor{stringliteral}{\ \ \ \ Exceções:}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00840}00840\ \textcolor{stringliteral}{\ \ \ \ Não\ levanta\ exceções,\ mas\ exibe\ mensagens\ de\ erro\ ao\ usuário\ se\ os\ campos\ obrigatórios\ não\ forem\ preenchidos.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00841}00841\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00842}00842\ \ \ \ \ \textcolor{comment}{\#\ Verificar\ se\ todos\ os\ campos\ obrigatórios\ estão\ preenchidos}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00843}00843\ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ all([}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00844}00844\ \ \ \ \ \ \ \ \ payment\_wallet\_id,\ receiving\_wallet\_id,\ crypto\_receive\_id,\ crypto\_receive\_price,\ crypto\_receive\_quantity,\ total\_received,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00845}00845\ \ \ \ \ \ \ \ \ crypto\_fee\_id,\ crypto\_fee\_price,\ crypto\_fee\_quantity,\ total\_fee,\ transaction\_type}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00846}00846\ \ \ \ \ ]):}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00847}00847\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_ace539ad0b5b24d48f30bb8653e773e64}{store\_data}}(}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00848}00848\ \ \ \ \ \ \ \ \ \ \ \ \ transaction\_type=transaction\_type,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00849}00849\ \ \ \ \ \ \ \ \ \ \ \ \ payment\_wallet\_id=payment\_wallet\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00850}00850\ \ \ \ \ \ \ \ \ \ \ \ \ receiving\_wallet\_id=receiving\_wallet\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00851}00851\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_id=crypto\_receive\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00852}00852\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_price=crypto\_receive\_price,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00853}00853\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_quantity=crypto\_receive\_quantity,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00854}00854\ \ \ \ \ \ \ \ \ \ \ \ \ total\_received=total\_received,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00855}00855\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_fee\_id=crypto\_fee\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00856}00856\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_fee\_price=crypto\_fee\_price,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00857}00857\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_fee\_quantity=crypto\_fee\_quantity,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00858}00858\ \ \ \ \ \ \ \ \ \ \ \ \ total\_fee=total\_fee,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00859}00859\ \ \ \ \ \ \ \ \ \ \ \ \ transaction\_date=transaction\_date}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00860}00860\ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00861}00861\ \ \ \ \ \ \ \ \ flash(\textcolor{stringliteral}{'Preencha/Verifique\ todos\ os\ campos!'},\ \textcolor{stringliteral}{'alert-\/danger'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00862}00862\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ redirect(url\_for(\textcolor{stringliteral}{'transaction.add\_transactions'}))}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00863}00863\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00864}00864\ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ transaction\_date:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00865}00865\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_ace539ad0b5b24d48f30bb8653e773e64}{store\_data}}(}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00866}00866\ \ \ \ \ \ \ \ \ \ \ \ \ transaction\_type=transaction\_type,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00867}00867\ \ \ \ \ \ \ \ \ \ \ \ \ payment\_wallet\_id=payment\_wallet\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00868}00868\ \ \ \ \ \ \ \ \ \ \ \ \ receiving\_wallet\_id=receiving\_wallet\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00869}00869\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_id=crypto\_receive\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00870}00870\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_price=crypto\_receive\_price,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00871}00871\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_quantity=crypto\_receive\_quantity,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00872}00872\ \ \ \ \ \ \ \ \ \ \ \ \ total\_received=total\_received,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00873}00873\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_fee\_id=crypto\_fee\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00874}00874\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_fee\_price=crypto\_fee\_price,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00875}00875\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_fee\_quantity=crypto\_fee\_quantity,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00876}00876\ \ \ \ \ \ \ \ \ \ \ \ \ total\_fee=total\_fee}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00877}00877\ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00878}00878\ \ \ \ \ \ \ \ \ flash(\textcolor{stringliteral}{'Preencha\ a\ data!'},\ \textcolor{stringliteral}{'alert-\/danger'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00879}00879\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ redirect(url\_for(\textcolor{stringliteral}{'transaction.add\_transactions'}))}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00880}00880\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00881}00881\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00882}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a4d01550b3acde636bac6dad4f79e0c66}{00882}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a4d01550b3acde636bac6dad4f79e0c66}{realizar\_transferencia}}(}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00883}00883\ \ \ \ \ session,\ transaction\_date,\ payment\_wallet\_id,\ receiving\_wallet\_id,\ crypto\_receive\_id,\ crypto\_receive\_price,\ crypto\_receive\_quantity,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00884}00884\ \ \ \ \ total\_received,\ crypto\_fee\_id,\ crypto\_fee\_price,\ crypto\_fee\_quantity,\ total\_fee,\ transaction\_type}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00885}00885\ \ \ \ \ ):}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00886}00886\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00887}00887\ \textcolor{stringliteral}{\ \ \ \ Realiza\ uma\ transferência\ de\ criptomoedas\ entre\ carteiras.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00888}00888\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00889}00889\ \textcolor{stringliteral}{\ \ \ \ Esta\ função\ verifica\ se\ as\ carteiras\ de\ pagamento\ e\ recebimento\ existem,\ se\ há\ saldo\ suficiente\ para\ a\ transferência\ e\ para\ a\ taxa}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00890}00890\ \textcolor{stringliteral}{\ \ \ \ associada.\ Se\ todas\ as\ condições\ forem\ atendidas,\ a\ transação\ é\ registrada\ no\ banco\ de\ dados\ e\ os\ saldos\ das\ carteiras\ são\ atualizados.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00891}00891\ \textcolor{stringliteral}{\ \ \ \ Caso\ contrário,\ uma\ mensagem\ de\ erro\ é\ exibida\ e\ as\ alterações\ são\ revertidas.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00892}00892\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00893}00893\ \textcolor{stringliteral}{\ \ \ \ Parâmetros:}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00894}00894\ \textcolor{stringliteral}{\ \ \ \ session\ (Session):\ A\ sessão\ do\ banco\ de\ dados\ para\ realizar\ operações.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00895}00895\ \textcolor{stringliteral}{\ \ \ \ transaction\_date\ (str):\ A\ data\ da\ transação\ no\ formato\ 'YYYY-\/MM-\/DD'.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00896}00896\ \textcolor{stringliteral}{\ \ \ \ payment\_wallet\_id\ (str):\ O\ ID\ da\ carteira\ de\ pagamento.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00897}00897\ \textcolor{stringliteral}{\ \ \ \ receiving\_wallet\_id\ (str):\ O\ ID\ da\ carteira\ de\ recebimento.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00898}00898\ \textcolor{stringliteral}{\ \ \ \ crypto\_receive\_id\ (str):\ O\ ID\ da\ criptomoeda\ a\ ser\ recebida.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00899}00899\ \textcolor{stringliteral}{\ \ \ \ crypto\_receive\_price\ (float):\ O\ preço\ da\ criptomoeda\ a\ ser\ recebida.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00900}00900\ \textcolor{stringliteral}{\ \ \ \ crypto\_receive\_quantity\ (float):\ A\ quantidade\ da\ criptomoeda\ a\ ser\ recebida.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00901}00901\ \textcolor{stringliteral}{\ \ \ \ total\_received\ (float):\ O\ total\ recebido\ na\ transação.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00902}00902\ \textcolor{stringliteral}{\ \ \ \ crypto\_fee\_id\ (str):\ O\ ID\ da\ criptomoeda\ utilizada\ para\ pagamento\ da\ taxa.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00903}00903\ \textcolor{stringliteral}{\ \ \ \ crypto\_fee\_price\ (float):\ O\ preço\ da\ criptomoeda\ utilizada\ para\ pagamento\ da\ taxa.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00904}00904\ \textcolor{stringliteral}{\ \ \ \ crypto\_fee\_quantity\ (float):\ A\ quantidade\ da\ criptomoeda\ utilizada\ para\ pagamento\ da\ taxa.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00905}00905\ \textcolor{stringliteral}{\ \ \ \ total\_fee\ (float):\ O\ total\ da\ taxa\ da\ transação.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00906}00906\ \textcolor{stringliteral}{\ \ \ \ transaction\_type\ (str):\ O\ tipo\ da\ transação\ (por\ exemplo,\ "{}transferência"{}).}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00907}00907\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00908}00908\ \textcolor{stringliteral}{\ \ \ \ Retorna:}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00909}00909\ \textcolor{stringliteral}{\ \ \ \ None:\ Se\ a\ transferência\ for\ realizada\ com\ sucesso,\ uma\ mensagem\ de\ sucesso\ é\ exibida.\ }}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00910}00910\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ Se\ houver\ erro\ ou\ saldo\ insuficiente,\ uma\ mensagem\ de\ erro\ é\ exibida.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00911}00911\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00912}00912\ \textcolor{stringliteral}{\ \ \ \ Exceções:}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00913}00913\ \textcolor{stringliteral}{\ \ \ \ Levanta\ uma\ exceção\ em\ caso\ de\ erro\ durante\ o\ processo\ de\ transferência.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00914}00914\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00915}00915\ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00916}00916\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Verificar\ campos\ obrigatórios}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00917}00917\ \ \ \ \ \ \ \ \ redirect\_result\_com\ =\ \mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a3b240a4fdbcc3776d3134a08d21bdf65}{check\_mandatory\_fields\_in\_transf}}(}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00918}00918\ \ \ \ \ \ \ \ \ \ \ \ \ payment\_wallet\_id,\ receiving\_wallet\_id,\ crypto\_receive\_id,\ crypto\_receive\_price,\ crypto\_receive\_quantity,\ total\_received,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00919}00919\ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_fee\_id,\ crypto\_fee\_price,\ crypto\_fee\_quantity,\ total\_fee,\ transaction\_type,\ transaction\_date}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00920}00920\ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00921}00921\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ redirect\_result\_com:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00922}00922\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ redirect\_result\_com}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00923}00923\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00924}00924\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Verifica\ o\ saldo\ da\ carteira\ de\ pagamento\ para\ a\ criptomoeda\ de\ pagamento\ e\ a\ taxa}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00925}00925\ \ \ \ \ \ \ \ \ payment\_wallet\_balance\ =\ session.query(WalletBalance).filter\_by(}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00926}00926\ \ \ \ \ \ \ \ \ \ \ \ \ balance\_wallet\_id=payment\_wallet\_id,\ balance\_crypto\_id=crypto\_receive\_id}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00927}00927\ \ \ \ \ \ \ \ \ ).first()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00928}00928\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00929}00929\ \ \ \ \ \ \ \ \ fee\_wallet\_balance\ =\ session.query(WalletBalance).filter\_by(}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00930}00930\ \ \ \ \ \ \ \ \ \ \ \ \ balance\_wallet\_id=payment\_wallet\_id,\ balance\_crypto\_id=crypto\_fee\_id}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00931}00931\ \ \ \ \ \ \ \ \ ).first()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00932}00932\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00933}00933\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Verifica\ se\ as\ carteiras\ foram\ encontradas}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00934}00934\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ payment\_wallet\_balance:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00935}00935\ \ \ \ \ \ \ \ \ \ \ \ \ flash(f\textcolor{stringliteral}{'Carteira\ de\ pagamento\ não\ encontrada\ para\ a\ criptomoeda\ de\ recebimento.'},\ \textcolor{stringliteral}{'alert-\/danger'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00936}00936\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00937}00937\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ fee\_wallet\_balance:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00938}00938\ \ \ \ \ \ \ \ \ \ \ \ \ flash(f\textcolor{stringliteral}{'Carteira\ de\ pagamento\ não\ encontrada\ para\ a\ criptomoeda\ da\ taxa.'},\ \textcolor{stringliteral}{'alert-\/danger'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00939}00939\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00940}00940\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00941}00941\ \ \ \ \ \ \ \ \ saldo\_transferencia\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00942}00942\ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}Payment\ Wallet\ Balance:\ \{payment\_wallet\_balance.balance\}"{}})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00943}00943\ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}Fee\ Wallet\ Balance:\ \{fee\_wallet\_balance.balance\}"{}})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00944}00944\ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}Crypto\ Receive\ Quantity:\ \{crypto\_receive\_quantity\}"{}})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00945}00945\ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}Crypto\ Fee\ Quantity:\ \{crypto\_fee\_quantity\}"{}})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00946}00946\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00947}00947\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Verificar\ se\ há\ saldo\ suficiente\ para\ a\ taxa\ e\ a\ quantidade\ a\ ser\ transferida}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00948}00948\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ crypto\_receive\_id\ ==\ crypto\_fee\_id:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00949}00949\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Verifica\ se\ a\ soma\ das\ duas\ quantidades\ cabe\ no\ saldo\ da\ carteira\ de\ pagamento}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00950}00950\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ payment\_wallet\_balance.balance\ >=\ (crypto\_receive\_quantity\ +\ crypto\_fee\_quantity):}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00951}00951\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ saldo\_transferencia\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00952}00952\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ payment\_wallet\_balance.balance\ -\/=\ (crypto\_receive\_quantity\ +\ crypto\_fee\_quantity)}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00953}00953\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00954}00954\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Verifica\ se\ o\ saldo\ de\ ambas\ as\ carteiras\ é\ suficiente}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00955}00955\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (float(payment\_wallet\_balance.balance)\ >=\ float(crypto\_receive\_quantity))\ \textcolor{keywordflow}{and}\ (float(fee\_wallet\_balance.balance)\ >=\ float(crypto\_fee\_quantity)):}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00956}00956\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ saldo\_transferencia\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00957}00957\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ payment\_wallet\_balance.balance\ -\/=\ crypto\_receive\_quantity}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00958}00958\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fee\_wallet\_balance.balance\ -\/=\ crypto\_fee\_quantity}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00959}00959\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00960}00960\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ saldo\_transferencia:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00961}00961\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Cria\ a\ transação}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00962}00962\ \ \ \ \ \ \ \ \ \ \ \ \ transaction\ =\ \mbox{\hyperlink{classcripto_control_1_1models_1_1_transaction}{Transaction}}(}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00963}00963\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ transaction\_type=transaction\_type,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00964}00964\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ transaction\_date=datetime.strptime(transaction\_date,\ \textcolor{stringliteral}{'\%Y-\/\%m-\/\%d'}),\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00965}00965\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ payment\_wallet\_id=payment\_wallet\_id,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00966}00966\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ receiving\_wallet\_id=receiving\_wallet\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00967}00967\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_payment\_id=crypto\_receive\_id,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00968}00968\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_payment\_price=crypto\_receive\_price,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00969}00969\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_payment\_quantity=crypto\_receive\_quantity,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00970}00970\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_id=crypto\_receive\_id,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00971}00971\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_price=crypto\_receive\_price,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00972}00972\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_quantity=crypto\_receive\_quantity,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00973}00973\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ total\_received=total\_received,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00974}00974\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_fee\_id=crypto\_fee\_id,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00975}00975\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_fee\_price=crypto\_fee\_price,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00976}00976\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_fee\_quantity=crypto\_fee\_quantity,\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00977}00977\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ total\_fee=total\_fee}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00978}00978\ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00979}00979\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00980}00980\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Registra\ a\ transação}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00981}00981\ \ \ \ \ \ \ \ \ \ \ \ \ session.add(transaction)}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00982}00982\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00983}00983\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Atualiza\ a\ carteira\ de\ recebimento}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00984}00984\ \ \ \ \ \ \ \ \ \ \ \ \ wallet\_balance\_receb\ =\ session.query(WalletBalance).filter\_by(}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00985}00985\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ balance\_wallet\_id=receiving\_wallet\_id,\ balance\_crypto\_id=crypto\_receive\_id}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00986}00986\ \ \ \ \ \ \ \ \ \ \ \ \ ).first()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00987}00987\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ wallet\_balance\_receb:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00988}00988\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ wallet\_balance\_receb.balance\ +=\ crypto\_receive\_quantity}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00989}00989\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00990}00990\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ novo\_recebimento\_trans\ =\ \mbox{\hyperlink{classcripto_control_1_1models_1_1_wallet_balance}{WalletBalance}}(}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00991}00991\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ balance\_wallet\_id=receiving\_wallet\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00992}00992\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ balance\_crypto\_id=crypto\_receive\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00993}00993\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ balance=crypto\_receive\_quantity}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00994}00994\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00995}00995\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ session.add(novo\_recebimento\_trans)}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00996}00996\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00997}00997\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Commit\ das\ mudanças}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00998}00998\ \ \ \ \ \ \ \ \ \ \ \ \ session.commit()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l00999}00999\ \ \ \ \ \ \ \ \ \ \ \ \ flash(\textcolor{stringliteral}{'Transação\ realizada\ com\ sucesso!'},\ \textcolor{stringliteral}{'alert-\/success'})\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01000}01000\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01001}01001\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_ace539ad0b5b24d48f30bb8653e773e64}{store\_data}}(}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01002}01002\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ transaction\_type=transaction\_type,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01003}01003\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ payment\_wallet\_id=payment\_wallet\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01004}01004\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ receiving\_wallet\_id=receiving\_wallet\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01005}01005\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_id=crypto\_receive\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01006}01006\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_price=crypto\_receive\_price,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01007}01007\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_quantity=crypto\_receive\_quantity,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01008}01008\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ total\_received=total\_received,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01009}01009\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_fee\_id=crypto\_fee\_id,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01010}01010\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_fee\_price=crypto\_fee\_price,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01011}01011\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_fee\_quantity=crypto\_fee\_quantity,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01012}01012\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ total\_fee=total\_fee,}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01013}01013\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ transaction\_date=transaction\_date}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01014}01014\ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01015}01015\ \ \ \ \ \ \ \ \ \ \ \ \ flash(f\textcolor{stringliteral}{'Saldo\ Insuficiente!\ Saldo\ taxa:\ \{fee\_wallet\_balance.balance\},\ Saldo\ Moeda\ Transferência\ \{payment\_wallet\_balance.balance\}'},\ \textcolor{stringliteral}{'alert-\/danger'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01016}01016\ \ \ \ \ \ \ \ \ \ \ \ \ session.rollback()\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01017}01017\ \ \ \ \ \textcolor{keywordflow}{except}\ Exception\ \textcolor{keyword}{as}\ e:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01018}01018\ \ \ \ \ \ \ \ \ flash(f\textcolor{stringliteral}{'Erro\ ao\ realizar\ transferência:\ \{e\}'},\ \textcolor{stringliteral}{'alert-\/danger'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01019}01019\ \ \ \ \ \ \ \ \ session.rollback()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01020}01020\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01021}01021\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01022}01022\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01023}01023\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01024}01024\ \textcolor{comment}{\#\ **********\ \ \ DELETE\ TRANSACTION\ *******\ \ DELETE\ \ \ ************************************************}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01025}01025\ \textcolor{preprocessor}{@transaction\_bp.route('/transaction.delete\_transaction',\ methods=['POST'])}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01026}01026\ \textcolor{preprocessor}{@login\_required}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01027}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_adcfd72af33f76853de8834bfebf580c4}{01027}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_adcfd72af33f76853de8834bfebf580c4}{delete\_transaction}}():}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01028}01028\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01029}01029\ \textcolor{stringliteral}{\ \ \ \ Exclui\ uma\ transação\ do\ banco\ de\ dados\ e\ atualiza\ os\ saldos\ das\ carteiras.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01030}01030\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01031}01031\ \textcolor{stringliteral}{\ \ \ \ Parâmetros:}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01032}01032\ \textcolor{stringliteral}{\ \ \ \ session\ (sqlalchemy.orm.Session):\ A\ sessão\ do\ banco\ de\ dados.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01033}01033\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01034}01034\ \textcolor{stringliteral}{\ \ \ \ Retorna:}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01035}01035\ \textcolor{stringliteral}{\ \ \ \ redirect:\ Redireciona\ para\ a\ página\ de\ transações\ após\ excluir\ a\ transação.}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01036}01036\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01037}01037\ \ \ \ \ session\ =\ \mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes_a51907abc78dec2948f9481c507811b7f}{create\_session}}()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01038}01038\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01039}01039\ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01040}01040\ \ \ \ \ \ \ \ \ transacao\_id\ =\ request.form.get(\textcolor{stringliteral}{'transactions\_id'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01041}01041\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01042}01042\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ transacao\_id:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01043}01043\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01044}01044\ \ \ \ \ \ \ \ \ \ \ \ \ transaction\ =\ session.query(Transaction).filter\_by(transactions\_id=transacao\_id).first()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01045}01045\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01046}01046\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ transaction:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01047}01047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tipo\_transacao\ =\ transaction.transaction\_type}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01048}01048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ wallet\_id\_saida\ =\ transaction.payment\_wallet\_id}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01049}01049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ wallet\_id\_recebimento\ =\ transaction.receiving\_wallet\_id}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01050}01050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_payment\_id\ =\ transaction.crypto\_payment\_id}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01051}01051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_fee\_id\ =\ transaction.crypto\_fee\_id}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01052}01052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_id\ =\ transaction.crypto\_receive\_id}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01053}01053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_payment\_quantity\ =\ transaction.crypto\_payment\_quantity}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01054}01054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_fee\_quantity\ =\ transaction.crypto\_fee\_quantity}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01055}01055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ crypto\_receive\_quantity\ =\ transaction.crypto\_receive\_quantity}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01056}01056\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01057}01057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ balance\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01058}01058\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01059}01059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Busca\ os\ saldos}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01060}01060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ wallet\_balance\_payment\ =\ session.query(WalletBalance).filter\_by(balance\_wallet\_id=wallet\_id\_saida,\ balance\_crypto\_id=crypto\_payment\_id).first()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01061}01061\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01062}01062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ wallet\_balance\_fee\ =\ session.query(WalletBalance).filter\_by(balance\_wallet\_id=wallet\_id\_saida,\ balance\_crypto\_id=crypto\_fee\_id).first()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01063}01063\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01064}01064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ wallet\_balance\_receive\ =\ session.query(WalletBalance).filter\_by(balance\_wallet\_id=wallet\_id\_recebimento,\ balance\_crypto\_id=crypto\_receive\_id).first()\ \ \ \ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01065}01065\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01066}01066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ wallet\_balance\_receive:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01067}01067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ wallet\_balance\_receive.balance\ >=\ crypto\_receive\_quantity:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01068}01068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ wallet\_balance\_receive.balance\ -\/=\ crypto\_receive\_quantity}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01069}01069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ session.add(wallet\_balance\_receive)}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01070}01070\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01071}01071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ wallet\_balance\_payment:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01072}01072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ wallet\_balance\_payment.balance\ +=\ crypto\_payment\_quantity}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01073}01073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ session.add(wallet\_balance\_payment)}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01074}01074\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01075}01075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ wallet\_balance\_fee:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01076}01076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ wallet\_balance\_fee.balance\ +=\ crypto\_fee\_quantity}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01077}01077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ tipo\_transacao\ ==\ \textcolor{stringliteral}{'Transferência'}:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01078}01078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ wallet\_balance\_fee.balance\ +=\ crypto\_receive\_quantity}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01079}01079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ session.add(wallet\_balance\_fee)}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01080}01080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ session.add(wallet\_balance\_fee)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01081}01081\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01082}01082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#session.add(wallet\_balance\_receive)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01083}01083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01084}01084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ balance\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01085}01085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ flash(\textcolor{stringliteral}{'Saldo\ insuficiente\ para\ excluir\ recebimento.'},\ \textcolor{stringliteral}{'alert-\/danger'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01086}01086\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01087}01087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ balance:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01088}01088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Exclui\ a\ transação}}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01089}01089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ session.delete(transaction)}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01090}01090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ session.commit()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01091}01091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ flash(f\textcolor{stringliteral}{'Transação\ excluída\ com\ sucesso.'},\ \textcolor{stringliteral}{'alert-\/success'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01092}01092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01093}01093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ flash(f\textcolor{stringliteral}{'Transação\ não\ tem\ saldo\ suficiente\ para\ ser\ excluída.'},\ \textcolor{stringliteral}{'alert-\/danger'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01094}01094\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01095}01095\ \ \ \ \ \ \ \ \ \ \ \ \ flash(\textcolor{stringliteral}{"{}Transação\ não\ encontrada."{}},\ \textcolor{stringliteral}{'alert-\/danger'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01096}01096\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01097}01097\ \ \ \ \ \textcolor{keywordflow}{except}\ Exception\ \textcolor{keyword}{as}\ e:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01098}01098\ \ \ \ \ \ \ \ \ flash(f\textcolor{stringliteral}{'Erro\ ao\ tentar\ excluir\ transação:\ \{e\}'},\ \textcolor{stringliteral}{'alert-\/danger'})}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01099}01099\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ session:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01100}01100\ \ \ \ \ \ \ \ \ \ \ \ \ session.rollback()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01101}01101\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01102}01102\ \ \ \ \ \textcolor{keywordflow}{finally}:}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01103}01103\ \ \ \ \ \ \ \ \ session.close()}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01104}01104\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01105}01105\ \ \ \ \ \textcolor{keywordflow}{return}\ redirect(url\_for(\textcolor{stringliteral}{'transaction.transactions'}))}
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01106}01106\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01107}01107\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01108}01108\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01109}01109\ }
+\DoxyCodeLine{\Hypertarget{transactions__routes_8py_source_l01110}01110\ \textcolor{comment}{\#\ ******\ \ \ \ Implementar\ função\ de\ editar\ transação\ ********************************}}
+
+\end{DoxyCode}

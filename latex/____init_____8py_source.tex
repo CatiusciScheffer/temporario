@@ -1,0 +1,65 @@
+\doxysection{\+\_\+\+\_\+init\+\_\+\+\_\+.\+py}
+\hypertarget{____init_____8py_source}{}\label{____init_____8py_source}\index{criptoControl/\_\_init\_\_.py@{criptoControl/\_\_init\_\_.py}}
+\mbox{\hyperlink{____init_____8py}{Ir para a documentação deste ficheiro.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00001}\mbox{\hyperlink{namespacecripto_control}{00001}}\ \textcolor{keyword}{from}\ flask\ \textcolor{keyword}{import}\ Flask}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00002}00002\ \textcolor{keyword}{from}\ flask\_sqlalchemy\ \textcolor{keyword}{import}\ SQLAlchemy}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00003}00003\ \textcolor{keyword}{from}\ flask\_migrate\ \textcolor{keyword}{import}\ Migrate}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00004}00004\ \textcolor{keyword}{from}\ flask\_login\ \textcolor{keyword}{import}\ LoginManager}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00005}00005\ \textcolor{keyword}{from}\ flask\_bootstrap\ \textcolor{keyword}{import}\ Bootstrap5}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00006}00006\ \textcolor{keyword}{from}\ dotenv\ \textcolor{keyword}{import}\ load\_dotenv}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00007}00007\ \textcolor{keyword}{import}\ os}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00010}00010\ \textcolor{comment}{\#\ Carregar\ variáveis\ do\ .env}}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00011}00011\ load\_dotenv()}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00013}\mbox{\hyperlink{namespacecripto_control_a0967c3673001ab9e54c4433e605b6357}{00013}}\ app\ =\ Flask(\_\_name\_\_)}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00015}\mbox{\hyperlink{namespacecripto_control_a8b60c58da0fbf8f7b7c6c1f1a2af217b}{00015}}\ bootstrap\ =\ Bootstrap5(app)}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00018}00018\ app.config[\textcolor{stringliteral}{'SQLALCHEMY\_DATABASE\_URI'}]\ =\ os.getenv(\textcolor{stringliteral}{'DATABASE\_URL'},\ \textcolor{stringliteral}{'sqlite:///crypto\_data.db'})}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00019}00019\ app.config[\textcolor{stringliteral}{'SQLALCHEMY\_TRACK\_MODIFICATIONS'}]\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00020}00020\ app.config[\textcolor{stringliteral}{'SQLALCHEMY\_ECHO'}]\ =\ \textcolor{keyword}{True}\ }
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00022}00022\ \textcolor{comment}{\#\ Configurar\ chaves}}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00023}00023\ app.config[\textcolor{stringliteral}{'SECRET\_KEY'}]\ =\ os.getenv(\textcolor{stringliteral}{'SECRET\_KEY'},\ \textcolor{stringliteral}{'uma\_chave\_secreta\_padrao'})}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00024}00024\ app.config[\textcolor{stringliteral}{'COINMARKETCAP\_API\_KEY'}]\ =\ os.getenv(\textcolor{stringliteral}{'COINMARKETCAP\_API\_KEY'})}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00026}\mbox{\hyperlink{namespacecripto_control_aa0b347f45c2c0084beefc7512d26c0f0}{00026}}\ db\ =\ SQLAlchemy(app)}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00027}\mbox{\hyperlink{namespacecripto_control_a3ea4fb8277d1edf2307eb6dfe8ebd7b7}{00027}}\ migrate\ =\ Migrate(app,\ db)}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00029}\mbox{\hyperlink{namespacecripto_control_a93a9791060cc43ca539d4bcc4ad0002a}{00029}}\ login\_manager\ =\ LoginManager()}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00030}00030\ login\_manager.init\_app(app)}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00031}\mbox{\hyperlink{namespacecripto_control_a94438fe8c0e250451a092f32ab95d7b0}{00031}}\ login\_manager.login\_view\ =\ \textcolor{stringliteral}{'auth.login'}\ }
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00033}00033\ \textcolor{preprocessor}{@login\_manager.user\_loader}}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00034}\mbox{\hyperlink{namespacecripto_control_a2f1a1813b75af06abfa6f54d5ee217cb}{00034}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacecripto_control_a2f1a1813b75af06abfa6f54d5ee217cb}{load\_user}}(user\_id):}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00035}00035\ \ \ \ \ \textcolor{keyword}{from}\ \mbox{\hyperlink{namespacecripto_control_1_1models}{criptoControl.models}}\ \textcolor{keyword}{import}\ User\ }
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00036}00036\ \ \ \ \ \textcolor{keywordflow}{return}\ User.query.get(int(user\_id))}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00038}00038\ \textcolor{comment}{\#\ def\ initialize\_database():}}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00039}00039\ \textcolor{comment}{\#\ \ \ \ with\ app.app\_context():}}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00040}00040\ \textcolor{comment}{\#\ \ \ \ \ \ \ \ db.create\_all()}}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00043}00043\ \textcolor{comment}{\#\ Registrar\ os\ blueprints}}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00044}00044\ \textcolor{keyword}{from}\ \mbox{\hyperlink{namespacecripto_control_1_1routes_1_1auth__routes}{criptoControl.routes.auth\_routes}}\ \textcolor{keyword}{import}\ auth\_bp}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00045}00045\ \textcolor{keyword}{from}\ \mbox{\hyperlink{namespacecripto_control_1_1routes_1_1transactions__routes}{criptoControl.routes.transactions\_routes}}\ \textcolor{keyword}{import}\ transaction\_bp}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00046}00046\ \textcolor{keyword}{from}\ \mbox{\hyperlink{namespacecripto_control_1_1routes_1_1main__routes}{criptoControl.routes.main\_routes}}\ \textcolor{keyword}{import}\ main\_bp}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00047}00047\ \textcolor{keyword}{from}\ \mbox{\hyperlink{namespacecripto_control_1_1routes_1_1crud__crypto__wallet}{criptoControl.routes.crud\_crypto\_wallet}}\ \textcolor{keyword}{import}\ crypto\_wallet\_bp}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00048}00048\ \textcolor{keyword}{from}\ \mbox{\hyperlink{namespacecripto_control_1_1routes_1_1update__price}{criptoControl.routes.update\_price}}\ \textcolor{keyword}{import}\ update\_price\_bp}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00049}00049\ \textcolor{keyword}{from}\ \mbox{\hyperlink{namespacecripto_control_1_1routes_1_1views__databases}{criptoControl.routes.views\_databases}}\ \textcolor{keyword}{import}\ views\_db\_bp}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00050}00050\ \textcolor{keyword}{from}\ \mbox{\hyperlink{namespacecripto_control_1_1routes_1_1docs}{criptoControl.routes.docs}}\ \textcolor{keyword}{import}\ docs\_db\_bp}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00052}00052\ \textcolor{comment}{\#from\ criptoControl\ import\ routes}}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00053}00053\ app.register\_blueprint(auth\_bp)}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00054}00054\ app.register\_blueprint(transaction\_bp)}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00055}00055\ app.register\_blueprint(main\_bp)}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00056}00056\ app.register\_blueprint(crypto\_wallet\_bp)}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00057}00057\ app.register\_blueprint(update\_price\_bp)}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00058}00058\ app.register\_blueprint(views\_db\_bp)}
+\DoxyCodeLine{\Hypertarget{____init_____8py_source_l00059}00059\ app.register\_blueprint(docs\_db\_bp)}
+
+\end{DoxyCode}

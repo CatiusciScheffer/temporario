@@ -1,0 +1,10 @@
+var searchData=
+[
+  ['total_5ffee_0',['total_fee',['../classcripto_control_1_1forms_1_1_transactions_form.html#acb680ea1bc833744ee0dbe78c76d4958',1,'criptoControl.forms.TransactionsForm.total_fee'],['../classcripto_control_1_1models_1_1_transaction.html#ae878e66e5ee030b8a78aab86bf9324ac',1,'criptoControl.models.Transaction.total_fee']]],
+  ['total_5fpaid_1',['total_paid',['../classcripto_control_1_1forms_1_1_transactions_form.html#a6973e183dd1b1a27955c40fafb52dfcc',1,'criptoControl.forms.TransactionsForm.total_paid'],['../classcripto_control_1_1models_1_1_transaction.html#aef595c54279a7504d556f4b80550c532',1,'criptoControl.models.Transaction.total_paid']]],
+  ['total_5freceived_2',['total_received',['../classcripto_control_1_1forms_1_1_transactions_form.html#a8a141bd7d72d2ddbdf4cbcecd4b92137',1,'criptoControl.forms.TransactionsForm.total_received'],['../classcripto_control_1_1models_1_1_transaction.html#aecba96c7d74577f699843ee101d86ce2',1,'criptoControl.models.Transaction.total_received']]],
+  ['transaction_5fbp_3',['transaction_bp',['../namespacecripto_control_1_1routes_1_1transactions__routes.html#ac1c02e256cac998ebf313c9d1b8b0803',1,'criptoControl::routes::transactions_routes']]],
+  ['transaction_5fdate_4',['transaction_date',['../classcripto_control_1_1forms_1_1_transactions_form.html#adaf3046b8dd3e84b08b957b6c35b4343',1,'criptoControl.forms.TransactionsForm.transaction_date'],['../classcripto_control_1_1models_1_1_transaction.html#a4402a17f94c09e9242cc282bcf9a938d',1,'criptoControl.models.Transaction.transaction_date']]],
+  ['transaction_5ftype_5',['transaction_type',['../classcripto_control_1_1forms_1_1_transactions_form.html#abe0edb236be3a6af21cb0c9c8ce5f4eb',1,'criptoControl.forms.TransactionsForm.transaction_type'],['../classcripto_control_1_1models_1_1_transaction.html#a6b4f12ac41aa611b8036ce5a4c8b23c0',1,'criptoControl.models.Transaction.transaction_type']]],
+  ['transactions_5fid_6',['transactions_id',['../classcripto_control_1_1models_1_1_transaction.html#a878eb35b91381da8f9cb72337643c3d4',1,'criptoControl::models::Transaction']]]
+];

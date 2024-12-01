@@ -1,0 +1,71 @@
+\doxysection{Referência à classe cripto\+Control.\+forms.\+Add\+Crypto\+Form}
+\hypertarget{classcripto_control_1_1forms_1_1_add_crypto_form}{}\label{classcripto_control_1_1forms_1_1_add_crypto_form}\index{criptoControl.forms.AddCryptoForm@{criptoControl.forms.AddCryptoForm}}
+
+
+Diagrama de heranças da classe cripto\+Control.\+forms.\+Add\+Crypto\+Form
+% FIG 0
+
+
+Diagrama de colaboração para cripto\+Control.\+forms.\+Add\+Crypto\+Form\+:
+% FIG 1
+\doxysubsubsection*{Atributos Públicos Estáticos}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcripto_control_1_1forms_1_1_add_crypto_form_a743c84c7bce05ddc78fa22306fe39f6b}{crypto\+\_\+name}} = String\+Field(\textquotesingle{}Nome\textquotesingle{}, validators=\mbox{[}Data\+Required()\mbox{]})
+\item 
+\mbox{\hyperlink{classcripto_control_1_1forms_1_1_add_crypto_form_a2dbf7807578154d981a204e289e37f67}{crypto\+\_\+symbol}} = String\+Field(\textquotesingle{}Símbolo\textquotesingle{}, validators=\mbox{[}Data\+Required()\mbox{]})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Descrição detalhada}
+\begin{DoxyVerb}Classe de formulário para adicionar uma nova criptomoeda.
+
+Esta classe define um formulário utilizado para a entrada de dados de uma nova criptomoeda, incluindo
+o nome e o símbolo da criptomoeda. Os campos possuem validações para garantir que os dados inseridos
+sejam obrigatórios.
+
+Atributos:
+    crypto_name (StringField): Campo para o nome da criptomoeda. Deve ser preenchido.
+    crypto_symbol (StringField): Campo para o símbolo da criptomoeda. Deve ser preenchido.
+
+Validações:
+    - O campo de nome da criptomoeda deve ser preenchido.
+    - O campo de símbolo da criptomoeda deve ser preenchido.
+
+Exemplos de uso:
+    form = AddCryptoForm()
+    if form.validate_on_submit():
+        # Lógica para adicionar a nova criptomoeda
+\end{DoxyVerb}
+ 
+
+Definido na linha \mbox{\hyperlink{forms_8py_source_l00062}{62}} do ficheiro \mbox{\hyperlink{forms_8py_source}{forms.\+py}}.
+
+
+
+\doxysubsection{Documentação dos dados membro}
+\Hypertarget{classcripto_control_1_1forms_1_1_add_crypto_form_a743c84c7bce05ddc78fa22306fe39f6b}\index{criptoControl.forms.AddCryptoForm@{criptoControl.forms.AddCryptoForm}!crypto\_name@{crypto\_name}}
+\index{crypto\_name@{crypto\_name}!criptoControl.forms.AddCryptoForm@{criptoControl.forms.AddCryptoForm}}
+\doxysubsubsection{\texorpdfstring{crypto\_name}{crypto\_name}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1forms_1_1_add_crypto_form_a743c84c7bce05ddc78fa22306fe39f6b} 
+cripto\+Control.\+forms.\+Add\+Crypto\+Form.\+crypto\+\_\+name = String\+Field(\textquotesingle{}Nome\textquotesingle{}, validators=\mbox{[}Data\+Required()\mbox{]})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{forms_8py_source_l00083}{83}} do ficheiro \mbox{\hyperlink{forms_8py_source}{forms.\+py}}.
+
+\Hypertarget{classcripto_control_1_1forms_1_1_add_crypto_form_a2dbf7807578154d981a204e289e37f67}\index{criptoControl.forms.AddCryptoForm@{criptoControl.forms.AddCryptoForm}!crypto\_symbol@{crypto\_symbol}}
+\index{crypto\_symbol@{crypto\_symbol}!criptoControl.forms.AddCryptoForm@{criptoControl.forms.AddCryptoForm}}
+\doxysubsubsection{\texorpdfstring{crypto\_symbol}{crypto\_symbol}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1forms_1_1_add_crypto_form_a2dbf7807578154d981a204e289e37f67} 
+cripto\+Control.\+forms.\+Add\+Crypto\+Form.\+crypto\+\_\+symbol = String\+Field(\textquotesingle{}Símbolo\textquotesingle{}, validators=\mbox{[}Data\+Required()\mbox{]})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{forms_8py_source_l00084}{84}} do ficheiro \mbox{\hyperlink{forms_8py_source}{forms.\+py}}.
+
+
+
+A documentação para esta classe foi gerada a partir do seguinte ficheiro\+:\begin{DoxyCompactItemize}
+\item 
+cripto\+Control/\mbox{\hyperlink{forms_8py}{forms.\+py}}\end{DoxyCompactItemize}

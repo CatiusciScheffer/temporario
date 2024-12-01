@@ -1,0 +1,160 @@
+\doxysection{Referência à classe cripto\+Control.\+forms.\+Register\+Form}
+\hypertarget{classcripto_control_1_1forms_1_1_register_form}{}\label{classcripto_control_1_1forms_1_1_register_form}\index{criptoControl.forms.RegisterForm@{criptoControl.forms.RegisterForm}}
+
+
+Diagrama de heranças da classe cripto\+Control.\+forms.\+Register\+Form
+% FIG 0
+
+
+Diagrama de colaboração para cripto\+Control.\+forms.\+Register\+Form\+:
+% FIG 1
+\doxysubsubsection*{Atributos Públicos Estáticos}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcripto_control_1_1forms_1_1_register_form_a23e6221f212f55b12e7d8b8d824da998}{username}}
+\item 
+\mbox{\hyperlink{classcripto_control_1_1forms_1_1_register_form_a9c51991ccbbdb90c80968eed8273e64b}{email}}
+\item 
+\mbox{\hyperlink{classcripto_control_1_1forms_1_1_register_form_a401f2018f64d99975ac70be35c4e91df}{password}}
+\item 
+\mbox{\hyperlink{classcripto_control_1_1forms_1_1_register_form_afef2ad555c7c0d2e7c7cb45055746ffd}{confirm\+\_\+password}}
+\item 
+\mbox{\hyperlink{classcripto_control_1_1forms_1_1_register_form_a23ed94ac28c85b743cce04d916512a30}{submit}} = Submit\+Field(\textquotesingle{}Cadastrar\textquotesingle{})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Descrição detalhada}
+\begin{DoxyVerb}Formulário de registro de novos usuários.
+
+Este formulário é usado para capturar e validar os dados necessários para o registro de um novo usuário no sistema.
+
+Campos:
+    - username: Campo de texto para o nome completo do usuário. É obrigatório.
+        - Validações:
+            - `DataRequired`: Certifica-se de que o campo não está vazio.
+    - email: Campo de texto para o email do usuário. É obrigatório e deve ser um endereço de email válido.
+        - Validações:
+            - `DataRequired`: Certifica-se de que o campo não está vazio.
+            - `Email`: Garante que o valor inserido é um email válido.
+    - password: Campo para a senha do usuário. É obrigatório e deve ter pelo menos 6 caracteres.
+        - Validações:
+            - `DataRequired`: Certifica-se de que o campo não está vazio.
+            - `Length`: Garante que a senha tenha no mínimo 6 caracteres.
+    - confirm_password: Campo para confirmar a senha do usuário. É obrigatório e deve corresponder ao valor do campo `password`.
+        - Validações:
+            - `DataRequired`: Certifica-se de que o campo não está vazio.
+            - `EqualTo`: Garante que o valor corresponde ao campo `password`.
+    - submit: Botão para enviar o formulário.
+
+Uso:
+    Este formulário é renderizado em templates para capturar as informações do usuário e validá-las antes de criar um novo registro no banco de dados.
+
+Exemplo:
+    >>> form = RegisterForm()
+    >>> form.validate_on_submit()
+\end{DoxyVerb}
+ 
+
+Definido na linha \mbox{\hyperlink{forms_8py_source_l00155}{155}} do ficheiro \mbox{\hyperlink{forms_8py_source}{forms.\+py}}.
+
+
+
+\doxysubsection{Documentação dos dados membro}
+\Hypertarget{classcripto_control_1_1forms_1_1_register_form_afef2ad555c7c0d2e7c7cb45055746ffd}\index{criptoControl.forms.RegisterForm@{criptoControl.forms.RegisterForm}!confirm\_password@{confirm\_password}}
+\index{confirm\_password@{confirm\_password}!criptoControl.forms.RegisterForm@{criptoControl.forms.RegisterForm}}
+\doxysubsubsection{\texorpdfstring{confirm\_password}{confirm\_password}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1forms_1_1_register_form_afef2ad555c7c0d2e7c7cb45055746ffd} 
+cripto\+Control.\+forms.\+Register\+Form.\+confirm\+\_\+password\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Valor inicial\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \ PasswordField(}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Confirme\ sua\ senha'},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ validators=[}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ DataRequired(message=\textcolor{stringliteral}{"{}O\ campo\ de\ confirmação\ de\ senha\ é\ obrigatório."{}}),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ EqualTo(\textcolor{stringliteral}{'password'},\ message=\textcolor{stringliteral}{"{}As\ senhas\ não\ coincidem."{}}),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ],}
+\DoxyCodeLine{\ \ \ \ )}
+
+\end{DoxyCode}
+
+
+Definido na linha \mbox{\hyperlink{forms_8py_source_l00208}{208}} do ficheiro \mbox{\hyperlink{forms_8py_source}{forms.\+py}}.
+
+\Hypertarget{classcripto_control_1_1forms_1_1_register_form_a9c51991ccbbdb90c80968eed8273e64b}\index{criptoControl.forms.RegisterForm@{criptoControl.forms.RegisterForm}!email@{email}}
+\index{email@{email}!criptoControl.forms.RegisterForm@{criptoControl.forms.RegisterForm}}
+\doxysubsubsection{\texorpdfstring{email}{email}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1forms_1_1_register_form_a9c51991ccbbdb90c80968eed8273e64b} 
+cripto\+Control.\+forms.\+Register\+Form.\+email\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Valor inicial\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \ StringField(}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Email'},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ validators=[}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ DataRequired(message=\textcolor{stringliteral}{"{}O\ campo\ email\ é\ obrigatório."{}}),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ Email(message=\textcolor{stringliteral}{"{}Insira\ um\ email\ válido."{}}),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ],}
+\DoxyCodeLine{\ \ \ \ )}
+
+\end{DoxyCode}
+
+
+Definido na linha \mbox{\hyperlink{forms_8py_source_l00194}{194}} do ficheiro \mbox{\hyperlink{forms_8py_source}{forms.\+py}}.
+
+\Hypertarget{classcripto_control_1_1forms_1_1_register_form_a401f2018f64d99975ac70be35c4e91df}\index{criptoControl.forms.RegisterForm@{criptoControl.forms.RegisterForm}!password@{password}}
+\index{password@{password}!criptoControl.forms.RegisterForm@{criptoControl.forms.RegisterForm}}
+\doxysubsubsection{\texorpdfstring{password}{password}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1forms_1_1_register_form_a401f2018f64d99975ac70be35c4e91df} 
+cripto\+Control.\+forms.\+Register\+Form.\+password\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Valor inicial\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \ PasswordField(}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Senha'},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ validators=[}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ DataRequired(message=\textcolor{stringliteral}{"{}O\ campo\ senha\ é\ obrigatório."{}}),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ Length(min=6,\ message=\textcolor{stringliteral}{"{}A\ senha\ deve\ ter\ no\ mínimo\ 6\ caracteres."{}}),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ],}
+\DoxyCodeLine{\ \ \ \ )}
+
+\end{DoxyCode}
+
+
+Definido na linha \mbox{\hyperlink{forms_8py_source_l00201}{201}} do ficheiro \mbox{\hyperlink{forms_8py_source}{forms.\+py}}.
+
+\Hypertarget{classcripto_control_1_1forms_1_1_register_form_a23ed94ac28c85b743cce04d916512a30}\index{criptoControl.forms.RegisterForm@{criptoControl.forms.RegisterForm}!submit@{submit}}
+\index{submit@{submit}!criptoControl.forms.RegisterForm@{criptoControl.forms.RegisterForm}}
+\doxysubsubsection{\texorpdfstring{submit}{submit}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1forms_1_1_register_form_a23ed94ac28c85b743cce04d916512a30} 
+cripto\+Control.\+forms.\+Register\+Form.\+submit = Submit\+Field(\textquotesingle{}Cadastrar\textquotesingle{})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{forms_8py_source_l00215}{215}} do ficheiro \mbox{\hyperlink{forms_8py_source}{forms.\+py}}.
+
+\Hypertarget{classcripto_control_1_1forms_1_1_register_form_a23e6221f212f55b12e7d8b8d824da998}\index{criptoControl.forms.RegisterForm@{criptoControl.forms.RegisterForm}!username@{username}}
+\index{username@{username}!criptoControl.forms.RegisterForm@{criptoControl.forms.RegisterForm}}
+\doxysubsubsection{\texorpdfstring{username}{username}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1forms_1_1_register_form_a23e6221f212f55b12e7d8b8d824da998} 
+cripto\+Control.\+forms.\+Register\+Form.\+username\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Valor inicial\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \ StringField(}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{stringliteral}{'Nome\ Completo'},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ validators=[}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ DataRequired(message=\textcolor{stringliteral}{"{}O\ campo\ 'Nome\ Completo'\ é\ obrigatório."{}})}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ],}
+\DoxyCodeLine{\ \ \ \ )}
+
+\end{DoxyCode}
+
+
+Definido na linha \mbox{\hyperlink{forms_8py_source_l00187}{187}} do ficheiro \mbox{\hyperlink{forms_8py_source}{forms.\+py}}.
+
+
+
+A documentação para esta classe foi gerada a partir do seguinte ficheiro\+:\begin{DoxyCompactItemize}
+\item 
+cripto\+Control/\mbox{\hyperlink{forms_8py}{forms.\+py}}\end{DoxyCompactItemize}

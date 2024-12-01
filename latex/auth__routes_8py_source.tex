@@ -1,0 +1,109 @@
+\doxysection{auth\+\_\+routes.\+py}
+\hypertarget{auth__routes_8py_source}{}\label{auth__routes_8py_source}\index{criptoControl/routes/auth\_routes.py@{criptoControl/routes/auth\_routes.py}}
+\mbox{\hyperlink{auth__routes_8py}{Ir para a documentação deste ficheiro.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00001}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1auth__routes}{00001}}\ \textcolor{keyword}{from}\ flask\ \textcolor{keyword}{import}\ Blueprint,\ render\_template,\ flash,\ redirect,\ url\_for,\ request}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00002}00002\ \textcolor{keyword}{from}\ \mbox{\hyperlink{namespacecripto_control_1_1forms}{criptoControl.forms}}\ \textcolor{keyword}{import}\ Users,\ RegisterForm}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00003}00003\ \textcolor{keyword}{from}\ \mbox{\hyperlink{namespacecripto_control_1_1models}{criptoControl.models}}\ \textcolor{keyword}{import}\ db,\ User}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00004}00004\ \textcolor{keyword}{from}\ werkzeug.security\ \textcolor{keyword}{import}\ check\_password\_hash,\ generate\_password\_hash}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00005}00005\ \textcolor{keyword}{from}\ flask\_login\ \textcolor{keyword}{import}\ login\_user}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00008}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1auth__routes_ab651bd53b3e1a2b82e02b2ed9e98bea4}{00008}}\ auth\_bp\ =\ Blueprint(\textcolor{stringliteral}{'auth'},\ \_\_name\_\_)}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00011}00011\ \textcolor{comment}{\#-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ \ \ Autentication\ \ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00013}00013\ \textcolor{preprocessor}{@auth\_bp.route('/',\ methods=['GET',\ 'POST'])}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00014}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1auth__routes_ab5cea46079a29ed15ee6422c713f9720}{00014}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1auth__routes_ab5cea46079a29ed15ee6422c713f9720}{login}}():}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00015}00015\ \ \ \ \ \textcolor{stringliteral}{'''}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00016}00016\ \textcolor{stringliteral}{\ \ \ \ Lida\ com\ o\ login\ do\ usuário.}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00017}00017\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00018}00018\ \textcolor{stringliteral}{\ \ \ \ Esta\ função\ renderiza\ uma\ página\ de\ login\ e\ manipula\ a\ autenticação\ do\ usuário.}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00019}00019\ \textcolor{stringliteral}{\ \ \ \ Ela\ utiliza\ um\ formulário\ para\ coletar\ as\ credenciais\ do\ usuário\ e\ as\ verifica\ contra\ o\ banco\ de\ dados.}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00020}00020\ \textcolor{stringliteral}{\ \ \ \ Se\ as\ credenciais\ são\ válidas,\ o\ usuário\ é\ logado\ e\ redirecionado\ para\ a\ página\ principal.}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00021}00021\ \textcolor{stringliteral}{\ \ \ \ Se\ as\ credenciais\ são\ inválidas,\ uma\ mensagem\ de\ erro\ é\ exibida.}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00022}00022\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00023}00023\ \textcolor{stringliteral}{\ \ \ \ auth\_bp\ =\ Blueprint('auth',\ \_\_name\_\_)}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00024}00024\ \textcolor{stringliteral}{\ \ \ \ Parâmetros:}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00025}00025\ \textcolor{stringliteral}{\ \ \ \ None}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00026}00026\ \textcolor{stringliteral}{\ \ \ \ '''}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00027}00027\ \ \ \ \ formLogin\ =\ \mbox{\hyperlink{classcripto_control_1_1forms_1_1_users}{Users}}()\ \ \textcolor{comment}{\#\ Formulário\ de\ login}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00029}00029\ \ \ \ \ \textcolor{keywordflow}{if}\ formLogin.validate\_on\_submit():}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00030}00030\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Verifica\ se\ o\ email\ existe\ no\ banco\ de\ dados}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00031}00031\ \ \ \ \ \ \ \ \ user\ =\ User.query.filter\_by(email=formLogin.email.data).first()}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00032}00032\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ user\ \textcolor{keywordflow}{and}\ check\_password\_hash(user.password\_hash,\ formLogin.password\_hash.data):}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Se\ o\ email\ e\ a\ senha\ são\ válidos,\ faz\ o\ login\ do\ usuário}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ login\_user(user,\ remember=formLogin.remember\_me.data)}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ redirect(url\_for(\textcolor{stringliteral}{'main.index'}))\ \ \textcolor{comment}{\#\ Redireciona\ para\ a\ rota\ index\ após\ o\ login}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00036}00036\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ flash(\textcolor{stringliteral}{'Credenciais\ inválidas.\ Verifique\ seu\ email\ e/ou\ senha.'},\ \textcolor{stringliteral}{'alert-\/danger'})}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00039}00039\ \ \ \ \ \textcolor{keywordflow}{return}\ render\_template(\textcolor{stringliteral}{'auth/login.html'},\ formLogin=formLogin)}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00042}00042\ \textcolor{preprocessor}{@auth\_bp.route('/create\_account',\ methods=['GET',\ 'POST'])}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00043}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1auth__routes_a3ee3fcb6bd1c6779e76097c2a86062b6}{00043}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1auth__routes_a3ee3fcb6bd1c6779e76097c2a86062b6}{create\_account}}():}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00044}00044\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00045}00045\ \textcolor{stringliteral}{\ \ \ \ Lida\ com\ o\ cadastro\ de\ novos\ usuários.}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00046}00046\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00047}00047\ \textcolor{stringliteral}{\ \ \ \ Rota:\ '/create\_account'}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00048}00048\ \textcolor{stringliteral}{\ \ \ \ Métodos\ HTTP:\ GET,\ POST}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00049}00049\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00050}00050\ \textcolor{stringliteral}{\ \ \ \ Esta\ função\ gerencia\ o\ processo\ de\ criação\ de\ uma\ nova\ conta\ de\ usuário:}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00051}00051\ \textcolor{stringliteral}{\ \ \ \ -\/\ Renderiza\ um\ formulário\ de\ registro\ para\ entrada\ de\ dados\ do\ usuário\ (username,\ email,\ senha).}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00052}00052\ \textcolor{stringliteral}{\ \ \ \ -\/\ Valida\ os\ dados\ submetidos\ no\ formulário.}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00053}00053\ \textcolor{stringliteral}{\ \ \ \ -\/\ Verifica\ se\ o\ e-\/mail\ já\ está\ registrado\ no\ banco\ de\ dados.}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00054}00054\ \textcolor{stringliteral}{\ \ \ \ -\/\ Se\ o\ e-\/mail\ for\ único:}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00055}00055\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ -\/\ Cria\ um\ novo\ registro\ de\ usuário\ com\ as\ informações\ fornecidas.}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00056}00056\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ -\/\ Armazena\ o\ hash\ da\ senha\ no\ banco\ de\ dados.}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00057}00057\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ -\/\ Salva\ o\ novo\ usuário\ na\ sessão\ do\ banco\ de\ dados.}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00058}00058\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ -\/\ Loga\ automaticamente\ o\ usuário\ após\ o\ cadastro.}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00059}00059\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ -\/\ Redireciona\ para\ a\ página\ inicial\ com\ uma\ mensagem\ de\ boas-\/vindas.}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00060}00060\ \textcolor{stringliteral}{\ \ \ \ -\/\ Se\ o\ e-\/mail\ já\ estiver\ registrado:}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00061}00061\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ -\/\ Exibe\ uma\ mensagem\ de\ erro\ informando\ que\ o\ e-\/mail\ já\ está\ cadastrado.}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00062}00062\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ -\/\ Redireciona\ o\ usuário\ de\ volta\ para\ a\ página\ de\ cadastro.}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00063}00063\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00064}00064\ \textcolor{stringliteral}{\ \ \ \ Retornos:}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00065}00065\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ -\/\ Renderiza\ a\ página\ de\ cadastro\ com\ o\ formulário\ (GET).}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00066}00066\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ -\/\ Redireciona\ para\ a\ página\ inicial\ ou\ para\ a\ página\ de\ cadastro,\ dependendo\ da\ validação\ dos\ dados\ (POST).}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00067}00067\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00068}00068\ \ \ \ \ form\ =\ \mbox{\hyperlink{classcripto_control_1_1forms_1_1_register_form}{RegisterForm}}()}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00070}00070\ \ \ \ \ \textcolor{keywordflow}{if}\ form.validate\_on\_submit():}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00071}00071\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Verificar\ se\ o\ e-\/mail\ já\ está\ registrado}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00072}00072\ \ \ \ \ \ \ \ \ existing\_user\ =\ User.query.filter\_by(email=form.email.data).first()}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00073}00073\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ existing\_user:}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ flash(\textcolor{stringliteral}{'O\ email\ já\ está\ cadastrado.\ Tente\ outro.'},\ \textcolor{stringliteral}{'alert-\/danger'})}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ redirect(url\_for(\textcolor{stringliteral}{'auth.create\_account'}))}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00076}00076\ }
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00077}00077\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Criar\ novo\ usuário}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00078}00078\ \ \ \ \ \ \ \ \ new\_user\ =\ \mbox{\hyperlink{classcripto_control_1_1models_1_1_user}{User}}(}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ username=form.username.data,}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ email=form.email.data,}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ password\_hash=generate\_password\_hash(form.password.data),}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00082}00082\ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00083}00083\ \ \ \ \ \ \ \ \ db.session.add(new\_user)}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00084}00084\ \ \ \ \ \ \ \ \ db.session.commit()}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00086}00086\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Logar\ automaticamente\ após\ o\ cadastro}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00087}00087\ \ \ \ \ \ \ \ \ flash(\textcolor{stringliteral}{'Conta\ criada\ com\ sucesso!\ Bem-\/vindo!'},\ \textcolor{stringliteral}{'alert-\/success'})}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00088}00088\ \ \ \ \ \ \ \ \ login\_user(new\_user)}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00089}00089\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ redirect(url\_for(\textcolor{stringliteral}{'main.index'}))}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00091}00091\ \ \ \ \ \textcolor{comment}{\#\ Renderizar\ a\ página\ de\ cadastro}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00092}00092\ \ \ \ \ \textcolor{keywordflow}{return}\ render\_template(\textcolor{stringliteral}{'auth/register.html'},\ form=form)}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00094}00094\ }
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00095}00095\ \textcolor{comment}{\#\ terminar\ de\ impelmentar\ e\ descomentar\ o\ html}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00096}00096\ \textcolor{preprocessor}{@auth\_bp.route('/forgot\_password',\ methods=['GET',\ 'POST'])}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00097}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1auth__routes_a0952db19d2ab479d346a512769f14989}{00097}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1auth__routes_a0952db19d2ab479d346a512769f14989}{forgot\_password}}():}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00098}00098\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00099}00099\ \textcolor{stringliteral}{\ \ \ \ Rota\ para\ recuperação\ de\ senha.}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00100}00100\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00101}00101\ \ \ \ \ \textcolor{comment}{\#\ Implemente\ a\ lógica\ para\ enviar\ email\ de\ recuperação\ ou\ exibir\ instruções}}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00102}00102\ \ \ \ \ flash(\textcolor{stringliteral}{"{}Função\ de\ recuperação\ de\ senha\ não\ implementada\ ainda."{}},\ \textcolor{stringliteral}{"{}alert-\/info"{}})}
+\DoxyCodeLine{\Hypertarget{auth__routes_8py_source_l00103}00103\ \ \ \ \ \textcolor{keywordflow}{return}\ redirect(url\_for(\textcolor{stringliteral}{'auth.login'}))}
+
+\end{DoxyCode}

@@ -1,0 +1,120 @@
+\doxysection{Referência à classe cripto\+Control.\+models.\+Wallet\+Balance}
+\hypertarget{classcripto_control_1_1models_1_1_wallet_balance}{}\label{classcripto_control_1_1models_1_1_wallet_balance}\index{criptoControl.models.WalletBalance@{criptoControl.models.WalletBalance}}
+
+
+Diagrama de heranças da classe cripto\+Control.\+models.\+Wallet\+Balance
+% FIG 0
+
+
+Diagrama de colaboração para cripto\+Control.\+models.\+Wallet\+Balance\+:
+% FIG 1
+\doxysubsubsection*{Atributos Públicos Estáticos}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_wallet_balance_a163b6981f0aaf87d2ae39e6fb7444a35}{balance\+\_\+id}} = db.\+Column(db.\+Integer, primary\+\_\+key=True)
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_wallet_balance_ab9c8d98a518b7e38d36718a2fb7e1120}{balance\+\_\+wallet\+\_\+id}} = db.\+Column(db.\+Integer, db.\+Foreign\+Key(\textquotesingle{}wallets.\+wallet\+\_\+id\textquotesingle{}), nullable=False)
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_wallet_balance_a2ff51066180b3e82dd41d5fc863535a1}{balance\+\_\+crypto\+\_\+id}} = db.\+Column(db.\+Integer, db.\+Foreign\+Key(\textquotesingle{}cryptocurrencies.\+crypto\+\_\+id\textquotesingle{}), nullable=False)
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_wallet_balance_a0401d7113897684b710f28967dc7aeb2}{balance}} = db.\+Column(db.\+Float, nullable=False)
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_wallet_balance_a63ae7b2672903c28cec7fa74a4a51cd5}{wallet}} = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classcripto_control_1_1models_1_1_wallet}{Wallet}}\textquotesingle{}, back\+\_\+populates=\textquotesingle{}balances\textquotesingle{})
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_wallet_balance_a8dab4f6229404a6cf80559d19a71d4c1}{cryptocurrency}} = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classcripto_control_1_1models_1_1_cryptocurrency}{Cryptocurrency}}\textquotesingle{}, back\+\_\+populates=\textquotesingle{}balances\textquotesingle{})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Descrição detalhada}
+\begin{DoxyVerb}Representa o saldo de uma criptomoeda em uma carteira de usuário.
+
+A classe WalletBalance mapeia para a tabela 'wallet_balances' no banco de dados e contém 
+informações sobre o saldo de uma criptomoeda específica em uma carteira, incluindo o valor do saldo. 
+A classe também define relacionamentos com as tabelas 'Wallet' e 'Cryptocurrency', permitindo 
+acessar os dados da carteira e da criptomoeda associada.
+
+Atributos:
+    balance_id (int): Identificador único do saldo (chave primária).
+    balance_wallet_id (int): Identificador da carteira associada ao saldo (chave estrangeira para a tabela 'wallets').
+    balance_crypto_id (int): Identificador da criptomoeda associada ao saldo (chave estrangeira para a tabela 'cryptocurrencies').
+    balance (float): Quantidade de criptomoeda disponível na carteira.
+
+Relacionamentos:
+    wallet (Wallet): Relacionamento de muitos para um com a tabela 'wallets', permitindo acessar a carteira associada.
+    cryptocurrency (Cryptocurrency): Relacionamento de muitos para um com a tabela 'cryptocurrencies', permitindo acessar a criptomoeda associada.
+
+Métodos:
+    __repr__(self): Retorna uma representação legível do objeto WalletBalance, exibindo o identificador da carteira, criptomoeda e saldo.
+\end{DoxyVerb}
+ 
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00098}{98}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+
+
+\doxysubsection{Documentação dos dados membro}
+\Hypertarget{classcripto_control_1_1models_1_1_wallet_balance_a0401d7113897684b710f28967dc7aeb2}\index{criptoControl.models.WalletBalance@{criptoControl.models.WalletBalance}!balance@{balance}}
+\index{balance@{balance}!criptoControl.models.WalletBalance@{criptoControl.models.WalletBalance}}
+\doxysubsubsection{\texorpdfstring{balance}{balance}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_wallet_balance_a0401d7113897684b710f28967dc7aeb2} 
+cripto\+Control.\+models.\+Wallet\+Balance.\+balance = db.\+Column(db.\+Float, nullable=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00125}{125}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_wallet_balance_a2ff51066180b3e82dd41d5fc863535a1}\index{criptoControl.models.WalletBalance@{criptoControl.models.WalletBalance}!balance\_crypto\_id@{balance\_crypto\_id}}
+\index{balance\_crypto\_id@{balance\_crypto\_id}!criptoControl.models.WalletBalance@{criptoControl.models.WalletBalance}}
+\doxysubsubsection{\texorpdfstring{balance\_crypto\_id}{balance\_crypto\_id}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_wallet_balance_a2ff51066180b3e82dd41d5fc863535a1} 
+cripto\+Control.\+models.\+Wallet\+Balance.\+balance\+\_\+crypto\+\_\+id = db.\+Column(db.\+Integer, db.\+Foreign\+Key(\textquotesingle{}cryptocurrencies.\+crypto\+\_\+id\textquotesingle{}), nullable=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00124}{124}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_wallet_balance_a163b6981f0aaf87d2ae39e6fb7444a35}\index{criptoControl.models.WalletBalance@{criptoControl.models.WalletBalance}!balance\_id@{balance\_id}}
+\index{balance\_id@{balance\_id}!criptoControl.models.WalletBalance@{criptoControl.models.WalletBalance}}
+\doxysubsubsection{\texorpdfstring{balance\_id}{balance\_id}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_wallet_balance_a163b6981f0aaf87d2ae39e6fb7444a35} 
+cripto\+Control.\+models.\+Wallet\+Balance.\+balance\+\_\+id = db.\+Column(db.\+Integer, primary\+\_\+key=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00122}{122}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_wallet_balance_ab9c8d98a518b7e38d36718a2fb7e1120}\index{criptoControl.models.WalletBalance@{criptoControl.models.WalletBalance}!balance\_wallet\_id@{balance\_wallet\_id}}
+\index{balance\_wallet\_id@{balance\_wallet\_id}!criptoControl.models.WalletBalance@{criptoControl.models.WalletBalance}}
+\doxysubsubsection{\texorpdfstring{balance\_wallet\_id}{balance\_wallet\_id}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_wallet_balance_ab9c8d98a518b7e38d36718a2fb7e1120} 
+cripto\+Control.\+models.\+Wallet\+Balance.\+balance\+\_\+wallet\+\_\+id = db.\+Column(db.\+Integer, db.\+Foreign\+Key(\textquotesingle{}wallets.\+wallet\+\_\+id\textquotesingle{}), nullable=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00123}{123}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_wallet_balance_a8dab4f6229404a6cf80559d19a71d4c1}\index{criptoControl.models.WalletBalance@{criptoControl.models.WalletBalance}!cryptocurrency@{cryptocurrency}}
+\index{cryptocurrency@{cryptocurrency}!criptoControl.models.WalletBalance@{criptoControl.models.WalletBalance}}
+\doxysubsubsection{\texorpdfstring{cryptocurrency}{cryptocurrency}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_wallet_balance_a8dab4f6229404a6cf80559d19a71d4c1} 
+cripto\+Control.\+models.\+Wallet\+Balance.\+cryptocurrency = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classcripto_control_1_1models_1_1_cryptocurrency}{Cryptocurrency}}\textquotesingle{}, back\+\_\+populates=\textquotesingle{}balances\textquotesingle{})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00129}{129}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_wallet_balance_a63ae7b2672903c28cec7fa74a4a51cd5}\index{criptoControl.models.WalletBalance@{criptoControl.models.WalletBalance}!wallet@{wallet}}
+\index{wallet@{wallet}!criptoControl.models.WalletBalance@{criptoControl.models.WalletBalance}}
+\doxysubsubsection{\texorpdfstring{wallet}{wallet}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_wallet_balance_a63ae7b2672903c28cec7fa74a4a51cd5} 
+cripto\+Control.\+models.\+Wallet\+Balance.\+wallet = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classcripto_control_1_1models_1_1_wallet}{Wallet}}\textquotesingle{}, back\+\_\+populates=\textquotesingle{}balances\textquotesingle{})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00128}{128}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+
+
+A documentação para esta classe foi gerada a partir do seguinte ficheiro\+:\begin{DoxyCompactItemize}
+\item 
+cripto\+Control/\mbox{\hyperlink{models_8py}{models.\+py}}\end{DoxyCompactItemize}

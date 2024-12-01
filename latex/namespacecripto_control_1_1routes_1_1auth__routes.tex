@@ -1,0 +1,98 @@
+\doxysection{Referência ao namespace cripto\+Control.\+routes.\+auth\+\_\+routes}
+\hypertarget{namespacecripto_control_1_1routes_1_1auth__routes}{}\label{namespacecripto_control_1_1routes_1_1auth__routes}\index{criptoControl.routes.auth\_routes@{criptoControl.routes.auth\_routes}}
+\doxysubsubsection*{Funções}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1auth__routes_ab5cea46079a29ed15ee6422c713f9720}{login}} ()
+\item 
+\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1auth__routes_a3ee3fcb6bd1c6779e76097c2a86062b6}{create\+\_\+account}} ()
+\item 
+\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1auth__routes_a0952db19d2ab479d346a512769f14989}{forgot\+\_\+password}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variáveis}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1auth__routes_ab651bd53b3e1a2b82e02b2ed9e98bea4}{auth\+\_\+bp}} = Blueprint(\textquotesingle{}auth\textquotesingle{}, \+\_\+\+\_\+name\+\_\+\+\_\+)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Documentação das funções}
+\Hypertarget{namespacecripto_control_1_1routes_1_1auth__routes_a3ee3fcb6bd1c6779e76097c2a86062b6}\index{criptoControl.routes.auth\_routes@{criptoControl.routes.auth\_routes}!create\_account@{create\_account}}
+\index{create\_account@{create\_account}!criptoControl.routes.auth\_routes@{criptoControl.routes.auth\_routes}}
+\doxysubsubsection{\texorpdfstring{create\_account()}{create\_account()}}
+{\footnotesize\ttfamily \label{namespacecripto_control_1_1routes_1_1auth__routes_a3ee3fcb6bd1c6779e76097c2a86062b6} 
+cripto\+Control.\+routes.\+auth\+\_\+routes.\+create\+\_\+account (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Lida com o cadastro de novos usuários.
+
+Rota: '/create_account'
+Métodos HTTP: GET, POST
+
+Esta função gerencia o processo de criação de uma nova conta de usuário:
+- Renderiza um formulário de registro para entrada de dados do usuário (username, email, senha).
+- Valida os dados submetidos no formulário.
+- Verifica se o e-mail já está registrado no banco de dados.
+- Se o e-mail for único:
+    - Cria um novo registro de usuário com as informações fornecidas.
+    - Armazena o hash da senha no banco de dados.
+    - Salva o novo usuário na sessão do banco de dados.
+    - Loga automaticamente o usuário após o cadastro.
+    - Redireciona para a página inicial com uma mensagem de boas-vindas.
+- Se o e-mail já estiver registrado:
+    - Exibe uma mensagem de erro informando que o e-mail já está cadastrado.
+    - Redireciona o usuário de volta para a página de cadastro.
+
+Retornos:
+    - Renderiza a página de cadastro com o formulário (GET).
+    - Redireciona para a página inicial ou para a página de cadastro, dependendo da validação dos dados (POST).
+\end{DoxyVerb}
+ 
+
+Definido na linha \mbox{\hyperlink{auth__routes_8py_source_l00043}{43}} do ficheiro \mbox{\hyperlink{auth__routes_8py_source}{auth\+\_\+routes.\+py}}.
+
+\Hypertarget{namespacecripto_control_1_1routes_1_1auth__routes_a0952db19d2ab479d346a512769f14989}\index{criptoControl.routes.auth\_routes@{criptoControl.routes.auth\_routes}!forgot\_password@{forgot\_password}}
+\index{forgot\_password@{forgot\_password}!criptoControl.routes.auth\_routes@{criptoControl.routes.auth\_routes}}
+\doxysubsubsection{\texorpdfstring{forgot\_password()}{forgot\_password()}}
+{\footnotesize\ttfamily \label{namespacecripto_control_1_1routes_1_1auth__routes_a0952db19d2ab479d346a512769f14989} 
+cripto\+Control.\+routes.\+auth\+\_\+routes.\+forgot\+\_\+password (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Rota para recuperação de senha.
+\end{DoxyVerb}
+ 
+
+Definido na linha \mbox{\hyperlink{auth__routes_8py_source_l00097}{97}} do ficheiro \mbox{\hyperlink{auth__routes_8py_source}{auth\+\_\+routes.\+py}}.
+
+\Hypertarget{namespacecripto_control_1_1routes_1_1auth__routes_ab5cea46079a29ed15ee6422c713f9720}\index{criptoControl.routes.auth\_routes@{criptoControl.routes.auth\_routes}!login@{login}}
+\index{login@{login}!criptoControl.routes.auth\_routes@{criptoControl.routes.auth\_routes}}
+\doxysubsubsection{\texorpdfstring{login()}{login()}}
+{\footnotesize\ttfamily \label{namespacecripto_control_1_1routes_1_1auth__routes_ab5cea46079a29ed15ee6422c713f9720} 
+cripto\+Control.\+routes.\+auth\+\_\+routes.\+login (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Lida com o login do usuário.
+
+Esta função renderiza uma página de login e manipula a autenticação do usuário.
+Ela utiliza um formulário para coletar as credenciais do usuário e as verifica contra o banco de dados.
+Se as credenciais são válidas, o usuário é logado e redirecionado para a página principal.
+Se as credenciais são inválidas, uma mensagem de erro é exibida.
+
+auth_bp = Blueprint('auth', __name__)
+Parâmetros:
+None
+\end{DoxyVerb}
+ 
+
+Definido na linha \mbox{\hyperlink{auth__routes_8py_source_l00014}{14}} do ficheiro \mbox{\hyperlink{auth__routes_8py_source}{auth\+\_\+routes.\+py}}.
+
+
+
+\doxysubsection{Documentação das variáveis}
+\Hypertarget{namespacecripto_control_1_1routes_1_1auth__routes_ab651bd53b3e1a2b82e02b2ed9e98bea4}\index{criptoControl.routes.auth\_routes@{criptoControl.routes.auth\_routes}!auth\_bp@{auth\_bp}}
+\index{auth\_bp@{auth\_bp}!criptoControl.routes.auth\_routes@{criptoControl.routes.auth\_routes}}
+\doxysubsubsection{\texorpdfstring{auth\_bp}{auth\_bp}}
+{\footnotesize\ttfamily \label{namespacecripto_control_1_1routes_1_1auth__routes_ab651bd53b3e1a2b82e02b2ed9e98bea4} 
+cripto\+Control.\+routes.\+auth\+\_\+routes.\+auth\+\_\+bp = Blueprint(\textquotesingle{}auth\textquotesingle{}, \+\_\+\+\_\+name\+\_\+\+\_\+)}
+
+
+
+Definido na linha \mbox{\hyperlink{auth__routes_8py_source_l00008}{8}} do ficheiro \mbox{\hyperlink{auth__routes_8py_source}{auth\+\_\+routes.\+py}}.
+

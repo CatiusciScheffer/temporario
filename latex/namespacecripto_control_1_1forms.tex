@@ -1,0 +1,50 @@
+\doxysection{Referência ao namespace cripto\+Control.\+forms}
+\hypertarget{namespacecripto_control_1_1forms}{}\label{namespacecripto_control_1_1forms}\index{criptoControl.forms@{criptoControl.forms}}
+\doxysubsubsection*{Componentes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcripto_control_1_1forms_1_1_add_crypto_form}{Add\+Crypto\+Form}}
+\item 
+class \mbox{\hyperlink{classcripto_control_1_1forms_1_1_add_wallet_form}{Add\+Wallet\+Form}}
+\item 
+class \mbox{\hyperlink{classcripto_control_1_1forms_1_1_register_form}{Register\+Form}}
+\item 
+class \mbox{\hyperlink{classcripto_control_1_1forms_1_1_transactions_form}{Transactions\+Form}}
+\item 
+class \mbox{\hyperlink{classcripto_control_1_1forms_1_1_users}{Users}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Funções}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespacecripto_control_1_1forms_a15502a8bbbb770263a4cb86f788cf044}{check\+\_\+password\+\_\+complexity}} (form, field)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Documentação das funções}
+\Hypertarget{namespacecripto_control_1_1forms_a15502a8bbbb770263a4cb86f788cf044}\index{criptoControl.forms@{criptoControl.forms}!check\_password\_complexity@{check\_password\_complexity}}
+\index{check\_password\_complexity@{check\_password\_complexity}!criptoControl.forms@{criptoControl.forms}}
+\doxysubsubsection{\texorpdfstring{check\_password\_complexity()}{check\_password\_complexity()}}
+{\footnotesize\ttfamily \label{namespacecripto_control_1_1forms_a15502a8bbbb770263a4cb86f788cf044} 
+cripto\+Control.\+forms.\+check\+\_\+password\+\_\+complexity (\begin{DoxyParamCaption}\item[{}]{form}{, }\item[{}]{field}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Verifica a complexidade da senha fornecida.
+
+Esta função é utilizada como um validador para garantir que a senha atenda a critérios de complexidade
+específicos. A função verifica se a senha contém pelo menos uma letra maiúscula e pelo menos um caractere
+especial.
+
+Parâmetros:
+    form (FlaskForm): O formulário que contém o campo da senha.
+    field (Field): O campo da senha que está sendo validado.
+
+Levanta:
+    ValidationError: Se a senha não contiver pelo menos uma letra maiúscula ou um caractere especial.
+
+Exemplo de uso:
+    # Esta função pode ser usada como um validador em um campo de senha em um formulário Flask.
+    password_hash = PasswordField('Senha', validators=[DataRequired(), check_password_complexity])
+\end{DoxyVerb}
+ 
+
+Definido na linha \mbox{\hyperlink{forms_8py_source_l00086}{86}} do ficheiro \mbox{\hyperlink{forms_8py_source}{forms.\+py}}.
+

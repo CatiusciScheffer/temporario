@@ -1,0 +1,350 @@
+\doxysection{Referência ao namespace cripto\+Control.\+routes.\+views\+\_\+databases}
+\hypertarget{namespacecripto_control_1_1routes_1_1views__databases}{}\label{namespacecripto_control_1_1routes_1_1views__databases}\index{criptoControl.routes.views\_databases@{criptoControl.routes.views\_databases}}
+\doxysubsubsection*{Funções}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1views__databases_ae47d7f4ecf53c5960791979d70c9edb6}{create\+\_\+session}} ()
+\item 
+\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1views__databases_a89a5eb23a9e98909fe9ca6ce066d5105}{prices}} ()
+\item 
+\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1views__databases_a178a967103307df1c798971d905ee8e2}{wallets}} ()
+\item 
+\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1views__databases_a0a959245cebf1ea7e20c96e52d15d1b9}{cryptos}} ()
+\item 
+\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1views__databases_a09e0d5349520178fb280e9ce79c8b29f}{balance\+\_\+wallet}} ()
+\item 
+\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1views__databases_aa12b1467973d994d715ff433eec430a5}{lucro\+\_\+prejuizo}} ()
+\item 
+\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1views__databases_a9c18f6eb1913ce3422d89d5e52b2c5f5}{dca\+\_\+compras}} ()
+\item 
+\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1views__databases_a48f3dd773665e55696615568608566f9}{wallet\+\_\+summary}} ()
+\item 
+\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1views__databases_afafb290341cac8e593991ba82c181675}{get\+\_\+wallet\+\_\+summary}} ()
+\item 
+\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1views__databases_a810daafdeb066bc531f6534413fce077}{filtros\+\_\+transacoes}} ()
+\item 
+\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1views__databases_a73bb8130f8992c328670457129bbf989}{filter\+\_\+results}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variáveis}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1views__databases_a1b43c065a217bb457523b68d3ad530e1}{views\+\_\+db\+\_\+bp}} = Blueprint(\textquotesingle{}views\textquotesingle{}, \+\_\+\+\_\+name\+\_\+\+\_\+)
+\item 
+\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1views__databases_a7576d61b594b1b7ffcf1d2fb75a3d8df}{level}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Documentação das funções}
+\Hypertarget{namespacecripto_control_1_1routes_1_1views__databases_a09e0d5349520178fb280e9ce79c8b29f}\index{criptoControl.routes.views\_databases@{criptoControl.routes.views\_databases}!balance\_wallet@{balance\_wallet}}
+\index{balance\_wallet@{balance\_wallet}!criptoControl.routes.views\_databases@{criptoControl.routes.views\_databases}}
+\doxysubsubsection{\texorpdfstring{balance\_wallet()}{balance\_wallet()}}
+{\footnotesize\ttfamily \label{namespacecripto_control_1_1routes_1_1views__databases_a09e0d5349520178fb280e9ce79c8b29f} 
+cripto\+Control.\+routes.\+views\+\_\+databases.\+balance\+\_\+wallet (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Exibe o saldo das carteiras do usuário em dólares e reais.
+
+Esta função realiza consultas ao banco de dados para obter o saldo total de cada carteira do usuário autenticado, 
+tanto em dólares quanto em reais. As consultas filtram as criptomoedas, excluindo as que estão em BRL para o saldo em dólares 
+e incluindo apenas as que estão em BRL para o saldo em reais. 
+
+Passos realizados pela função:
+1. Cria uma subconsulta para obter o preço mais recente de cada criptomoeda.
+2. Realiza uma consulta para calcular o saldo total em dólares, agrupando por carteira.
+3. Realiza uma consulta para calcular o saldo total em reais, também agrupando por carteira.
+4. Calcula a soma total dos valores de todas as carteiras em dólares e reais.
+5. Prepara os dados para renderização no template.
+6. Renderiza o template 'views_databases/wallet_balance.html' com os saldos e totais.
+
+Retorna:
+render_template: Retorna a renderização do template 'views_databases/wallet_balance.html' com os saldos em dólares e reais.
+
+Exceções:
+Não levanta exceções diretamente, mas garante que apenas usuários autenticados possam acessar a função.
+\end{DoxyVerb}
+ 
+
+Definido na linha \mbox{\hyperlink{views__databases_8py_source_l00204}{204}} do ficheiro \mbox{\hyperlink{views__databases_8py_source}{views\+\_\+databases.\+py}}.
+
+\Hypertarget{namespacecripto_control_1_1routes_1_1views__databases_ae47d7f4ecf53c5960791979d70c9edb6}\index{criptoControl.routes.views\_databases@{criptoControl.routes.views\_databases}!create\_session@{create\_session}}
+\index{create\_session@{create\_session}!criptoControl.routes.views\_databases@{criptoControl.routes.views\_databases}}
+\doxysubsubsection{\texorpdfstring{create\_session()}{create\_session()}}
+{\footnotesize\ttfamily \label{namespacecripto_control_1_1routes_1_1views__databases_ae47d7f4ecf53c5960791979d70c9edb6} 
+cripto\+Control.\+routes.\+views\+\_\+databases.\+create\+\_\+session (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Definido na linha \mbox{\hyperlink{views__databases_8py_source_l00013}{13}} do ficheiro \mbox{\hyperlink{views__databases_8py_source}{views\+\_\+databases.\+py}}.
+
+Este é o diagrama das funções que utilizam esta função\+:
+% FIG 0
+\Hypertarget{namespacecripto_control_1_1routes_1_1views__databases_a0a959245cebf1ea7e20c96e52d15d1b9}\index{criptoControl.routes.views\_databases@{criptoControl.routes.views\_databases}!cryptos@{cryptos}}
+\index{cryptos@{cryptos}!criptoControl.routes.views\_databases@{criptoControl.routes.views\_databases}}
+\doxysubsubsection{\texorpdfstring{cryptos()}{cryptos()}}
+{\footnotesize\ttfamily \label{namespacecripto_control_1_1routes_1_1views__databases_a0a959245cebf1ea7e20c96e52d15d1b9} 
+cripto\+Control.\+routes.\+views\+\_\+databases.\+cryptos (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Exibe a lista de criptomoedas disponíveis.
+
+Esta função busca todas as criptomoedas que não estão com o status 'S' (suspensas) e as ordena pelo nome da criptomoeda.
+A função é protegida por um decorador de login, garantindo que apenas usuários autenticados possam acessá-la.
+
+Passos realizados pela função:
+1. Cria uma sessão para interagir com o banco de dados.
+2. Consulta as criptomoedas, filtrando pelo status.
+3. Ordena as criptomoedas pelo nome.
+4. Fecha a sessão após a consulta.
+5. Renderiza o template 'operacoes/cryptos.html' com a lista de criptomoedas.
+
+Retorna:
+render_template: Retorna a renderização do template 'operacoes/cryptos.html' com as criptomoedas disponíveis.
+
+Exceções:
+Não levanta exceções diretamente, mas garante que a sessão do banco de dados seja fechada após a operação.
+\end{DoxyVerb}
+ 
+
+Definido na linha \mbox{\hyperlink{views__databases_8py_source_l00147}{147}} do ficheiro \mbox{\hyperlink{views__databases_8py_source}{views\+\_\+databases.\+py}}.
+
+Grafo de chamadas desta função\+:
+% FIG 1
+\Hypertarget{namespacecripto_control_1_1routes_1_1views__databases_a9c18f6eb1913ce3422d89d5e52b2c5f5}\index{criptoControl.routes.views\_databases@{criptoControl.routes.views\_databases}!dca\_compras@{dca\_compras}}
+\index{dca\_compras@{dca\_compras}!criptoControl.routes.views\_databases@{criptoControl.routes.views\_databases}}
+\doxysubsubsection{\texorpdfstring{dca\_compras()}{dca\_compras()}}
+{\footnotesize\ttfamily \label{namespacecripto_control_1_1routes_1_1views__databases_a9c18f6eb1913ce3422d89d5e52b2c5f5} 
+cripto\+Control.\+routes.\+views\+\_\+databases.\+dca\+\_\+compras (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Calcula e exibe o DCA (Preço Médio de Compra) das criptomoedas adquiridas pelo usuário.
+
+Esta função realiza consultas ao banco de dados para calcular o DCA e o preço atual de cada criptomoeda comprada ou 
+creditada nas carteiras do usuário autenticado. Os resultados são apresentados em um template HTML.
+
+Passos realizados pela função:
+1. Cria uma subconsulta para obter os preços mais recentes de cada criptomoeda.
+2. Realiza uma consulta para calcular o DCA (Preço Médio de Compra) por carteira e moeda, incluindo o preço atual da criptomoeda.
+3. Filtra as transações para incluir apenas compras e créditos de saldo.
+4. Prepara os dados para renderização no template, incluindo informações sobre a carteira, moeda, DCA, preço atual e a diferença entre eles.
+5. Renderiza o template 'views_databases/crypto_DCA.html' com os dados calculados.
+
+Retorna:
+render_template: Retorna a renderização do template 'views_databases/crypto_DCA.html' com os dados de DCA das compras.
+
+Exceções:
+Não levanta exceções diretamente, mas garante que apenas usuários autenticados possam acessar a função.
+\end{DoxyVerb}
+ 
+
+Definido na linha \mbox{\hyperlink{views__databases_8py_source_l00408}{408}} do ficheiro \mbox{\hyperlink{views__databases_8py_source}{views\+\_\+databases.\+py}}.
+
+\Hypertarget{namespacecripto_control_1_1routes_1_1views__databases_a73bb8130f8992c328670457129bbf989}\index{criptoControl.routes.views\_databases@{criptoControl.routes.views\_databases}!filter\_results@{filter\_results}}
+\index{filter\_results@{filter\_results}!criptoControl.routes.views\_databases@{criptoControl.routes.views\_databases}}
+\doxysubsubsection{\texorpdfstring{filter\_results()}{filter\_results()}}
+{\footnotesize\ttfamily \label{namespacecripto_control_1_1routes_1_1views__databases_a73bb8130f8992c328670457129bbf989} 
+cripto\+Control.\+routes.\+views\+\_\+databases.\+filter\+\_\+results (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Filtra e exibe os resultados das transações com base nos critérios fornecidos.
+
+Esta função captura os filtros de transação enviados via parâmetros da requisição GET e realiza uma consulta ao banco de dados
+para obter as transações que atendem aos critérios especificados pelo usuário autenticado. A consulta é construída dinamicamente
+com base nos filtros fornecidos.
+
+Passos realizados pela função:
+1. Captura os filtros do formulário de busca, como tipo de transação, IDs de criptomoedas, IDs de carteiras e data da transação.
+2. Obtém o ID do usuário logado.
+3. Cria aliases para as tabelas de criptomoedas e carteiras para facilitar as junções na consulta.
+4. Constrói uma consulta básica com junções entre as tabelas de transações, carteiras e criptomoedas.
+5. Adiciona condições de filtro dinamicamente com base nos parâmetros fornecidos.
+6. Executa a consulta filtrada e obtém as transações correspondentes.
+7. Renderiza o template 'views_databases/transacoes_filtradas.html' com os resultados das transações filtradas.
+
+Retorna:
+render_template: Retorna a renderização do template 'views_databases/transacoes_filtradas.html' com as transações filtradas.
+
+Exceções:
+Não levanta exceções diretamente, mas pode depender da integridade dos dados no banco de dados e da validação dos parâmetros.
+\end{DoxyVerb}
+ 
+
+Definido na linha \mbox{\hyperlink{views__databases_8py_source_l00611}{611}} do ficheiro \mbox{\hyperlink{views__databases_8py_source}{views\+\_\+databases.\+py}}.
+
+\Hypertarget{namespacecripto_control_1_1routes_1_1views__databases_a810daafdeb066bc531f6534413fce077}\index{criptoControl.routes.views\_databases@{criptoControl.routes.views\_databases}!filtros\_transacoes@{filtros\_transacoes}}
+\index{filtros\_transacoes@{filtros\_transacoes}!criptoControl.routes.views\_databases@{criptoControl.routes.views\_databases}}
+\doxysubsubsection{\texorpdfstring{filtros\_transacoes()}{filtros\_transacoes()}}
+{\footnotesize\ttfamily \label{namespacecripto_control_1_1routes_1_1views__databases_a810daafdeb066bc531f6534413fce077} 
+cripto\+Control.\+routes.\+views\+\_\+databases.\+filtros\+\_\+transacoes (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Exibe os filtros disponíveis para transações.
+
+Esta função obtém todas as criptomoedas e carteiras do banco de dados e renderiza um template HTML 
+que permite ao usuário aplicar filtros nas transações. A função é protegida por um decorador de login, 
+garantindo que apenas usuários autenticados possam acessá-la.
+
+Passos realizados pela função:
+1. Consulta todas as criptomoedas disponíveis no banco de dados.
+2. Consulta todas as carteiras disponíveis no banco de dados.
+3. Renderiza o template 'views_databases/filtros_transacoes.html', passando as listas de criptomoedas 
+   e carteiras obtidas.
+
+Retorna:
+render_template: Retorna a renderização do template 'views_databases/filtros_transacoes.html' 
+                 com as criptomoedas e carteiras disponíveis.
+
+Exceções:
+Não levanta exceções diretamente, mas garante que apenas usuários autenticados possam acessar a função.
+\end{DoxyVerb}
+ 
+
+Definido na linha \mbox{\hyperlink{views__databases_8py_source_l00580}{580}} do ficheiro \mbox{\hyperlink{views__databases_8py_source}{views\+\_\+databases.\+py}}.
+
+\Hypertarget{namespacecripto_control_1_1routes_1_1views__databases_afafb290341cac8e593991ba82c181675}\index{criptoControl.routes.views\_databases@{criptoControl.routes.views\_databases}!get\_wallet\_summary@{get\_wallet\_summary}}
+\index{get\_wallet\_summary@{get\_wallet\_summary}!criptoControl.routes.views\_databases@{criptoControl.routes.views\_databases}}
+\doxysubsubsection{\texorpdfstring{get\_wallet\_summary()}{get\_wallet\_summary()}}
+{\footnotesize\ttfamily \label{namespacecripto_control_1_1routes_1_1views__databases_afafb290341cac8e593991ba82c181675} 
+cripto\+Control.\+routes.\+views\+\_\+databases.\+get\+\_\+wallet\+\_\+summary (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Obtém um resumo dos saldos das carteiras do usuário.
+
+Esta função realiza consultas ao banco de dados para coletar informações sobre as carteiras do usuário, incluindo 
+o nome da carteira, o símbolo da criptomoeda, a quantidade disponível, o preço atual e o valor total de cada 
+criptomoeda. Os dados são filtrados para incluir apenas as criptomoedas que possuem saldo positivo.
+
+Passos realizados pela função:
+1. Cria uma subconsulta para obter o preço mais recente de cada criptomoeda.
+2. Realiza uma consulta principal que junta as tabelas de carteiras, saldos, criptomoedas e preços.
+3. Filtra os resultados para incluir apenas as carteiras do usuário autenticado e saldos positivos.
+4. Ordena os resultados pelo nome da carteira e pelo símbolo da criptomoeda.
+5. Calcula a soma total dos valores das criptomoedas.
+6. Retorna uma lista de dicionários contendo os detalhes das carteiras e o total de valor.
+
+Retorna:
+tuple: Uma lista de dicionários com as informações das carteiras e o total de valor.
+
+Exceções:
+Não levanta exceções diretamente, mas depende da integridade dos dados no banco de dados.
+\end{DoxyVerb}
+ 
+
+Definido na linha \mbox{\hyperlink{views__databases_8py_source_l00511}{511}} do ficheiro \mbox{\hyperlink{views__databases_8py_source}{views\+\_\+databases.\+py}}.
+
+Este é o diagrama das funções que utilizam esta função\+:
+% FIG 2
+\Hypertarget{namespacecripto_control_1_1routes_1_1views__databases_aa12b1467973d994d715ff433eec430a5}\index{criptoControl.routes.views\_databases@{criptoControl.routes.views\_databases}!lucro\_prejuizo@{lucro\_prejuizo}}
+\index{lucro\_prejuizo@{lucro\_prejuizo}!criptoControl.routes.views\_databases@{criptoControl.routes.views\_databases}}
+\doxysubsubsection{\texorpdfstring{lucro\_prejuizo()}{lucro\_prejuizo()}}
+{\footnotesize\ttfamily \label{namespacecripto_control_1_1routes_1_1views__databases_aa12b1467973d994d715ff433eec430a5} 
+cripto\+Control.\+routes.\+views\+\_\+databases.\+lucro\+\_\+prejuizo (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Calcula e exibe o lucro ou prejuízo das transações de venda de criptomoedas do usuário.
+
+Esta função realiza consultas ao banco de dados para calcular o lucro ou prejuízo das vendas de criptomoedas realizadas pelo 
+usuário autenticado. Ela considera o DCA (Preço Médio de Compra) das criptomoedas e utiliza a função COALESCE para lidar 
+com valores nulos. O resultado é apresentado em um template HTML.
+
+Passos realizados pela função:
+1. Cria uma subconsulta para obter o preço mais recente de cada criptomoeda.
+2. Calcula o DCA (Preço Médio de Compra) para cada carteira e criptomoeda.
+3. Realiza uma consulta para calcular o lucro ou prejuízo das transações de venda.
+4. Prepara os dados para renderização no template, incluindo informações sobre a carteira, moeda, data da venda, 
+   quantidade vendida, preço de venda, DCA e lucro/prejuízo.
+5. Calcula o total de lucro ou prejuízo e determina se o resultado final é lucro ou prejuízo.
+6. Renderiza o template 'views_databases/crypto_lucroXprejuizo.html' com os dados calculados.
+
+Retorna:
+render_template: Retorna a renderização do template 'views_databases/crypto_lucroXprejuizo.html' com os dados de lucro/prejuízo.
+
+Exceções:
+Não levanta exceções diretamente, mas garante que apenas usuários autenticados possam acessar a função.
+\end{DoxyVerb}
+ 
+
+Definido na linha \mbox{\hyperlink{views__databases_8py_source_l00303}{303}} do ficheiro \mbox{\hyperlink{views__databases_8py_source}{views\+\_\+databases.\+py}}.
+
+\Hypertarget{namespacecripto_control_1_1routes_1_1views__databases_a89a5eb23a9e98909fe9ca6ce066d5105}\index{criptoControl.routes.views\_databases@{criptoControl.routes.views\_databases}!prices@{prices}}
+\index{prices@{prices}!criptoControl.routes.views\_databases@{criptoControl.routes.views\_databases}}
+\doxysubsubsection{\texorpdfstring{prices()}{prices()}}
+{\footnotesize\ttfamily \label{namespacecripto_control_1_1routes_1_1views__databases_a89a5eb23a9e98909fe9ca6ce066d5105} 
+cripto\+Control.\+routes.\+views\+\_\+databases.\+prices (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Recupera os preços mais recentes das criptomoedas do banco de dados.
+
+Parâmetros:
+Nenhum
+
+Retorna:
+prices (lista): Uma lista de objetos Price que representam os preços mais recentes das criptomoedas.
+\end{DoxyVerb}
+ 
+
+Definido na linha \mbox{\hyperlink{views__databases_8py_source_l00019}{19}} do ficheiro \mbox{\hyperlink{views__databases_8py_source}{views\+\_\+databases.\+py}}.
+
+Grafo de chamadas desta função\+:
+% FIG 3
+\Hypertarget{namespacecripto_control_1_1routes_1_1views__databases_a48f3dd773665e55696615568608566f9}\index{criptoControl.routes.views\_databases@{criptoControl.routes.views\_databases}!wallet\_summary@{wallet\_summary}}
+\index{wallet\_summary@{wallet\_summary}!criptoControl.routes.views\_databases@{criptoControl.routes.views\_databases}}
+\doxysubsubsection{\texorpdfstring{wallet\_summary()}{wallet\_summary()}}
+{\footnotesize\ttfamily \label{namespacecripto_control_1_1routes_1_1views__databases_a48f3dd773665e55696615568608566f9} 
+cripto\+Control.\+routes.\+views\+\_\+databases.\+wallet\+\_\+summary (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Exibe um resumo dos saldos das carteiras do usuário.
+
+Esta função obtém os dados de todas as carteiras associadas ao usuário e calcula o total dos valores. 
+Em seguida, renderiza um template HTML para apresentar essas informações de forma organizada.
+
+Passos realizados pela função:
+1. Chama a função `get_wallet_summary()` para obter os dados de todas as carteiras e o total dos valores.
+2. Renderiza o template 'views_databases/wallet_summary.html', passando os dados das carteiras e o total dos valores.
+
+Retorna:
+render_template: Retorna a renderização do template 'views_databases/wallet_summary.html' com os saldos das carteiras e o valor total.
+
+Exceções:
+Não levanta exceções diretamente, mas pode depender da implementação da função `get_wallet_summary()`.
+\end{DoxyVerb}
+ 
+
+Definido na linha \mbox{\hyperlink{views__databases_8py_source_l00487}{487}} do ficheiro \mbox{\hyperlink{views__databases_8py_source}{views\+\_\+databases.\+py}}.
+
+Grafo de chamadas desta função\+:
+% FIG 4
+\Hypertarget{namespacecripto_control_1_1routes_1_1views__databases_a178a967103307df1c798971d905ee8e2}\index{criptoControl.routes.views\_databases@{criptoControl.routes.views\_databases}!wallets@{wallets}}
+\index{wallets@{wallets}!criptoControl.routes.views\_databases@{criptoControl.routes.views\_databases}}
+\doxysubsubsection{\texorpdfstring{wallets()}{wallets()}}
+{\footnotesize\ttfamily \label{namespacecripto_control_1_1routes_1_1views__databases_a178a967103307df1c798971d905ee8e2} 
+cripto\+Control.\+routes.\+views\+\_\+databases.\+wallets (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Exibe um resumo dos saldos das carteiras para o usuário.
+
+Parâmetros:
+Nenhum
+
+Retorna:
+render_template: Um modelo HTML renderizado com dados de carteiras, página atual, total de páginas e nome do endpoint.
+\end{DoxyVerb}
+ 
+
+Definido na linha \mbox{\hyperlink{views__databases_8py_source_l00091}{91}} do ficheiro \mbox{\hyperlink{views__databases_8py_source}{views\+\_\+databases.\+py}}.
+
+Grafo de chamadas desta função\+:
+% FIG 5
+
+
+\doxysubsection{Documentação das variáveis}
+\Hypertarget{namespacecripto_control_1_1routes_1_1views__databases_a7576d61b594b1b7ffcf1d2fb75a3d8df}\index{criptoControl.routes.views\_databases@{criptoControl.routes.views\_databases}!level@{level}}
+\index{level@{level}!criptoControl.routes.views\_databases@{criptoControl.routes.views\_databases}}
+\doxysubsubsection{\texorpdfstring{level}{level}}
+{\footnotesize\ttfamily \label{namespacecripto_control_1_1routes_1_1views__databases_a7576d61b594b1b7ffcf1d2fb75a3d8df} 
+cripto\+Control.\+routes.\+views\+\_\+databases.\+level}
+
+
+
+Definido na linha \mbox{\hyperlink{views__databases_8py_source_l00011}{11}} do ficheiro \mbox{\hyperlink{views__databases_8py_source}{views\+\_\+databases.\+py}}.
+
+\Hypertarget{namespacecripto_control_1_1routes_1_1views__databases_a1b43c065a217bb457523b68d3ad530e1}\index{criptoControl.routes.views\_databases@{criptoControl.routes.views\_databases}!views\_db\_bp@{views\_db\_bp}}
+\index{views\_db\_bp@{views\_db\_bp}!criptoControl.routes.views\_databases@{criptoControl.routes.views\_databases}}
+\doxysubsubsection{\texorpdfstring{views\_db\_bp}{views\_db\_bp}}
+{\footnotesize\ttfamily \label{namespacecripto_control_1_1routes_1_1views__databases_a1b43c065a217bb457523b68d3ad530e1} 
+cripto\+Control.\+routes.\+views\+\_\+databases.\+views\+\_\+db\+\_\+bp = Blueprint(\textquotesingle{}views\textquotesingle{}, \+\_\+\+\_\+name\+\_\+\+\_\+)}
+
+
+
+Definido na linha \mbox{\hyperlink{views__databases_8py_source_l00010}{10}} do ficheiro \mbox{\hyperlink{views__databases_8py_source}{views\+\_\+databases.\+py}}.
+

@@ -1,0 +1,150 @@
+\doxysection{main\+\_\+routes.\+py}
+\hypertarget{main__routes_8py_source}{}\label{main__routes_8py_source}\index{criptoControl/routes/main\_routes.py@{criptoControl/routes/main\_routes.py}}
+\mbox{\hyperlink{main__routes_8py}{Ir para a documentação deste ficheiro.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00001}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1main__routes}{00001}}\ \textcolor{keyword}{from}\ flask\ \textcolor{keyword}{import}\ Blueprint,\ render\_template,\ send\_file}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00002}00002\ \textcolor{keyword}{from}\ sqlalchemy\ \textcolor{keyword}{import}\ func}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00003}00003\ \textcolor{keyword}{from}\ sqlalchemy.orm\ \textcolor{keyword}{import}\ sessionmaker}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00004}00004\ \textcolor{keyword}{from}\ \mbox{\hyperlink{namespacecripto_control_1_1forms}{criptoControl.forms}}\ \textcolor{keyword}{import}\ TransactionsForm,\ AddWalletForm,\ AddCryptoForm}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00005}00005\ \textcolor{keyword}{from}\ \mbox{\hyperlink{namespacecripto_control_1_1models}{criptoControl.models}}\ \textcolor{keyword}{import}\ db,\ Wallet,\ Cryptocurrency,\ WalletBalance,\ Transaction,\ Price,\ User}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00006}00006\ \textcolor{keyword}{from}\ flask\_login\ \textcolor{keyword}{import}\ current\_user,\ login\_required}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00007}00007\ \textcolor{keyword}{import}\ io}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00008}00008\ \textcolor{keyword}{import}\ matplotlib.pyplot\ \textcolor{keyword}{as}\ plt}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00011}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1main__routes_a4abacfdc0abca110661973ddda02da3d}{00011}}\ main\_bp\ =\ Blueprint(\textcolor{stringliteral}{'main'},\ \_\_name\_\_)}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00014}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1main__routes_a3f441ddc92431bbdd50fa9c5b8a94923}{00014}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1main__routes_a3f441ddc92431bbdd50fa9c5b8a94923}{create\_session}}():}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00015}00015\ \ \ \ \ \textcolor{keywordflow}{return}\ sessionmaker(bind=db.engine)()}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00018}00018\ \textcolor{preprocessor}{@main\_bp.route('/index')}}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00019}00019\ \textcolor{preprocessor}{@login\_required}\ \ }
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00020}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1main__routes_a9618e6dc7a6070a0b606bb655fa532f8}{00020}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1main__routes_a9618e6dc7a6070a0b606bb655fa532f8}{index}}():}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00021}00021\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00022}00022\ \textcolor{stringliteral}{\ \ \ \ Esta\ função\ lida\ com\ a\ página\ principal\ do\ aplicativo,\ exibindo\ informações\ de\ transações,\ carteiras\ e\ }}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00023}00023\ \textcolor{stringliteral}{\ \ \ \ criptomoedas\ ao\ usuário.\ Ela\ recupera\ dados\ do\ banco\ de\ dados\ usando\ consultas\ SQLAlchemy\ e\ renderiza\ o\ }}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00024}00024\ \textcolor{stringliteral}{\ \ \ \ modelo\ HTML\ correspondente.}}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00025}00025\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00026}00026\ \textcolor{stringliteral}{\ \ \ \ Parâmetros:}}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00027}00027\ \textcolor{stringliteral}{\ \ \ \ Nenhum}}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00028}00028\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00029}00029\ \textcolor{stringliteral}{\ \ \ \ Retorna:}}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00030}00030\ \textcolor{stringliteral}{\ \ \ \ render\_template:\ Uma\ resposta\ do\ Flask\ contendo\ o\ modelo\ HTML\ renderizado\ com\ os\ dados\ recuperados.}}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00031}00031\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00032}00032\ \ \ \ \ formTransactions\ =\ \mbox{\hyperlink{classcripto_control_1_1forms_1_1_transactions_form}{TransactionsForm}}()}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00033}00033\ \ \ \ \ formAddWallet\ =\ \mbox{\hyperlink{classcripto_control_1_1forms_1_1_add_wallet_form}{AddWalletForm}}()}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00034}00034\ \ \ \ \ formAddCrypto\ =\ \mbox{\hyperlink{classcripto_control_1_1forms_1_1_add_crypto_form}{AddCryptoForm}}()}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00036}00036\ \ \ \ \ \textcolor{comment}{\#\ Inicializa\ a\ sessão\ como\ None}}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00037}00037\ \ \ \ \ session\ =\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00038}00038\ \ \ \ \ cons\_transactions\ =\ []}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00039}00039\ \ \ \ \ cons\_wallets\ =\ []}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00040}00040\ \ \ \ \ cons\_crypto\ =\ []}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00042}00042\ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00043}00043\ \ \ \ \ \ \ \ \ session\ =\ \mbox{\hyperlink{namespacecripto_control_1_1routes_1_1main__routes_a3f441ddc92431bbdd50fa9c5b8a94923}{create\_session}}()}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00044}00044\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Busca\ dados\ do\ banco\ de\ dados}}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00045}00045\ \ \ \ \ \ \ \ \ cons\_transactions\ =\ session.query(Transaction).all()}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00046}00046\ \ \ \ \ \ \ \ \ cons\_wallets\ =\ session.query(Wallet).filter(}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ Wallet.wallet\_status\ ==\ \textcolor{stringliteral}{'N'},}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ Wallet.wallet\_user\_id\ ==\ current\_user.user\_id}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00049}00049\ \ \ \ \ \ \ \ \ ).all()}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00050}00050\ \ \ \ \ \ \ \ \ cons\_crypto\ =\ session.query(Cryptocurrency).filter(Cryptocurrency.crypto\_status\ ==\ \textcolor{stringliteral}{'N'}).all()}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00051}00051\ \ \ \ \ \textcolor{keywordflow}{except}\ Exception\ \textcolor{keyword}{as}\ e:}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00052}00052\ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}Ocorreu\ um\ erro:\ \{e\}"{}})}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00053}00053\ \ \ \ \ \textcolor{keywordflow}{finally}:}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00054}00054\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ session:}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ session.close()}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00057}00057\ \ \ \ \ \textcolor{keywordflow}{return}\ render\_template(}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00058}00058\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'index.html'},}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00059}00059\ \ \ \ \ \ \ \ \ cons\_transactions=cons\_transactions,}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00060}00060\ \ \ \ \ \ \ \ \ cons\_wallets=cons\_wallets,}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00061}00061\ \ \ \ \ \ \ \ \ cons\_crypto=cons\_crypto,}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00062}00062\ \ \ \ \ \ \ \ \ formTransactions=formTransactions,}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00063}00063\ \ \ \ \ \ \ \ \ formAddWallet=formAddWallet,}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00064}00064\ \ \ \ \ \ \ \ \ formAddCrypto=formAddCrypto}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00065}00065\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00070}00070\ \textcolor{preprocessor}{@main\_bp.route('/grafico')}}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00071}00071\ \textcolor{preprocessor}{@login\_required}}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00072}\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1main__routes_a09a4fd1c529256e713424a317b2a3292}{00072}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacecripto_control_1_1routes_1_1main__routes_a09a4fd1c529256e713424a317b2a3292}{grafico}}():}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00073}00073\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00074}00074\ \textcolor{stringliteral}{\ \ \ \ Esta\ função\ gera\ um\ gráfico\ de\ barras\ mostrando\ o\ valor\ atual\ das\ criptomoedas\ em\ cada\ carteira.}}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00075}00075\ \textcolor{stringliteral}{\ \ \ \ Ela\ recupera\ os\ dados\ necessários\ do\ banco\ de\ dados,\ processa-\/os\ e\ cria\ o\ gráfico\ usando\ matplotlib.}}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00076}00076\ \textcolor{stringliteral}{\ \ \ \ O\ gráfico\ é\ então\ salvo\ em\ um\ buffer\ de\ memória\ e\ retornado\ como\ uma\ imagem\ PNG.}}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00077}00077\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00078}00078\ \textcolor{stringliteral}{\ \ \ \ Parâmetros:}}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00079}00079\ \textcolor{stringliteral}{\ \ \ \ Nenhum}}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00080}00080\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00081}00081\ \textcolor{stringliteral}{\ \ \ \ Retorna:}}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00082}00082\ \textcolor{stringliteral}{\ \ \ \ send\_file:\ Uma\ resposta\ do\ Flask\ contendo\ o\ gráfico\ gerado\ como\ uma\ imagem\ PNG.}}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00083}00083\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00084}00084\ \ \ \ \ \textcolor{comment}{\#\ Subconsulta\ para\ obter\ o\ preço\ mais\ recente}}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00085}00085\ \ \ \ \ latest\_prices\_subquery\ =\ (}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00086}00086\ \ \ \ \ \ \ \ \ db.session.query(}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ Price.price\_crypto\_id,}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ func.max(Price.price\_consult\_datetime).label(\textcolor{stringliteral}{'latest\_timestamp'})}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00089}00089\ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00090}00090\ \ \ \ \ \ \ \ \ .group\_by(Price.price\_crypto\_id)}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00091}00091\ \ \ \ \ \ \ \ \ .subquery()}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00092}00092\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00094}00094\ \ \ \ \ \textcolor{comment}{\#\ Consulta\ principal}}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00095}00095\ \ \ \ \ query\ =\ (}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00096}00096\ \ \ \ \ \ \ \ \ db.session.query(}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ Wallet.wallet\_name.label(\textcolor{stringliteral}{'carteira'}),}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ Cryptocurrency.crypto\_name.label(\textcolor{stringliteral}{'crypto'}),}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ WalletBalance.balance.label(\textcolor{stringliteral}{'quantidade'}),}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ Price.price.label(\textcolor{stringliteral}{'preço'}),}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ (WalletBalance.balance\ *\ Price.price).label(\textcolor{stringliteral}{'valor'})}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00102}00102\ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00103}00103\ \ \ \ \ \ \ \ \ .join(WalletBalance,\ Wallet.wallet\_id\ ==\ WalletBalance.balance\_wallet\_id)}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00104}00104\ \ \ \ \ \ \ \ \ .join(Cryptocurrency,\ Cryptocurrency.crypto\_id\ ==\ WalletBalance.balance\_crypto\_id)}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00105}00105\ \ \ \ \ \ \ \ \ .join(Price,\ Price.price\_crypto\_id\ ==\ Cryptocurrency.crypto\_id)}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00106}00106\ \ \ \ \ \ \ \ \ .join(latest\_prices\_subquery,\ }
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (Price.price\_crypto\_id\ ==\ latest\_prices\_subquery.c.price\_crypto\_id)\ \&\ }
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (Price.price\_consult\_datetime\ ==\ latest\_prices\_subquery.c.latest\_timestamp))}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00109}00109\ \ \ \ \ \ \ \ \ .join(User,\ User.user\_id\ ==\ Wallet.wallet\_user\_id)\ \ \textcolor{comment}{\#\ Adiciona\ o\ join\ com\ a\ tabela\ User}}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00110}00110\ \ \ \ \ \ \ \ \ .filter(User.user\_id\ ==\ current\_user.user\_id)\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00111}00111\ \ \ \ \ \ \ \ \ .order\_by(Wallet.wallet\_name,\ Cryptocurrency.crypto\_name)}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00112}00112\ \ \ \ \ \ \ \ \ .limit(15)}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00113}00113\ \ \ \ \ \ \ \ \ .all()}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00114}00114\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00115}00115\ }
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00116}00116\ \ \ \ \ \textcolor{comment}{\#\ Preparar\ dados\ para\ o\ gráfico}}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00117}00117\ \ \ \ \ data\ =\ \{\}}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00118}00118\ \ \ \ \ \textcolor{keywordflow}{for}\ row\ \textcolor{keywordflow}{in}\ query:}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00119}00119\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ row.carteira\ \textcolor{keywordflow}{not}\ \textcolor{keywordflow}{in}\ data:}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ data[row.carteira]\ =\ \{\textcolor{stringliteral}{'x'}:\ [],\ \textcolor{stringliteral}{'y'}:\ []\}}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00121}00121\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Adiciona\ os\ valores\ corretamente\ às\ listas}}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00122}00122\ \ \ \ \ \ \ \ \ data[row.carteira][\textcolor{stringliteral}{'x'}].append(row.crypto)}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00123}00123\ \ \ \ \ \ \ \ \ data[row.carteira][\textcolor{stringliteral}{'y'}].append(row.valor)}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00124}00124\ }
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00125}00125\ \ \ \ \ \textcolor{comment}{\#\ Gerar\ o\ gráfico}}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00126}00126\ \ \ \ \ plt.figure(figsize=(10,\ 6))}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00127}00127\ \ \ \ \ \textcolor{keywordflow}{for}\ wallet\_name,\ values\ \textcolor{keywordflow}{in}\ data.items():}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00128}00128\ \ \ \ \ \ \ \ \ plt.bar(values[\textcolor{stringliteral}{'x'}],\ values[\textcolor{stringliteral}{'y'}],\ label=wallet\_name)}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00129}00129\ }
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00130}00130\ \ \ \ \ plt.xlabel(\textcolor{stringliteral}{'Criptomoeda'})}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00131}00131\ \ \ \ \ plt.ylabel(\textcolor{stringliteral}{'Valor\ (R\$)'})}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00132}00132\ \ \ \ \ plt.title(\textcolor{stringliteral}{'Valor\ das\ Criptomoedas\ por\ Carteira'})}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00133}00133\ \ \ \ \ plt.legend(title=\textcolor{stringliteral}{'Carteira'})}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00134}00134\ \ \ \ \ plt.xticks(rotation=45)}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00135}00135\ \ \ \ \ plt.tight\_layout()}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00136}00136\ }
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00137}00137\ \ \ \ \ \textcolor{comment}{\#\ Salvar\ o\ gráfico\ em\ um\ buffer\ de\ memória}}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00138}00138\ \ \ \ \ img\ =\ io.BytesIO()}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00139}00139\ \ \ \ \ plt.savefig(img,\ format=\textcolor{stringliteral}{'png'})}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00140}00140\ \ \ \ \ img.seek(0)}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00141}00141\ }
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00142}00142\ \ \ \ \ \textcolor{keywordflow}{return}\ send\_file(img,\ mimetype=\textcolor{stringliteral}{'image/png'})}
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00143}00143\ }
+\DoxyCodeLine{\Hypertarget{main__routes_8py_source_l00144}00144\ }
+
+\end{DoxyCode}

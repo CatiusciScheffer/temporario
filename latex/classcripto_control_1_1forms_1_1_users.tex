@@ -1,0 +1,138 @@
+\doxysection{Referência à classe cripto\+Control.\+forms.\+Users}
+\hypertarget{classcripto_control_1_1forms_1_1_users}{}\label{classcripto_control_1_1forms_1_1_users}\index{criptoControl.forms.Users@{criptoControl.forms.Users}}
+
+
+Diagrama de heranças da classe cripto\+Control.\+forms.\+Users
+% FIG 0
+
+
+Diagrama de colaboração para cripto\+Control.\+forms.\+Users\+:
+% FIG 1
+\doxysubsubsection*{Atributos Públicos Estáticos}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcripto_control_1_1forms_1_1_users_a36313468621915baf0b64fc5aeaa8728}{email}} = String\+Field(\textquotesingle{}Email\textquotesingle{}, validators=\mbox{[}Data\+Required(), Email(message="{}Insira um email válido."{})\mbox{]})
+\item 
+\mbox{\hyperlink{classcripto_control_1_1forms_1_1_users_a35f6ac4f839995461de7c45ce3862197}{password\+\_\+hash}}
+\item 
+\mbox{\hyperlink{classcripto_control_1_1forms_1_1_users_a2cd0e3b3f5823ef042a9be3029669e69}{remember\+\_\+me}} = Boolean\+Field(\textquotesingle{}Lembrar-\/me\textquotesingle{})
+\item 
+\mbox{\hyperlink{classcripto_control_1_1forms_1_1_users_a2ad43ce3b63f7ad85883b122e10f07eb}{btn\+\_\+user\+\_\+enter}} = Submit\+Field(\textquotesingle{}Entrar\textquotesingle{})
+\item 
+\mbox{\hyperlink{classcripto_control_1_1forms_1_1_users_adf6b27c4ba80b13ec793d51cd0a6476f}{btn\+\_\+user\+\_\+create}} = Submit\+Field(\textquotesingle{}Cadastrar\textquotesingle{})
+\item 
+\mbox{\hyperlink{classcripto_control_1_1forms_1_1_users_aa855e4dc336aa2a2957749570b53493d}{release\+\_\+cta}} = Submit\+Field(\textquotesingle{}Esqueci minha senha\textquotesingle{})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Descrição detalhada}
+\begin{DoxyVerb}Formulário de autenticação de usuários.
+
+Este formulário é utilizado para realizar operações de login, cadastro de novas contas e recuperação de senha.
+
+Campos:
+    - email (StringField): Campo para o e-mail do usuário.
+        - Obrigatório.
+        - Deve ser um endereço de e-mail válido.
+    - password_hash (PasswordField): Campo para a senha do usuário.
+        - Obrigatório.
+        - Deve ter no mínimo 8 caracteres.
+        - Valida a complexidade da senha utilizando `check_password_complexity`.
+    - remember_me (BooleanField): Checkbox para lembrar a sessão do usuário.
+        - Opcional.
+    - btn_user_enter (SubmitField): Botão para realizar o login.
+    - btn_user_create (SubmitField): Botão para criar uma nova conta.
+    - release_cta (SubmitField): Botão para recuperação de senha.
+
+Validações:
+    - O campo 'email' exige um e-mail válido.
+    - O campo 'password_hash' requer pelo menos 8 caracteres e deve passar na validação de complexidade.
+    - Todos os campos obrigatórios devem ser preenchidos antes do envio do formulário.
+
+Uso:
+    Este formulário é utilizado em páginas relacionadas à autenticação, como login, cadastro e recuperação de senha.
+
+Observação:
+    A validação de complexidade da senha é realizada pela função `check_password_complexity`.
+\end{DoxyVerb}
+ 
+
+Definido na linha \mbox{\hyperlink{forms_8py_source_l00111}{111}} do ficheiro \mbox{\hyperlink{forms_8py_source}{forms.\+py}}.
+
+
+
+\doxysubsection{Documentação dos dados membro}
+\Hypertarget{classcripto_control_1_1forms_1_1_users_adf6b27c4ba80b13ec793d51cd0a6476f}\index{criptoControl.forms.Users@{criptoControl.forms.Users}!btn\_user\_create@{btn\_user\_create}}
+\index{btn\_user\_create@{btn\_user\_create}!criptoControl.forms.Users@{criptoControl.forms.Users}}
+\doxysubsubsection{\texorpdfstring{btn\_user\_create}{btn\_user\_create}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1forms_1_1_users_adf6b27c4ba80b13ec793d51cd0a6476f} 
+cripto\+Control.\+forms.\+Users.\+btn\+\_\+user\+\_\+create = Submit\+Field(\textquotesingle{}Cadastrar\textquotesingle{})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{forms_8py_source_l00151}{151}} do ficheiro \mbox{\hyperlink{forms_8py_source}{forms.\+py}}.
+
+\Hypertarget{classcripto_control_1_1forms_1_1_users_a2ad43ce3b63f7ad85883b122e10f07eb}\index{criptoControl.forms.Users@{criptoControl.forms.Users}!btn\_user\_enter@{btn\_user\_enter}}
+\index{btn\_user\_enter@{btn\_user\_enter}!criptoControl.forms.Users@{criptoControl.forms.Users}}
+\doxysubsubsection{\texorpdfstring{btn\_user\_enter}{btn\_user\_enter}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1forms_1_1_users_a2ad43ce3b63f7ad85883b122e10f07eb} 
+cripto\+Control.\+forms.\+Users.\+btn\+\_\+user\+\_\+enter = Submit\+Field(\textquotesingle{}Entrar\textquotesingle{})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{forms_8py_source_l00150}{150}} do ficheiro \mbox{\hyperlink{forms_8py_source}{forms.\+py}}.
+
+\Hypertarget{classcripto_control_1_1forms_1_1_users_a36313468621915baf0b64fc5aeaa8728}\index{criptoControl.forms.Users@{criptoControl.forms.Users}!email@{email}}
+\index{email@{email}!criptoControl.forms.Users@{criptoControl.forms.Users}}
+\doxysubsubsection{\texorpdfstring{email}{email}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1forms_1_1_users_a36313468621915baf0b64fc5aeaa8728} 
+cripto\+Control.\+forms.\+Users.\+email = String\+Field(\textquotesingle{}Email\textquotesingle{}, validators=\mbox{[}Data\+Required(), Email(message="{}Insira um email válido."{})\mbox{]})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{forms_8py_source_l00143}{143}} do ficheiro \mbox{\hyperlink{forms_8py_source}{forms.\+py}}.
+
+\Hypertarget{classcripto_control_1_1forms_1_1_users_a35f6ac4f839995461de7c45ce3862197}\index{criptoControl.forms.Users@{criptoControl.forms.Users}!password\_hash@{password\_hash}}
+\index{password\_hash@{password\_hash}!criptoControl.forms.Users@{criptoControl.forms.Users}}
+\doxysubsubsection{\texorpdfstring{password\_hash}{password\_hash}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1forms_1_1_users_a35f6ac4f839995461de7c45ce3862197} 
+cripto\+Control.\+forms.\+Users.\+password\+\_\+hash\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Valor inicial\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \ PasswordField(\textcolor{stringliteral}{'Senha'},\ validators=[}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ DataRequired(),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ Length(min=8,\ message=\textcolor{stringliteral}{"{}A\ senha\ deve\ ter\ pelo\ menos\ 8\ caracteres."{}}),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ check\_password\_complexity}
+\DoxyCodeLine{\ \ \ \ ])}
+
+\end{DoxyCode}
+
+
+Definido na linha \mbox{\hyperlink{forms_8py_source_l00144}{144}} do ficheiro \mbox{\hyperlink{forms_8py_source}{forms.\+py}}.
+
+\Hypertarget{classcripto_control_1_1forms_1_1_users_aa855e4dc336aa2a2957749570b53493d}\index{criptoControl.forms.Users@{criptoControl.forms.Users}!release\_cta@{release\_cta}}
+\index{release\_cta@{release\_cta}!criptoControl.forms.Users@{criptoControl.forms.Users}}
+\doxysubsubsection{\texorpdfstring{release\_cta}{release\_cta}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1forms_1_1_users_aa855e4dc336aa2a2957749570b53493d} 
+cripto\+Control.\+forms.\+Users.\+release\+\_\+cta = Submit\+Field(\textquotesingle{}Esqueci minha senha\textquotesingle{})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{forms_8py_source_l00152}{152}} do ficheiro \mbox{\hyperlink{forms_8py_source}{forms.\+py}}.
+
+\Hypertarget{classcripto_control_1_1forms_1_1_users_a2cd0e3b3f5823ef042a9be3029669e69}\index{criptoControl.forms.Users@{criptoControl.forms.Users}!remember\_me@{remember\_me}}
+\index{remember\_me@{remember\_me}!criptoControl.forms.Users@{criptoControl.forms.Users}}
+\doxysubsubsection{\texorpdfstring{remember\_me}{remember\_me}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1forms_1_1_users_a2cd0e3b3f5823ef042a9be3029669e69} 
+cripto\+Control.\+forms.\+Users.\+remember\+\_\+me = Boolean\+Field(\textquotesingle{}Lembrar-\/me\textquotesingle{})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{forms_8py_source_l00149}{149}} do ficheiro \mbox{\hyperlink{forms_8py_source}{forms.\+py}}.
+
+
+
+A documentação para esta classe foi gerada a partir do seguinte ficheiro\+:\begin{DoxyCompactItemize}
+\item 
+cripto\+Control/\mbox{\hyperlink{forms_8py}{forms.\+py}}\end{DoxyCompactItemize}

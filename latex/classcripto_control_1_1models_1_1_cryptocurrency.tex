@@ -1,0 +1,88 @@
+\doxysection{Referência à classe cripto\+Control.\+models.\+Cryptocurrency}
+\hypertarget{classcripto_control_1_1models_1_1_cryptocurrency}{}\label{classcripto_control_1_1models_1_1_cryptocurrency}\index{criptoControl.models.Cryptocurrency@{criptoControl.models.Cryptocurrency}}
+
+
+Diagrama de heranças da classe cripto\+Control.\+models.\+Cryptocurrency
+% FIG 0
+
+
+Diagrama de colaboração para cripto\+Control.\+models.\+Cryptocurrency\+:
+% FIG 1
+\doxysubsubsection*{Atributos Públicos Estáticos}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_cryptocurrency_ab96cdac2beb5dcabce5684f95847ff7a}{crypto\+\_\+id}} = db.\+Column(db.\+Integer, primary\+\_\+key=True)
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_cryptocurrency_a2b3a34bed9477f9402c457b65e92ea48}{crypto\+\_\+name}} = db.\+Column(db.\+String, unique=True, nullable=False)
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_cryptocurrency_a59d96ca257fecdc2537a17a3cde107b9}{crypto\+\_\+symbol}} = db.\+Column(db.\+String, unique=True, nullable=False)
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_cryptocurrency_ad158ef3b22318a3249ee154b86600a6d}{crypto\+\_\+status}} = db.\+Column(db.\+String(1), nullable=False, default=\textquotesingle{}N\textquotesingle{})
+\item 
+\mbox{\hyperlink{classcripto_control_1_1models_1_1_cryptocurrency_ac4f3e35b36f4931aa8f2ae971960b2a7}{balances}} = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classcripto_control_1_1models_1_1_wallet_balance}{Wallet\+Balance}}\textquotesingle{}, back\+\_\+populates=\textquotesingle{}cryptocurrency\textquotesingle{})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Descrição detalhada}
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00071}{71}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+
+
+\doxysubsection{Documentação dos dados membro}
+\Hypertarget{classcripto_control_1_1models_1_1_cryptocurrency_ac4f3e35b36f4931aa8f2ae971960b2a7}\index{criptoControl.models.Cryptocurrency@{criptoControl.models.Cryptocurrency}!balances@{balances}}
+\index{balances@{balances}!criptoControl.models.Cryptocurrency@{criptoControl.models.Cryptocurrency}}
+\doxysubsubsection{\texorpdfstring{balances}{balances}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_cryptocurrency_ac4f3e35b36f4931aa8f2ae971960b2a7} 
+cripto\+Control.\+models.\+Cryptocurrency.\+balances = db.\+relationship(\textquotesingle{}\mbox{\hyperlink{classcripto_control_1_1models_1_1_wallet_balance}{Wallet\+Balance}}\textquotesingle{}, back\+\_\+populates=\textquotesingle{}cryptocurrency\textquotesingle{})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00078}{78}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_cryptocurrency_ab96cdac2beb5dcabce5684f95847ff7a}\index{criptoControl.models.Cryptocurrency@{criptoControl.models.Cryptocurrency}!crypto\_id@{crypto\_id}}
+\index{crypto\_id@{crypto\_id}!criptoControl.models.Cryptocurrency@{criptoControl.models.Cryptocurrency}}
+\doxysubsubsection{\texorpdfstring{crypto\_id}{crypto\_id}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_cryptocurrency_ab96cdac2beb5dcabce5684f95847ff7a} 
+cripto\+Control.\+models.\+Cryptocurrency.\+crypto\+\_\+id = db.\+Column(db.\+Integer, primary\+\_\+key=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00073}{73}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_cryptocurrency_a2b3a34bed9477f9402c457b65e92ea48}\index{criptoControl.models.Cryptocurrency@{criptoControl.models.Cryptocurrency}!crypto\_name@{crypto\_name}}
+\index{crypto\_name@{crypto\_name}!criptoControl.models.Cryptocurrency@{criptoControl.models.Cryptocurrency}}
+\doxysubsubsection{\texorpdfstring{crypto\_name}{crypto\_name}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_cryptocurrency_a2b3a34bed9477f9402c457b65e92ea48} 
+cripto\+Control.\+models.\+Cryptocurrency.\+crypto\+\_\+name = db.\+Column(db.\+String, unique=True, nullable=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00074}{74}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_cryptocurrency_ad158ef3b22318a3249ee154b86600a6d}\index{criptoControl.models.Cryptocurrency@{criptoControl.models.Cryptocurrency}!crypto\_status@{crypto\_status}}
+\index{crypto\_status@{crypto\_status}!criptoControl.models.Cryptocurrency@{criptoControl.models.Cryptocurrency}}
+\doxysubsubsection{\texorpdfstring{crypto\_status}{crypto\_status}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_cryptocurrency_ad158ef3b22318a3249ee154b86600a6d} 
+cripto\+Control.\+models.\+Cryptocurrency.\+crypto\+\_\+status = db.\+Column(db.\+String(1), nullable=False, default=\textquotesingle{}N\textquotesingle{})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00076}{76}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classcripto_control_1_1models_1_1_cryptocurrency_a59d96ca257fecdc2537a17a3cde107b9}\index{criptoControl.models.Cryptocurrency@{criptoControl.models.Cryptocurrency}!crypto\_symbol@{crypto\_symbol}}
+\index{crypto\_symbol@{crypto\_symbol}!criptoControl.models.Cryptocurrency@{criptoControl.models.Cryptocurrency}}
+\doxysubsubsection{\texorpdfstring{crypto\_symbol}{crypto\_symbol}}
+{\footnotesize\ttfamily \label{classcripto_control_1_1models_1_1_cryptocurrency_a59d96ca257fecdc2537a17a3cde107b9} 
+cripto\+Control.\+models.\+Cryptocurrency.\+crypto\+\_\+symbol = db.\+Column(db.\+String, unique=True, nullable=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definido na linha \mbox{\hyperlink{models_8py_source_l00075}{75}} do ficheiro \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+
+
+A documentação para esta classe foi gerada a partir do seguinte ficheiro\+:\begin{DoxyCompactItemize}
+\item 
+cripto\+Control/\mbox{\hyperlink{models_8py}{models.\+py}}\end{DoxyCompactItemize}
